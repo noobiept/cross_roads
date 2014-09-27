@@ -4,7 +4,10 @@ function Car( y, type )
 {
 this.shape = null;
 this.type = type;
-this.speed = Car.TYPES[ type ].speed;
+
+this.info = Car.TYPES[ type ];
+this.width = this.info.width;
+this.height = this.info.height;
 
 this.setupShape();
 
@@ -29,8 +32,8 @@ Car.TYPES = {
 
 Car.prototype.setupShape = function()
 {
-var info = Car.TYPES[ this.type ];
 var shape = new createjs.Shape();
+var info = this.info;
 
 var g = shape.graphics;
 
@@ -49,10 +52,21 @@ Car.prototype.clear = function()
 G.STAGE.removeChild( this.shape );
 };
 
+Car.prototype.getX = function()
+{
+return this.shape.x;
+};
+
+Car.prototype.getY = function()
+{
+return this.shape.y;
+};
+
+
 
 Car.prototype.tick = function()
 {
-this.shape.x += this.speed;
+this.shape.x += this.info.speed;
 
 if ( this.shape.x > G.CANVAS.width )
     {

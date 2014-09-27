@@ -1,14 +1,14 @@
 (function(window)
 {
-function Player( x, y )
+function Player()
 {
 this.shape = null;
 this.width = 20;
 this.height = 20;
 this.movement_step = 10;
+this.lifes = 5;
 
 this.setupShape();
-this.moveTo( x, y );
 }
 
 Player.prototype.setupShape = function()
@@ -83,6 +83,27 @@ else if ( key == Utilities.KEY_CODE.downArrow )
 Player.prototype.clear = function()
 {
 G.STAGE.removeChild( this.shape );
+};
+
+
+Player.prototype.getX = function()
+{
+return this.shape.x;
+};
+
+Player.prototype.getY = function()
+{
+return this.shape.y;
+};
+
+Player.prototype.oneLessLife = function()
+{
+this.lifes--;
+
+if ( this.lifes <= 0 )
+    {
+    console.log( 'Game over.' );
+    }
 };
 
 
