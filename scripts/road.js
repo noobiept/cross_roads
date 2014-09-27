@@ -1,11 +1,12 @@
 (function(window)
 {
-function Road( x, y, width, height )
+function Road( x, y, width, height, lanes )
 {
 this.lines = [];        // array of createjs.Shape()
 this.container = null;
 this.width = width;
 this.height = height;
+this.lanes = lanes;
 
 this.setupShape();
 this.moveTo( x, y );
@@ -43,39 +44,45 @@ g.endFill();
 container.addChild( bottomLine );
 this.lines.push( bottomLine );
 
-    // :: Middle lines :: //
+    // :: Middle lines/lanes :: //
 var middleLineLength = 20;
 var lengthBetweenLines = middleLineLength / 2;
 
-var midLength = 0;
-var length;
+    // a lane is where the car will move
+    // between each lane, there is a middle line separating the lanes
+var numberOfMidLines = this.lanes - 1;
 
-while ( midLength < width )
+for (var a = 0 ; a < numberOfMidLines ; a++)
     {
-    if ( midLength + middleLineLength < width )
+    var midLength = 0;
+    var length;
+
+    while ( midLength < width )
         {
-        length = middleLineLength;
+        if ( midLength + middleLineLength < width )
+            {
+            length = middleLineLength;
+            }
+
+        else
+            {
+            length = width - midLength;
+            }
+
+        var shape = new createjs.Shape();
+
+        g = shape.graphics;
+
+        g.beginFill( color );
+        g.drawRect( midLength, (a + 1) * height / this.lanes, length, 1 );
+        g.endFill();
+
+        container.addChild( shape );
+        this.lines.push( shape );
+
+        midLength += length + lengthBetweenLines;
         }
-
-    else
-        {
-        length = width - midLength;
-        }
-
-    var shape = new createjs.Shape();
-
-    g = shape.graphics;
-
-    g.beginFill( color );
-    g.drawRect( midLength, height / 2, length, 1 );
-    g.endFill();
-
-    container.addChild( shape );
-    this.lines.push( shape );
-
-    midLength += length + lengthBetweenLines;
     }
-
 
     // :: Container :: //
 G.STAGE.addChild( container );

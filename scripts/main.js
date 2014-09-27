@@ -14,7 +14,7 @@ G.CANVAS.height = 400;
 
 G.STAGE = new createjs.Stage( G.CANVAS );
 
-G.ROAD = new Road( 0, 50, 300, 200 );
+G.ROAD = new Road( 0, 50, 300, 200, 5 );
 G.PLAYER = new Player( 40, 40 );
 
 
