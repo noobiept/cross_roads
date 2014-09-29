@@ -1,17 +1,25 @@
 (function(window)
 {
-function Level()
+function Level( info )
 {
 var startX = 200;
 var startY = 0;
 
 G.PLAYER.moveTo( startX, startY );
 
-this.start_x = startX;
-this.start_y = startY;
+this.start_x = info.startX;
+this.start_y = info.startY;
 this.cars = [];
-this.road = new Road( 0, 50, 300, 200, 5 );
+this.road = new Road( info.road.x, info.road.y, info.road.width, info.road.height, info.road.lanes );
 
+this.count_duration = 0;
+this.cars_info = Utilities.deepClone( info.cars );
+
+for (var a = 0 ; a < this.cars_info.length ; a++)
+    {
+    this.cars_info[ a ].count = 0;
+    this.cars_info[ a ].has_started = false;    //HERE
+    }
 
 var car = new Car( 100, 'one' );
 
@@ -38,12 +46,15 @@ for (var a = 0 ; a < this.cars.length ; a++)
     }
 
 this.cars.length = 0;
+this.count_duration = 0;
 
 this.road.clear();
 };
 
-Level.prototype.tick = function()
+Level.prototype.tick = function( event )
 {
+this.count_duration += event.delta / 1000;  // in seconds
+
 var cars = this.cars;
 
 for (var a = cars.length - 1 ; a >= 0 ; a--)
