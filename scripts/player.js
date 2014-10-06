@@ -34,21 +34,41 @@ this.shape.y = y;
 
 Player.prototype.moveLeft = function()
 {
+if ( this.shape.x <= 0 )
+    {
+    return;
+    }
+
 this.shape.x -= this.movement_step;
 };
 
 Player.prototype.moveRight = function()
 {
+if ( this.shape.x + this.width >= G.CANVAS.width )
+    {
+    return;
+    }
+
 this.shape.x += this.movement_step;
 };
 
 Player.prototype.moveUp = function()
 {
+if ( this.shape.y <= 0 )
+    {
+    return;
+    }
+
 this.shape.y -= this.movement_step;
 };
 
 Player.prototype.moveDown = function()
 {
+if ( this.shape.y + this.height >= G.CANVAS.height )
+    {
+    return;
+    }
+
 this.shape.y += this.movement_step;
 };
 

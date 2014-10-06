@@ -7,8 +7,11 @@ var startY = 0;
 
 G.PLAYER.moveTo( startX, startY );
 
-this.start_x = info.startX;
-this.start_y = info.startY;
+this.start_x = info.player.startX;
+this.start_y = info.player.startY;
+
+G.PLAYER.moveTo( this.start_x, this.start_y );
+
 this.cars = [];
 this.road = new Road( info.road.x, info.road.y, info.road.width, info.road.height, info.road.lanes );
 
@@ -26,6 +29,9 @@ for (var a = 0 ; a < this.cars_info.length ; a++)
 
     // this will have the same info there is in .cars_info (it will be moved to here), once it is active (the level duration has passed the .start_seconds property)
 this.active_cars_info = [];
+
+    // need to move here to pass the level
+this.destination_y = info.road.y + info.road.height + 10;
 }
 
 Level.prototype.restart = function()
@@ -109,6 +115,13 @@ if ( this.checkCollisions() )
     {
     console.log( 'Collision has occurred.' );
     this.new_life();
+    }
+
+
+if ( G.PLAYER.getY() > this.destination_y )
+    {
+    console.log( 'you win!' );
+    nextLevel();
     }
 };
 

@@ -3,7 +3,8 @@ var G = {
     STAGE: null,
     PRELOAD: null,
     PLAYER: null,
-    LEVEL: null
+    LEVEL: null,
+    CURRENT_LEVEL: 0
 };
 
 var BASE_URL = '';
@@ -17,7 +18,7 @@ G.CANVAS.height = 400;
 G.STAGE = new createjs.Stage( G.CANVAS );
 
 var manifest = [
-        { id: 'level0', src: BASE_URL + 'levels/level0.json' }
+        { id: 'level_0', src: BASE_URL + 'levels/level0.json' }
     ];
 
 G.PRELOAD = new createjs.LoadQueue();
@@ -29,11 +30,34 @@ G.PRELOAD.loadManifest( manifest, true );
 function startGame()
 {
 G.PLAYER = new Player();
-G.LEVEL = new Level( G.PRELOAD.getResult( 'level0' ) );
+G.LEVEL = new Level( G.PRELOAD.getResult( 'level_0' ) );
 
 document.addEventListener( 'keydown', keyEvents, false );
 
 createjs.Ticker.on( 'tick', tick );
+}
+
+
+function nextLevel()
+{
+G.LEVEL.clear();
+G.LEVEL = null;
+
+G.CURRENT_LEVEL++;
+
+var next = 'level_' + G.CURRENT_LEVEL;
+
+var levelInfo = G.PRELOAD.getResult( next );
+
+if ( levelInfo !== null )
+    {
+    G.LEVEL = new Level( levelInfo );
+    }
+
+else
+    {
+    console.log( 'no more levels' );
+    }
 }
 
 
@@ -45,7 +69,11 @@ G.PLAYER.keyEvents( event );
 
 function tick( event )
 {
-G.LEVEL.tick( event );
+if ( G.LEVEL )
+    {
+    G.LEVEL.tick( event );
+    }
+
 
 G.STAGE.update();
 }
