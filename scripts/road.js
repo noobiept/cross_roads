@@ -7,6 +7,8 @@ this.container = null;
 this.width = width;
 this.height = height;
 this.lanes = lanes;
+this.x = x;
+this.y = y;
 
 this.setupShape();
 this.moveTo( x, y );
@@ -100,6 +102,14 @@ Road.prototype.clear = function()
 {
 G.STAGE.removeChild( this.container );
 this.lines.length = 0;
+};
+
+
+Road.prototype.laneToY = function( lane )
+{
+var laneHeight = this.height / this.lanes;
+
+return this.y + lane * laneHeight + laneHeight / 2;
 };
 
 

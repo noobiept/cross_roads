@@ -12,7 +12,7 @@ this.height = this.info.height;
 this.setupShape();
 
 this.shape.x = 0;
-this.shape.y = y;
+this.shape.y = y - this.height / 2;
 }
 
 Car.TYPES = {

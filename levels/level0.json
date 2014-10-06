@@ -4,8 +4,8 @@
     "road": {
         "x": 0,
         "y": 50,
-        "width": 300,
-        "height": 200,
+        "width": 600,
+        "height": 300,
         "lanes": 5
     },
     "cars": [

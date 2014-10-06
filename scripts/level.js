@@ -12,18 +12,20 @@ this.start_y = info.startY;
 this.cars = [];
 this.road = new Road( info.road.x, info.road.y, info.road.width, info.road.height, info.road.lanes );
 
+    // counts the time since the level started (useful to know when to start adding the cars)
 this.count_duration = 0;
+
+    // has the info of the cars to be added (which lane, spawn interval, etc)
+    // these still haven't started
 this.cars_info = Utilities.deepClone( info.cars );
 
 for (var a = 0 ; a < this.cars_info.length ; a++)
     {
     this.cars_info[ a ].count = 0;
-    this.cars_info[ a ].has_started = false;    //HERE
     }
 
-var car = new Car( 100, 'one' );
-
-this.cars.push( car );
+    // this will have the same info there is in .cars_info (it will be moved to here), once it is active (the level duration has passed the .start_seconds property)
+this.active_cars_info = [];
 }
 
 Level.prototype.restart = function()
@@ -51,13 +53,49 @@ this.count_duration = 0;
 this.road.clear();
 };
 
+
 Level.prototype.tick = function( event )
 {
-this.count_duration += event.delta / 1000;  // in seconds
+var delta = event.delta / 1000;  // in seconds
+this.count_duration += delta;
 
+var a;
+var info;
+
+    // check if we need to activate any car info
+for (a = this.cars_info.length - 1 ; a >= 0 ; a--)
+    {
+    info = this.cars_info[ a ];
+
+    if ( this.count_duration >= info.start_seconds )
+        {
+        this.active_cars_info.push( info );
+        this.cars_info.splice( a, 1 );
+        }
+    }
+
+    // add new cars, according to its spawn interval
+for (a = 0 ; a < this.active_cars_info.length ; a++)
+    {
+    info = this.active_cars_info[ a ];
+
+    info.count += delta;
+
+    if ( info.count >= info.spawn_interval_seconds )
+        {
+        var car = new Car( this.road.laneToY( info.lane ), info.type );
+
+        this.cars.push( car );
+
+        info.count = 0;
+        }
+    }
+
+
+    // run the active cars logic (tick)
 var cars = this.cars;
 
-for (var a = cars.length - 1 ; a >= 0 ; a--)
+for (a = cars.length - 1 ; a >= 0 ; a--)
     {
     var clear = cars[ a ].tick();
 
