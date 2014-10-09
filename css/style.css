@@ -1,0 +1,14 @@
+#GameMenu
+    {
+    list-style-type: none;
+    }
+
+#GameMenu > *
+    {
+    display: inline-block;
+    }
+
+.button
+    {
+    cursor: pointer;
+    }

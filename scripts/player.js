@@ -6,7 +6,7 @@ this.shape = null;
 this.width = 20;
 this.height = 20;
 this.movement_step = 10;
-this.lifes = 5;
+this.lives = 5;
 
 this.setupShape();
 }
@@ -118,9 +118,11 @@ return this.shape.y;
 
 Player.prototype.oneLessLife = function()
 {
-this.lifes--;
+this.lives--;
 
-if ( this.lifes <= 0 )
+GameMenu.setLives( this.lives );
+
+if ( this.lives <= 0 )
     {
     console.log( 'Game over.' );
     }

@@ -4,17 +4,28 @@
         <script type="text/javascript" src="libraries/preloadjs-0.4.1.min.js"></script>
         <script type="text/javascript" src="libraries/easeljs-0.7.1.min.js"></script>
         <script type="text/javascript" src="libraries/jquery-2.1.0.min.js"></script>
-        <script type="text/javascript" src="libraries/utilities-1.js"></script>
+        <script type="text/javascript" src="libraries/underscore-min.js"></script>
+        <script type="text/javascript" src="libraries/utilities-1.1-min.js"></script>
 
         <script type="text/javascript" src="scripts/car.js"></script>
         <script type="text/javascript" src="scripts/player.js"></script>
         <script type="text/javascript" src="scripts/road.js"></script>
         <script type="text/javascript" src="scripts/level.js"></script>
+        <script type="text/javascript" src="scripts/game_menu.js"></script>
         <script type="text/javascript" src="scripts/main.js"></script>
+
+        <link rel="stylesheet" href="css/style.css" />
     </head>
 <body>
 
     <canvas id="MainCanvas"></canvas>
+
+    <ul id="GameMenu">
+        <li id="Restart" class="button">restart</li>
+        <li id="Lives">lives: <span></span></li>
+        <li id="Level">level: <span></span></li>
+        <li id="Timer">timer: <span></span></li>
+    </ul>
 
 </body>
 </html>

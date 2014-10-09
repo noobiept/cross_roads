@@ -17,6 +17,8 @@ G.CANVAS.height = 400;
 
 G.STAGE = new createjs.Stage( G.CANVAS );
 
+GameMenu.init();
+
 var manifest = [
         { id: 'level_0', src: BASE_URL + 'levels/level0.json' }
     ];
@@ -31,6 +33,8 @@ function startGame()
 {
 G.PLAYER = new Player();
 G.LEVEL = new Level( G.PRELOAD.getResult( 'level_0' ) );
+
+GameMenu.startGame();
 
 document.addEventListener( 'keydown', keyEvents, false );
 
