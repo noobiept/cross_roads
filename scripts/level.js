@@ -4,13 +4,14 @@ function Level( info )
 {
 var startX = 200;
 var startY = 0;
+var player = Game.getPlayer();
 
-G.PLAYER.moveTo( startX, startY );
+player.moveTo( startX, startY );
 
 this.start_x = info.player.startX;
 this.start_y = info.player.startY;
 
-G.PLAYER.moveTo( this.start_x, this.start_y );
+player.moveTo( this.start_x, this.start_y );
 
 this.cars = [];
 this.road = new Road( info.road.x, info.road.y, info.road.width, info.road.height, info.road.lanes );
@@ -32,6 +33,8 @@ this.active_cars_info = [];
 
     // need to move here to pass the level
 this.destination_y = info.road.y + info.road.height + 10;
+
+this.player = player;
 }
 
 Level.prototype.restart = function()
@@ -41,8 +44,8 @@ Level.prototype.restart = function()
 
 Level.prototype.new_life = function()
 {
-G.PLAYER.moveTo( this.start_x, this.start_y );
-G.PLAYER.oneLessLife();
+this.player.moveTo( this.start_x, this.start_y );
+this.player.oneLessLife();
 };
 
 
@@ -77,6 +80,10 @@ for (a = this.cars_info.length - 1 ; a >= 0 ; a--)
         {
         this.active_cars_info.push( info );
         this.cars_info.splice( a, 1 );
+
+        var car = new Car( this.road.laneToY( info.lane ), info.type );
+
+        this.cars.push( car );
         }
     }
 
@@ -118,10 +125,10 @@ if ( this.checkCollisions() )
     }
 
 
-if ( G.PLAYER.getY() > this.destination_y )
+if ( this.player.getY() > this.destination_y )
     {
     console.log( 'you win!' );
-    nextLevel();
+    Game.nextLevel();
     }
 };
 
@@ -133,7 +140,7 @@ if ( G.PLAYER.getY() > this.destination_y )
 
 Level.prototype.checkCollisions = function()
 {
-var player = G.PLAYER;
+var player = this.player;
 var cars = this.cars;
 
 for (var a = 0 ; a < cars.length ; a++)

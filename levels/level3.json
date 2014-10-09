@@ -1,0 +1,39 @@
+{
+    "player": {
+        "startX": 200,
+        "startY": 0
+    },
+    "road": {
+        "x": 0,
+        "y": 50,
+        "width": 600,
+        "height": 300,
+        "lanes": 4
+    },
+    "cars": [
+        {
+            "type": "one",
+            "start_seconds": 0,
+            "spawn_interval_seconds": 2,
+            "lane": 0
+        },
+        {
+            "type": "two",
+            "start_seconds": 0,
+            "spawn_interval_seconds": 1,
+            "lane": 1
+        },
+        {
+            "type": "one",
+            "start_seconds": 0.5,
+            "spawn_interval_seconds": 1.5,
+            "lane": 2
+        },
+        {
+            "type": "two",
+            "start_seconds": 0.5,
+            "spawn_interval_seconds": 2.5,
+            "lane": 3
+        }
+    ]
+}

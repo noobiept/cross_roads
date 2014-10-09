@@ -24,7 +24,7 @@ var restart = container.querySelector( '#Restart' );
 
 restart.onclick = function()
     {
-        //HERE
+    Game.restart();
     };
 
 TIMER = new Utilities.Timer( timerElement );
@@ -45,8 +45,8 @@ LEVEL_ELEMENT.innerHTML = level;
 GameMenu.startGame = function()
 {
 TIMER.start();
-GameMenu.setLevel( G.CURRENT_LEVEL );
-GameMenu.setLives( G.PLAYER.lives );
+GameMenu.setLevel( Game.getCurrentLevel() );
+GameMenu.setLives( Game.getPlayer().lives );
 };
 
 
