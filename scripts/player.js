@@ -124,8 +124,10 @@ GameMenu.setLives( this.lives );
 
 if ( this.lives <= 0 )
     {
-    console.log( 'Game over.' );
+    return false;
     }
+
+return true;
 };
 
 

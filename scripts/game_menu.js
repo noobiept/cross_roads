@@ -7,6 +7,7 @@ function GameMenu()
 
 var LIVES_ELEMENT = null;
 var LEVEL_ELEMENT = null;
+
 var TIMER = null;
 
 
@@ -19,12 +20,12 @@ LEVEL_ELEMENT = container.querySelector( '#Level span' );
 var timerElement = container.querySelector( '#Timer span' );
 
 
-
 var restart = container.querySelector( '#Restart' );
 
 restart.onclick = function()
     {
     Game.restart();
+    Game.showMessage( 'Restarting..', 1000 );
     };
 
 TIMER = new Utilities.Timer( timerElement );
@@ -44,7 +45,7 @@ LEVEL_ELEMENT.innerHTML = level;
 
 GameMenu.startGame = function()
 {
-TIMER.start();
+TIMER.restart();
 GameMenu.setLevel( Game.getCurrentLevel() );
 GameMenu.setLives( Game.getPlayer().lives );
 };

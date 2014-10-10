@@ -45,7 +45,8 @@ Level.prototype.restart = function()
 Level.prototype.new_life = function()
 {
 this.player.moveTo( this.start_x, this.start_y );
-this.player.oneLessLife();
+
+return this.player.oneLessLife();
 };
 
 
@@ -120,14 +121,20 @@ for (a = cars.length - 1 ; a >= 0 ; a--)
 
 if ( this.checkCollisions() )
     {
-    console.log( 'Collision has occurred.' );
-    this.new_life();
+    Game.showMessage( 'Collision!', 500 );
+
+        // no more new lives
+    if ( !this.new_life() )
+        {
+        Game.showMessage( 'No more lives, you loose!', 2000, function() { Game.restart(); } );
+        return;
+        }
     }
 
 
 if ( this.player.getY() > this.destination_y )
     {
-    console.log( 'you win!' );
+    Game.showMessage( 'Level completed!', 1000 );
     Game.nextLevel();
     }
 };

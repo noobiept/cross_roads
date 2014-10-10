@@ -7,7 +7,7 @@
         "x": 0,
         "y": 50,
         "width": 600,
-        "height": 500,
+        "height": 300,
         "lanes": 6
     },
     "cars": [
@@ -38,7 +38,7 @@
         {
             "type": "one",
             "start_seconds": 2,
-            "spawn_interval_seconds": 1,
+            "spawn_interval_seconds": 2,
             "lane": 4
         },
         {
