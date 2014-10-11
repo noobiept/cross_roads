@@ -27,85 +27,24 @@ G.STAGE.addChild( shape );
 this.shape = shape;
 };
 
-Player.prototype.moveTo = function( x, y )
+Player.prototype.positionIn = function( x, y )
 {
+createjs.Tween.removeTweens( this.shape );
+
 this.shape.x = x;
 this.shape.y = y;
 };
 
-Player.prototype.moveLeft = function()
+
+Player.prototype.moveTo = function( xDirection, yDirection )
 {
-if ( this.shape.x <= 0 )
-    {
-    return;
-    }
+var angle = Math.atan2( yDirection, xDirection );
 
-var next = this.shape.x - this.movement_step;
-
-if ( next < 0 )
-    {
-    next = 0;
-    }
+var nextX = this.shape.x + Math.cos( angle ) * this.movement_step;
+var nextY = this.shape.y + Math.sin( angle ) * this.movement_step;
 
 createjs.Tween.get( this.shape, { override: true } ).to({
-        x: next
-    }, this.movement_animation );
-};
-
-Player.prototype.moveRight = function()
-{
-if ( this.shape.x + this.width >= G.CANVAS.width )
-    {
-    return;
-    }
-
-var next = this.shape.x + this.movement_step;
-
-if ( next + this.width > G.CANVAS.width )
-    {
-    next = G.CANVAS.width - this.width;
-    }
-
-createjs.Tween.get( this.shape, { override: true } ).to({
-        x: next
-    }, this.movement_animation );
-};
-
-Player.prototype.moveUp = function()
-{
-if ( this.shape.y <= 0 )
-    {
-    return;
-    }
-
-var next = this.shape.y - this.movement_step;
-
-if ( next < 0 )
-    {
-    next = 0;
-    }
-
-createjs.Tween.get( this.shape, { override: true } ).to({
-        y: next
-    }, this.movement_animation );
-};
-
-Player.prototype.moveDown = function()
-{
-if ( this.shape.y + this.height >= G.CANVAS.height )
-    {
-    return;
-    }
-
-var next = this.shape.y + this.movement_step;
-
-if ( next + this.height > G.CANVAS.height )
-    {
-    next = G.CANVAS.height - this.height;
-    }
-
-createjs.Tween.get( this.shape, { override: true } ).to({
-        y: next
+        x: nextX, y: nextY
     }, this.movement_animation );
 };
 
@@ -146,24 +85,44 @@ Player.prototype.tick = function( event )
 {
 var keysHeld = Keyboard.KEYS_HELD;
 
-if ( keysHeld.left )
+if ( keysHeld.left && keysHeld.up )
     {
-    this.moveLeft();
+    this.moveTo( -1, -1 );
+    }
+
+else if ( keysHeld.left && keysHeld.down )
+    {
+    this.moveTo( -1, 1 );
+    }
+
+else if ( keysHeld.right && keysHeld.up )
+    {
+    this.moveTo( 1, -1 );
+    }
+
+else if ( keysHeld.right && keysHeld.down )
+    {
+    this.moveTo( 1, 1 );
+    }
+
+else if ( keysHeld.left )
+    {
+    this.moveTo( -1, 0 );
     }
 
 else if ( keysHeld.right )
     {
-    this.moveRight();
+    this.moveTo( 1, 0 );
     }
 
 else if ( keysHeld.up )
     {
-    this.moveUp();
+    this.moveTo( 0, -1 );
     }
 
 else if ( keysHeld.down )
     {
-    this.moveDown();
+    this.moveTo( 0, 1 );
     }
 };
 

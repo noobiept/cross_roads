@@ -6,12 +6,12 @@ var startX = 200;
 var startY = 0;
 var player = Game.getPlayer();
 
-player.moveTo( startX, startY );
+player.positionIn( startX, startY );
 
 this.start_x = info.player.startX;
 this.start_y = info.player.startY;
 
-player.moveTo( this.start_x, this.start_y );
+player.positionIn( this.start_x, this.start_y );
 
 this.cars = [];
 this.road = new Road( info.road.x, info.road.y, info.road.width, info.road.height, info.road.lanes );
@@ -44,7 +44,7 @@ Level.prototype.restart = function()
 
 Level.prototype.new_life = function()
 {
-this.player.moveTo( this.start_x, this.start_y );
+this.player.positionIn( this.start_x, this.start_y );
 
 return this.player.oneLessLife();
 };
@@ -82,7 +82,7 @@ for (a = this.cars_info.length - 1 ; a >= 0 ; a--)
         this.active_cars_info.push( info );
         this.cars_info.splice( a, 1 );
 
-        var car = new Car( this.road.laneToY( info.lane ), info.type );
+        var car = new Car( this.road.laneToY( info.lane ), info.type, this );
 
         this.cars.push( car );
         }
@@ -97,7 +97,7 @@ for (a = 0 ; a < this.active_cars_info.length ; a++)
 
     if ( info.count >= info.spawn_interval_seconds )
         {
-        var car = new Car( this.road.laneToY( info.lane ), info.type );
+        var car = new Car( this.road.laneToY( info.lane ), info.type, this );
 
         this.cars.push( car );
 
@@ -105,19 +105,6 @@ for (a = 0 ; a < this.active_cars_info.length ; a++)
         }
     }
 
-
-    // run the active cars logic (tick)
-var cars = this.cars;
-
-for (a = cars.length - 1 ; a >= 0 ; a--)
-    {
-    var clear = cars[ a ].tick();
-
-    if ( clear )
-        {
-        cars.splice( a, 1 );
-        }
-    }
 
 if ( this.checkCollisions() )
     {
@@ -173,6 +160,15 @@ for (var a = 0 ; a < cars.length ; a++)
 return false;
 };
 
+
+Level.prototype.removeCar = function( car )
+{
+var index = this.cars.indexOf( car );
+
+this.cars.splice( index, 1 );
+
+car.clear();
+};
 
 
 window.Level = Level;

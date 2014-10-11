@@ -11,7 +11,7 @@ this.x = x;
 this.y = y;
 
 this.setupShape();
-this.moveTo( x, y );
+this.positionIn( x, y );
 }
 
 Road.prototype.setupShape = function()
@@ -92,7 +92,7 @@ G.STAGE.addChild( container );
 this.container = container;
 };
 
-Road.prototype.moveTo = function( x, y )
+Road.prototype.positionIn = function( x, y )
 {
 this.container.x = x;
 this.container.y = y;
