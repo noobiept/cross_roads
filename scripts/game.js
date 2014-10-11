@@ -17,9 +17,6 @@ Game.loadLevel( CURRENT_LEVEL );
 
 Game.initMessage();
 
-    // set the events
-document.addEventListener( 'keydown', keyEvents, false );
-
 createjs.Ticker.on( 'tick', tick );
 };
 
@@ -60,6 +57,8 @@ if ( PLAYER )
     PLAYER = null;
     }
 
+Keyboard.clearKeysHeld();
+
 CURRENT_LEVEL = 1;
 };
 
@@ -98,17 +97,17 @@ else
 };
 
 
-function keyEvents( event )
-{
-PLAYER.keyEvents( event );
-}
-
 
 function tick( event )
 {
 if ( LEVEL )
     {
     LEVEL.tick( event );
+    }
+
+if ( PLAYER )
+    {
+    PLAYER.tick( event );
     }
 
 G.STAGE.update();

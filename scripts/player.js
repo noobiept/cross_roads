@@ -6,6 +6,7 @@ this.shape = null;
 this.width = 20;
 this.height = 20;
 this.movement_step = 10;
+this.movement_animation = 100;  // ease duration
 this.lives = 5;
 
 this.setupShape();
@@ -39,7 +40,16 @@ if ( this.shape.x <= 0 )
     return;
     }
 
-this.shape.x -= this.movement_step;
+var next = this.shape.x - this.movement_step;
+
+if ( next < 0 )
+    {
+    next = 0;
+    }
+
+createjs.Tween.get( this.shape, { override: true } ).to({
+        x: next
+    }, this.movement_animation );
 };
 
 Player.prototype.moveRight = function()
@@ -49,7 +59,16 @@ if ( this.shape.x + this.width >= G.CANVAS.width )
     return;
     }
 
-this.shape.x += this.movement_step;
+var next = this.shape.x + this.movement_step;
+
+if ( next + this.width > G.CANVAS.width )
+    {
+    next = G.CANVAS.width - this.width;
+    }
+
+createjs.Tween.get( this.shape, { override: true } ).to({
+        x: next
+    }, this.movement_animation );
 };
 
 Player.prototype.moveUp = function()
@@ -59,7 +78,16 @@ if ( this.shape.y <= 0 )
     return;
     }
 
-this.shape.y -= this.movement_step;
+var next = this.shape.y - this.movement_step;
+
+if ( next < 0 )
+    {
+    next = 0;
+    }
+
+createjs.Tween.get( this.shape, { override: true } ).to({
+        y: next
+    }, this.movement_animation );
 };
 
 Player.prototype.moveDown = function()
@@ -69,33 +97,16 @@ if ( this.shape.y + this.height >= G.CANVAS.height )
     return;
     }
 
-this.shape.y += this.movement_step;
-};
+var next = this.shape.y + this.movement_step;
 
-
-Player.prototype.keyEvents = function( event )
-{
-var key = event.keyCode;
-
-if ( key == Utilities.KEY_CODE.leftArrow )
+if ( next + this.height > G.CANVAS.height )
     {
-    this.moveLeft();
+    next = G.CANVAS.height - this.height;
     }
 
-else if ( key == Utilities.KEY_CODE.rightArrow )
-    {
-    this.moveRight();
-    }
-
-else if ( key == Utilities.KEY_CODE.upArrow )
-    {
-    this.moveUp();
-    }
-
-else if ( key == Utilities.KEY_CODE.downArrow )
-    {
-    this.moveDown();
-    }
+createjs.Tween.get( this.shape, { override: true } ).to({
+        y: next
+    }, this.movement_animation );
 };
 
 
@@ -130,6 +141,31 @@ if ( this.lives <= 0 )
 return true;
 };
 
+
+Player.prototype.tick = function( event )
+{
+var keysHeld = Keyboard.KEYS_HELD;
+
+if ( keysHeld.left )
+    {
+    this.moveLeft();
+    }
+
+else if ( keysHeld.right )
+    {
+    this.moveRight();
+    }
+
+else if ( keysHeld.up )
+    {
+    this.moveUp();
+    }
+
+else if ( keysHeld.down )
+    {
+    this.moveDown();
+    }
+};
 
 
 window.Player = Player;

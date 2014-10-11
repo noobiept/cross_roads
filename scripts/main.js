@@ -15,6 +15,7 @@ G.CANVAS.height = 500;
 G.STAGE = new createjs.Stage( G.CANVAS );
 
 GameMenu.init();
+Keyboard.init();
 
 var manifest = [
         { id: 'level_1', src: BASE_URL + 'levels/level1.json' },
