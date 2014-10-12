@@ -13,7 +13,7 @@ var MESSAGE_TIMEOUT = null;
 
 Game.start = function()
 {
-Game.loadLevel( CURRENT_LEVEL );
+Game.loadInitialLevel();
 
 Game.initMessage();
 
@@ -39,7 +39,7 @@ MESSAGE_TIMEOUT = new Utilities.Timeout();
 Game.restart = function()
 {
 Game.clear();
-Game.loadLevel( CURRENT_LEVEL );
+Game.loadInitialLevel();
 };
 
 
@@ -63,10 +63,12 @@ CURRENT_LEVEL = 1;
 };
 
 
-Game.loadLevel = function( level )
+Game.loadInitialLevel = function()
 {
 PLAYER = new Player();
-LEVEL = new Level( G.PRELOAD.getResult( 'level_' + level ) );
+LEVEL = new Level( G.PRELOAD.getResult( 'level_1' ) );
+
+CURRENT_LEVEL = 1;
 
 GameMenu.startGame();
 };
@@ -92,7 +94,8 @@ if ( levelInfo !== null )
 
 else
     {
-    Game.showMessage( 'You Win!', 2000, function() { Game.restart(); } );
+    Game.clear();
+    Game.showMessage( 'You Win!', 2000, function() { Game.loadInitialLevel(); } );
     }
 };
 
@@ -109,6 +112,7 @@ if ( PLAYER )
     {
     PLAYER.tick( event );
     }
+
 
 G.STAGE.update();
 }

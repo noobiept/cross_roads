@@ -43,6 +43,26 @@ var angle = Math.atan2( yDirection, xDirection );
 var nextX = this.shape.x + Math.cos( angle ) * this.movement_step;
 var nextY = this.shape.y + Math.sin( angle ) * this.movement_step;
 
+if ( nextX < 0 )
+    {
+    nextX = 0;
+    }
+
+else if ( nextX > G.CANVAS.width - this.width )
+    {
+    nextX = G.CANVAS.width - this.width;
+    }
+
+if ( nextY < 0 )
+    {
+    nextY = 0;
+    }
+
+else if ( nextY > G.CANVAS.height - this.height )
+    {
+    nextY = G.CANVAS.height - this.height;
+    }
+
 createjs.Tween.get( this.shape, { override: true } ).to({
         x: nextX, y: nextY
     }, this.movement_animation );

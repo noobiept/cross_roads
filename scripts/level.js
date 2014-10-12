@@ -42,7 +42,7 @@ Level.prototype.restart = function()
 
 };
 
-Level.prototype.new_life = function()
+Level.prototype.newLife = function()
 {
 this.player.positionIn( this.start_x, this.start_y );
 
@@ -111,9 +111,13 @@ if ( this.checkCollisions() )
     Game.showMessage( 'Collision!', 500 );
 
         // no more new lives
-    if ( !this.new_life() )
+    if ( !this.newLife() )
         {
-        Game.showMessage( 'No more lives, you loose!', 2000, function() { Game.restart(); } );
+        Game.clear();
+        Game.showMessage( 'No more lives, you loose!', 2000, function()
+            {
+            Game.loadInitialLevel();
+            });
         return;
         }
     }
