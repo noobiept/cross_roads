@@ -94,6 +94,7 @@ if ( levelInfo !== null )
 
 else
     {
+    HighScore.add( GameMenu.getTimer().getTimeSeconds() );
     Game.clear();
     Game.showMessage( 'You Win!', 2000, function() { Game.loadInitialLevel(); } );
     }

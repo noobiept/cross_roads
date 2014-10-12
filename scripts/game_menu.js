@@ -50,6 +50,11 @@ GameMenu.setLevel( Game.getCurrentLevel() );
 GameMenu.setLives( Game.getPlayer().lives );
 };
 
+GameMenu.getTimer = function()
+{
+return TIMER;
+};
+
 
 window.GameMenu = GameMenu;
 

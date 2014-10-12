@@ -17,6 +17,7 @@ G.STAGE = new createjs.Stage( G.CANVAS );
 createjs.Ticker.setFPS( 60 );
 
 GameMenu.init();
+HighScore.init();
 Keyboard.init();
 
 var manifest = [
