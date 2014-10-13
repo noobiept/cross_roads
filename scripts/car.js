@@ -1,26 +1,40 @@
 (function(window)
 {
-function Car( y, type, level )
+/*
+    args = {
+        x : Number (optional= 0),
+        y : Number,
+        type  : String,
+        level : Level
+    }
+ */
+
+function Car( args )
 {
+if ( typeof args.x === 'undefined' )
+    {
+    args.x = 0;
+    }
+
 var _this = this;
 
 this.shape = null;
-this.type = type;
+this.type = args.type;
 
-this.info = Car.TYPES[ type ];
+this.info = Car.TYPES[ args.type ];
 this.width = this.info.width;
 this.height = this.info.height;
 
 this.setupShape();
 
-this.shape.x = 0;
-this.shape.y = y - this.height / 2;
+this.shape.x = args.x;
+this.shape.y = args.y - this.height / 2;
 
-var travelDuration = level.road.width / this.info.speed * 1000;
+var travelDuration = (args.level.road.width - args.x) / this.info.speed * 1000;
 
-createjs.Tween.get( this.shape ).to( { x: level.road.width }, travelDuration ).call( function()
+createjs.Tween.get( this.shape ).to( { x: args.level.road.width }, travelDuration ).call( function()
     {
-    level.removeCar( _this );
+    args.level.removeCar( _this );
     });
 }
 

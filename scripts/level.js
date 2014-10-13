@@ -26,6 +26,28 @@ this.cars_info = Utilities.deepClone( info.cars );
 for (var a = 0 ; a < this.cars_info.length ; a++)
     {
     this.cars_info[ a ].count = 0;
+
+        // start the level already with some cars in the road
+    var carInfo = this.cars_info[ a ];
+    var carTypeInfo = Car.TYPES[ carInfo.type ];
+    var xStep = carTypeInfo.speed * carInfo.spawn_interval_seconds;
+
+        // starting 'x'
+    var x = carTypeInfo.speed * (carInfo.spawn_interval_seconds - carInfo.start_seconds);
+
+    while( x < G.CANVAS.width )
+        {
+        var car = new Car({
+                x: x,
+                y: this.road.laneToY( carInfo.lane ),
+                type: carInfo.type,
+                level: this
+            });
+
+        this.cars.push( car );
+
+        x += xStep;
+        }
     }
 
     // this will have the same info there is in .cars_info (it will be moved to here), once it is active (the level duration has passed the .start_seconds property)
@@ -37,10 +59,6 @@ this.destination_y = info.road.y + info.road.height + 10;
 this.player = player;
 }
 
-Level.prototype.restart = function()
-{
-
-};
 
 Level.prototype.newLife = function()
 {
@@ -82,7 +100,11 @@ for (a = this.cars_info.length - 1 ; a >= 0 ; a--)
         this.active_cars_info.push( info );
         this.cars_info.splice( a, 1 );
 
-        var car = new Car( this.road.laneToY( info.lane ), info.type, this );
+        var car = new Car({
+            y: this.road.laneToY( info.lane ),
+            type: info.type,
+            level: this
+        });
 
         this.cars.push( car );
         }
@@ -97,7 +119,11 @@ for (a = 0 ; a < this.active_cars_info.length ; a++)
 
     if ( info.count >= info.spawn_interval_seconds )
         {
-        var car = new Car( this.road.laneToY( info.lane ), info.type, this );
+        var car = new Car({
+            y: this.road.laneToY( info.lane ),
+            type: info.type,
+            level: this
+        });
 
         this.cars.push( car );
 
@@ -125,7 +151,6 @@ if ( this.checkCollisions() )
 
 if ( this.player.getY() > this.destination_y )
     {
-    Game.showMessage( 'Level completed!', 1000 );
     Game.nextLevel();
     }
 };

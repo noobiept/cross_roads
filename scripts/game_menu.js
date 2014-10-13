@@ -25,7 +25,6 @@ var restart = container.querySelector( '#Restart' );
 restart.onclick = function()
     {
     Game.restart();
-    Game.showMessage( 'Restarting..', 1000 );
     };
 
 TIMER = new Utilities.Timer( timerElement );

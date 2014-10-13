@@ -13,9 +13,8 @@ var MESSAGE_TIMEOUT = null;
 
 Game.start = function()
 {
-Game.loadInitialLevel();
-
 Game.initMessage();
+Game.loadInitialLevel();
 
 createjs.Ticker.on( 'tick', tick );
 };
@@ -71,6 +70,8 @@ LEVEL = new Level( G.PRELOAD.getResult( 'level_1' ) );
 CURRENT_LEVEL = 1;
 
 GameMenu.startGame();
+
+Game.showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
 };
 
 
@@ -90,6 +91,8 @@ if ( levelInfo !== null )
     {
     LEVEL = new Level( levelInfo );
     GameMenu.setLevel( CURRENT_LEVEL );
+
+    Game.showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
     }
 
 else
@@ -135,6 +138,9 @@ Game.showMessage = function( text, timeout, callback )
 {
 MESSAGE.text = text;
 MESSAGE.visible = true;
+
+    // re-add the element so that it stays on top of other elements (z-index)
+G.STAGE.addChild( MESSAGE );
 
 MESSAGE_TIMEOUT.start( function()
     {
