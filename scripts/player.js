@@ -146,6 +146,15 @@ else if ( keysHeld.down )
     }
 };
 
+/*
+    Bring the player's shape to the top of other elements (z-index)
+ */
+
+Player.prototype.bringToTop = function()
+{
+G.STAGE.addChild( this.shape );
+};
+
 
 window.Player = Player;
 

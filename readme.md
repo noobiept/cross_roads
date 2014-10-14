@@ -21,5 +21,5 @@ Libraries
     - preloadjs 0.4
     - easeljs 0.7
     - tweenjs 0.5
-- underscorejs 1.6
+- underscorejs 1.7
 - utilities 1.1

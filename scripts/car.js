@@ -32,6 +32,7 @@ this.shape.y = args.y - this.height / 2;
 
 var travelDuration = (args.level.road.width - args.x) / this.info.speed * 1000;
 
+
 createjs.Tween.get( this.shape ).to( { x: args.level.road.width }, travelDuration ).call( function()
     {
     args.level.removeCar( _this );

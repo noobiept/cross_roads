@@ -1,90 +1,106 @@
 (function(window)
 {
-function Road( x, y, width, height, lanes )
+/*
+    info = {
+        x : Number,
+        y : Number,
+        lanes      : Number,
+        side_walks : Number[]
+    }
+ */
+
+function Road( info )
 {
 this.lines = [];        // array of createjs.Shape()
 this.container = null;
-this.width = width;
-this.height = height;
-this.lanes = lanes;
-this.x = x;
-this.y = y;
+this.lanes = info.lanes;
+this.x = info.x;    //HERE also don't need this?..
+this.y = info.y;
+this.side_walks = info.side_walks;
+this.width = G.CANVAS.width;
 
 this.setupShape();
-this.positionIn( x, y );
+this.positionIn( info.x, info.y );
 }
+
+    // height of each lane, as well of the side walks
+var LANE_HEIGHT = 30;
+
 
 Road.prototype.setupShape = function()
 {
 var container = new createjs.Container();
-var topLine = new createjs.Shape();
-var bottomLine = new createjs.Shape();
 
 var g;
-var color = 'black';
-var width = this.width;
-var height = this.height;
+var linesColor = 'black';
+var sideWalkColor = 'gray';
 var lineHeight = 1;
+var width = G.CANVAS.width;
 
-    // :: Top Line :: //
-g = topLine.graphics;
 
-g.beginFill( color );
-g.drawRect( 0, 0, width, lineHeight );
-g.endFill();
+    // :: Side walks :: //
 
-container.addChild( topLine );
-this.lines.push( topLine );
+for (var a = 0 ; a < this.side_walks.length ; a++)
+    {
+    var sideWalk = new createjs.Shape();
 
-    // :: Bottom Line :: //
-g = bottomLine.graphics;
+    g = sideWalk.graphics;
 
-g.beginFill( color );
-g.drawRect( 0, height, width, lineHeight );
-g.endFill();
+    g.beginFill( sideWalkColor );
+    g.drawRect( 0, (this.side_walks[ a ]) * LANE_HEIGHT, width, LANE_HEIGHT );
+    g.endFill();
 
-container.addChild( bottomLine );
-this.lines.push( bottomLine );
+    container.addChild( sideWalk );
+    this.lines.push( sideWalk );
+    }
 
-    // :: Middle lines/lanes :: //
-var middleLineLength = 20;
-var lengthBetweenLines = middleLineLength / 2;
+
+    // :: Lane separators :: //
 
     // a lane is where the car will move
     // between each lane, there is a middle line separating the lanes
-var numberOfMidLines = this.lanes - 1;
+var middleLineLength = 20;
+var lengthBetweenLines = middleLineLength / 2;
 
-for (var a = 0 ; a < numberOfMidLines ; a++)
+
+for (var a = 0 ; a < this.lanes ; a++)
     {
-    var midLength = 0;
-    var length;
-
-    while ( midLength < width )
+        // see if the next lane is not a sidewalk
+        // that means we need to add a middle line
+    if ( this.side_walks.indexOf( a ) < 0 &&
+         this.side_walks.indexOf( a + 1 ) < 0 )
         {
-        if ( midLength + middleLineLength < width )
+        var midLength = 0;
+        var length;
+
+        while ( midLength < width )
             {
-            length = middleLineLength;
+            if ( midLength + middleLineLength < width )
+                {
+                length = middleLineLength;
+                }
+
+            else
+                {
+                length = width - midLength;
+                }
+
+            var shape = new createjs.Shape();
+
+            g = shape.graphics;
+
+            g.beginFill( linesColor );
+            g.drawRect( midLength, LANE_HEIGHT + a * LANE_HEIGHT, length, lineHeight );
+            g.endFill();
+
+            container.addChild( shape );
+            this.lines.push( shape );
+
+            midLength += length + lengthBetweenLines;
             }
-
-        else
-            {
-            length = width - midLength;
-            }
-
-        var shape = new createjs.Shape();
-
-        g = shape.graphics;
-
-        g.beginFill( color );
-        g.drawRect( midLength, (a + 1) * height / this.lanes, length, 1 );
-        g.endFill();
-
-        container.addChild( shape );
-        this.lines.push( shape );
-
-        midLength += length + lengthBetweenLines;
         }
     }
+
 
     // :: Container :: //
 G.STAGE.addChild( container );
@@ -107,9 +123,13 @@ this.lines.length = 0;
 
 Road.prototype.laneToY = function( lane )
 {
-var laneHeight = this.height / this.lanes;
+return this.y + lane * LANE_HEIGHT + LANE_HEIGHT / 2;
+};
 
-return this.y + lane * laneHeight + laneHeight / 2;
+
+Road.getLaneHeight = function()
+{
+return LANE_HEIGHT;
 };
 
 

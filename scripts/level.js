@@ -14,7 +14,7 @@ this.start_y = info.player.startY;
 player.positionIn( this.start_x, this.start_y );
 
 this.cars = [];
-this.road = new Road( info.road.x, info.road.y, info.road.width, info.road.height, info.road.lanes );
+this.road = new Road( info.road );
 
     // counts the time since the level started (useful to know when to start adding the cars)
 this.count_duration = 0;
@@ -54,7 +54,7 @@ for (var a = 0 ; a < this.cars_info.length ; a++)
 this.active_cars_info = [];
 
     // need to move here to pass the level
-this.destination_y = info.road.y + info.road.height + 10;
+this.destination_y = info.road.y + info.road.lanes * Road.getLaneHeight() + 10;
 
 this.player = player;
 }

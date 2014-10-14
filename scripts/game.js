@@ -66,6 +66,7 @@ Game.loadInitialLevel = function()
 {
 PLAYER = new Player();
 LEVEL = new Level( G.PRELOAD.getResult( 'level_1' ) );
+PLAYER.bringToTop();
 
 CURRENT_LEVEL = 1;
 
@@ -91,6 +92,8 @@ if ( levelInfo !== null )
     {
     LEVEL = new Level( levelInfo );
     GameMenu.setLevel( CURRENT_LEVEL );
+
+    PLAYER.bringToTop();
 
     Game.showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
     }
