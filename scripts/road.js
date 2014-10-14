@@ -2,8 +2,6 @@
 {
 /*
     info = {
-        x : Number,
-        y : Number,
         lanes      : Number,
         side_walks : Number[]
     }
@@ -14,13 +12,11 @@ function Road( info )
 this.lines = [];        // array of createjs.Shape()
 this.container = null;
 this.lanes = info.lanes;
-this.x = info.x;    //HERE also don't need this?..
-this.y = info.y;
 this.side_walks = info.side_walks;
 this.width = G.CANVAS.width;
 
 this.setupShape();
-this.positionIn( info.x, info.y );
+this.positionIn( 0, 50 );
 }
 
     // height of each lane, as well of the side walks
@@ -123,13 +119,23 @@ this.lines.length = 0;
 
 Road.prototype.laneToY = function( lane )
 {
-return this.y + lane * LANE_HEIGHT + LANE_HEIGHT / 2;
+return this.getY() + lane * LANE_HEIGHT + LANE_HEIGHT / 2;
 };
 
 
 Road.getLaneHeight = function()
 {
 return LANE_HEIGHT;
+};
+
+Road.prototype.getX = function()
+{
+return this.container.x;
+};
+
+Road.prototype.getY = function()
+{
+return this.container.y;
 };
 
 

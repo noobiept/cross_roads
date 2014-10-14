@@ -1,11 +1,5 @@
 {
-    "player": {
-        "startX": 200,
-        "startY": 0
-    },
     "road": {
-        "x": 0,
-        "y": 50,
         "lanes": 6,
         "side_walks": [ 0, 2, 5 ]
     },

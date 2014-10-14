@@ -2,14 +2,10 @@
 {
 function Level( info )
 {
-var startX = 200;
-var startY = 0;
 var player = Game.getPlayer();
 
-player.positionIn( startX, startY );
-
-this.start_x = info.player.startX;
-this.start_y = info.player.startY;
+this.start_x = G.CANVAS.width / 2 - player.width / 2;
+this.start_y = 0;
 
 player.positionIn( this.start_x, this.start_y );
 
@@ -54,7 +50,7 @@ for (var a = 0 ; a < this.cars_info.length ; a++)
 this.active_cars_info = [];
 
     // need to move here to pass the level
-this.destination_y = info.road.y + info.road.lanes * Road.getLaneHeight() + 10;
+this.destination_y = this.road.getY() + info.road.lanes * Road.getLaneHeight() + 10;
 
 this.player = player;
 }
