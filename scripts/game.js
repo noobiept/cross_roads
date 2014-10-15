@@ -8,7 +8,9 @@ function Game()
 var PLAYER = null;
 var LEVEL = null;
 var CURRENT_LEVEL = 1;
+
 var MESSAGE = null;
+var MESSAGE_CONTAINER = null;
 var MESSAGE_TIMEOUT = null;
 
 Game.start = function()
@@ -22,15 +24,34 @@ createjs.Ticker.on( 'tick', tick );
 
 Game.initMessage = function()
 {
+var canvasWidth = G.CANVAS.width;
+
+    // the text part
 MESSAGE = new createjs.Text( '', '30px monospace' );
-MESSAGE.visible = false;
 MESSAGE.textAlign = 'center';
 
-MESSAGE.x = G.CANVAS.width / 2;
-MESSAGE.y = G.CANVAS.height / 2;
+    // the background color
+var background = new createjs.Shape();
 
-G.STAGE.addChild( MESSAGE );
+var g = background.graphics;
 
+g.beginFill( 'lightblue' );
+g.drawRect( -canvasWidth / 2, 0, G.CANVAS.width, 40 );
+g.endFill();
+
+    // the container
+MESSAGE_CONTAINER = new createjs.Container();
+
+MESSAGE_CONTAINER.visible = false;
+MESSAGE_CONTAINER.addChild( background );
+MESSAGE_CONTAINER.addChild( MESSAGE );
+
+MESSAGE_CONTAINER.x = G.CANVAS.width / 2;
+MESSAGE_CONTAINER.y = G.CANVAS.height / 2;
+
+G.STAGE.addChild( MESSAGE_CONTAINER );
+
+    // the timeout that will clear the message 
 MESSAGE_TIMEOUT = new Utilities.Timeout();
 };
 
@@ -140,14 +161,14 @@ return CURRENT_LEVEL;
 Game.showMessage = function( text, timeout, callback )
 {
 MESSAGE.text = text;
-MESSAGE.visible = true;
+MESSAGE_CONTAINER.visible = true;
 
     // re-add the element so that it stays on top of other elements (z-index)
-G.STAGE.addChild( MESSAGE );
+G.STAGE.addChild( MESSAGE_CONTAINER );
 
 MESSAGE_TIMEOUT.start( function()
     {
-    MESSAGE.visible = false;
+    MESSAGE_CONTAINER.visible = false;
 
     if ( _.isFunction( callback ) )
         {
