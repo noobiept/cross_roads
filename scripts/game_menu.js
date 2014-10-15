@@ -13,19 +13,48 @@ var TIMER = null;
 
 GameMenu.init = function()
 {
-var container = document.querySelector( '#GameMenu' );
+var container = document.querySelector( '#Menu' );
 
-LIVES_ELEMENT = container.querySelector( '#Lives span' );
-LEVEL_ELEMENT = container.querySelector( '#Level span' );
-var timerElement = container.querySelector( '#Timer span' );
+    // play/stop the music
+var musicElement = container.querySelector( '#MusicState' );
+var musicElementInfo = musicElement.querySelector( 'span' );
 
+var isPlaying = true;
+musicElementInfo.innerHTML = 'On';
 
+musicElement.onclick = function()
+    {
+    isPlaying = !isPlaying;
+
+    if ( isPlaying === true )
+        {
+        musicElementInfo.innerHTML = 'On';
+        }
+
+    else
+        {
+        musicElementInfo.innerHTML = 'Off';
+        }
+
+    Game.setMusicState( isPlaying );
+    };
+
+    // restart the game
 var restart = container.querySelector( '#Restart' );
 
 restart.onclick = function()
     {
     Game.restart();
     };
+
+    // lives count
+LIVES_ELEMENT = container.querySelector( '#Lives span' );
+
+    // current level
+LEVEL_ELEMENT = container.querySelector( '#Level span' );
+
+    // timer
+var timerElement = container.querySelector( '#Timer span' );
 
 TIMER = new Utilities.Timer( timerElement );
 };

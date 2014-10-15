@@ -37,8 +37,33 @@ var manifest = [
         { id: 'happy_tune', src: BASE_URL + 'music/happy_tune.ogg' }
     ];
 
+    // add a loading message
+var loadingMessage = new createjs.Text( '', '30px monospace' );
+
+loadingMessage.textAlign = 'center';
+loadingMessage.x = G.CANVAS.width / 2;
+loadingMessage.y = G.CANVAS.height / 2;
+
+var tickFunction = createjs.Ticker.on( 'tick', function()
+    {
+    G.STAGE.update();
+    });
+
+G.STAGE.addChild( loadingMessage );
+
+
 G.PRELOAD = new createjs.LoadQueue();
 G.PRELOAD.installPlugin( createjs.Sound );
-G.PRELOAD.on( 'complete', Game.start );
+G.PRELOAD.on( 'progress', function( event )
+    {
+    loadingMessage.text = 'Loading.. ' + (event.progress * 100 | 0) + '%';
+    });
+G.PRELOAD.on( 'complete', function()
+    {
+    G.STAGE.removeChild( loadingMessage );
+    createjs.Ticker.off( 'tick', tickFunction );
+
+    Game.start();
+    });
 G.PRELOAD.loadManifest( manifest, true );
 };

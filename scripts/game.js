@@ -186,6 +186,20 @@ MESSAGE_TIMEOUT.start( function()
 };
 
 
+Game.setMusicState = function( onOff )
+{
+if ( onOff === true )
+    {
+    MUSIC.resume();
+    }
+
+else
+    {
+    MUSIC.pause();
+    }
+};
+
+
 window.Game = Game;
 
 }(window));
