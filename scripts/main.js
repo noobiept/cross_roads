@@ -32,10 +32,13 @@ var manifest = [
         { id: 'car_3', src: BASE_URL + 'images/car3.png' },
         { id: 'car_4', src: BASE_URL + 'images/car4.png' },
         { id: 'car_5', src: BASE_URL + 'images/car5.png' },
-        { id: 'car_6', src: BASE_URL + 'images/car6.png' }
+        { id: 'car_6', src: BASE_URL + 'images/car6.png' },
+
+        { id: 'happy_tune', src: BASE_URL + 'music/happy_tune.ogg' }
     ];
 
 G.PRELOAD = new createjs.LoadQueue();
+G.PRELOAD.installPlugin( createjs.Sound );
 G.PRELOAD.on( 'complete', Game.start );
 G.PRELOAD.loadManifest( manifest, true );
 };

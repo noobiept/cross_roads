@@ -13,10 +13,14 @@ var MESSAGE = null;
 var MESSAGE_CONTAINER = null;
 var MESSAGE_TIMEOUT = null;
 
+var MUSIC = null;
+
 Game.start = function()
 {
 Game.initMessage();
 Game.loadInitialLevel();
+
+MUSIC = createjs.Sound.play( 'happy_tune', null, 0, 0, -1 );
 
 GameMenu.show();
 

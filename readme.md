@@ -19,6 +19,12 @@ Images
 - [basic 2d car collection](http://opengameart.org/content/basic-2d-car-collection) (license: public domain)
 
 
+Music
+=====
+
+- [happy tune](http://opengameart.org/content/happy-tune) (license: creative commons attribution)
+
+
 Libraries
 =========
 
