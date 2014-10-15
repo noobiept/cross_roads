@@ -43,29 +43,47 @@ createjs.Tween.get( this.shape ).to( { x: canvasWidth }, travelDuration ).call( 
 
 Car.TYPES = {
     one: {
-        color: 'red',
+        image: 'car_1',
         speed: 50,
-        width: 30,
-        height: 10
+        width: 47,
+        height: 24
         },
     two: {
-        color: 'gray',
+        image: 'car_2',
+        speed: 70,
+        width: 47,
+        height: 21
+        },
+    three: {
+        image: 'car_3',
         speed: 100,
+        width: 31,
+        height: 11
+        },
+    four: {
+        image: 'car_4',
+        speed: 120,
+        width: 16,
+        height: 12
+        },
+    five: {
+        image: 'car_5',
+        speed: 60,
         width: 20,
-        height: 10
+        height: 16
+        },
+    six: {
+        image: 'car_6',
+        speed: 80,
+        width: 31,
+        height: 15
         }
 };
 
 Car.prototype.setupShape = function()
 {
-var shape = new createjs.Shape();
 var info = this.info;
-
-var g = shape.graphics;
-
-g.beginFill( info.color );
-g.drawRect( 0, 0, info.width, info.height );
-g.endFill();
+var shape = new createjs.Bitmap( G.PRELOAD.getResult( info.image ) );
 
 G.STAGE.addChild( shape );
 

@@ -25,7 +25,14 @@ var manifest = [
         { id: 'level_2', src: BASE_URL + 'levels/level2.json' },
         { id: 'level_3', src: BASE_URL + 'levels/level3.json' },
         { id: 'level_4', src: BASE_URL + 'levels/level4.json' },
-        { id: 'level_5', src: BASE_URL + 'levels/level5.json' }
+        { id: 'level_5', src: BASE_URL + 'levels/level5.json' },
+
+        { id: 'car_1', src: BASE_URL + 'images/car1.png' },
+        { id: 'car_2', src: BASE_URL + 'images/car2.png' },
+        { id: 'car_3', src: BASE_URL + 'images/car3.png' },
+        { id: 'car_4', src: BASE_URL + 'images/car4.png' },
+        { id: 'car_5', src: BASE_URL + 'images/car5.png' },
+        { id: 'car_6', src: BASE_URL + 'images/car6.png' }
     ];
 
 G.PRELOAD = new createjs.LoadQueue();

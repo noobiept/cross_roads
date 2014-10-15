@@ -13,6 +13,12 @@ Description
 - Try to finish all the levels in the shortest time.
 
 
+Images
+======
+
+- [basic 2d car collection](http://opengameart.org/content/basic-2d-car-collection) (license: public domain)
+
+
 Libraries
 =========
 

@@ -17,19 +17,19 @@
             "lane": 2
         },
         {
-            "type": "one",
+            "type": "three",
             "start_seconds": 0.5,
             "spawn_interval_seconds": 2.5,
             "lane": 3
         },
         {
-            "type": "two",
+            "type": "four",
             "start_seconds": 0.5,
             "spawn_interval_seconds": 2.5,
             "lane": 4
         },
         {
-            "type": "one",
+            "type": "five",
             "start_seconds": 2,
             "spawn_interval_seconds": 2,
             "lane": 5
