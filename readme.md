@@ -16,7 +16,6 @@ Description
 Libraries
 =========
 
-- jquery 2.1
 - createjs
     - preloadjs 0.4
     - easeljs 0.7

@@ -55,6 +55,22 @@ return TIMER;
 };
 
 
+GameMenu.show = function()
+{
+var menu = document.querySelector( '#Menu' );
+
+menu.style.display = 'block';
+};
+
+
+GameMenu.hide = function()
+{
+var menu = document.querySelector( '#Menu' );
+
+menu.style.display = 'none';
+};
+
+
 window.GameMenu = GameMenu;
 
 }(window));

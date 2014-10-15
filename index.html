@@ -4,7 +4,6 @@
         <script type="text/javascript" src="libraries/preloadjs-0.4.1.min.js"></script>
         <script type="text/javascript" src="libraries/easeljs-0.7.1.min.js"></script>
         <script type="text/javascript" src="libraries/tweenjs-0.5.1.min.js"></script>
-        <script type="text/javascript" src="libraries/jquery-2.1.0.min.js"></script>
         <script type="text/javascript" src="libraries/underscore-min.js"></script>
         <script type="text/javascript" src="libraries/utilities-1.1-min.js"></script>
 
@@ -24,17 +23,19 @@
 
     <canvas id="MainCanvas"></canvas>
 
-    <ul id="GameMenu">
-        <li id="Restart" class="button">restart</li>
-        <li id="Lives">lives: <span></span></li>
-        <li id="Level">level: <span></span></li>
-        <li id="Timer">timer: <span></span></li>
-    </ul>
+    <div id="Menu">
+        <ul id="GameMenu">
+            <li id="Restart" class="button">restart</li>
+            <li id="Lives">lives: <span></span></li>
+            <li id="Level">level: <span></span></li>
+            <li id="Timer">timer: <span></span></li>
+        </ul>
 
+        <ul id="HighScore">
+            <li id="HighScore-header">High-score:</li>
+        </ul>
+    </div>
 
-    <ul id="HighScore">
-        <li id="HighScore-header">High-score:</li>
-    </ul>
 
 </body>
 </html>

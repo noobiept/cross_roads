@@ -4,13 +4,13 @@ function Level( info )
 {
 var player = Game.getPlayer();
 
-this.start_x = G.CANVAS.width / 2 - player.width / 2;
-this.start_y = 0;
-
-player.positionIn( this.start_x, this.start_y );
-
 this.cars = [];
 this.road = new Road( info.road );
+
+this.start_x = G.CANVAS.width / 2 - player.width / 2;
+this.start_y = G.CANVAS.height / 2 - this.road.height / 2 - player.height - 5;
+
+player.positionIn( this.start_x, this.start_y );
 
     // counts the time since the level started (useful to know when to start adding the cars)
 this.count_duration = 0;

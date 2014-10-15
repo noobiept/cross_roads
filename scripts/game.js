@@ -18,6 +18,8 @@ Game.start = function()
 Game.initMessage();
 Game.loadInitialLevel();
 
+GameMenu.show();
+
 createjs.Ticker.on( 'tick', tick );
 };
 
@@ -32,11 +34,12 @@ MESSAGE.textAlign = 'center';
 
     // the background color
 var background = new createjs.Shape();
+var backgroundHeight = 40;
 
 var g = background.graphics;
 
 g.beginFill( 'lightblue' );
-g.drawRect( -canvasWidth / 2, 0, G.CANVAS.width, 40 );
+g.drawRect( -canvasWidth / 2, 0, G.CANVAS.width, backgroundHeight );
 g.endFill();
 
     // the container
@@ -47,11 +50,11 @@ MESSAGE_CONTAINER.addChild( background );
 MESSAGE_CONTAINER.addChild( MESSAGE );
 
 MESSAGE_CONTAINER.x = G.CANVAS.width / 2;
-MESSAGE_CONTAINER.y = G.CANVAS.height / 2;
+MESSAGE_CONTAINER.y = 0;
 
 G.STAGE.addChild( MESSAGE_CONTAINER );
 
-    // the timeout that will clear the message 
+    // the timeout that will clear the message
 MESSAGE_TIMEOUT = new Utilities.Timeout();
 };
 

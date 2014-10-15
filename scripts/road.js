@@ -14,9 +14,10 @@ this.container = null;
 this.lanes = info.lanes;
 this.side_walks = info.side_walks;
 this.width = G.CANVAS.width;
+this.height = this.lanes * LANE_HEIGHT;
 
 this.setupShape();
-this.positionIn( 0, 50 );
+this.positionIn( 0, G.CANVAS.height / 2 - this.height / 2 );
 }
 
     // height of each lane, as well of the side walks
