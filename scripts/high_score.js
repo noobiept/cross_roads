@@ -18,6 +18,7 @@ for (var a = 0 ; a < SAVE_LIMIT ; a++)
     {
     var li = document.createElement( 'li' );
 
+    li.className = 'value';
     ul.appendChild( li );
 
     LIST_ITEMS.push( li );
@@ -30,6 +31,12 @@ HighScore.updateHtmlElement();
 
 HighScore.add = function( value )
 {
+    // don't add repeated values
+if ( HIGH_SCORE.indexOf( value ) >= 0 )
+    {
+    return;
+    }
+
 HIGH_SCORE.push( value );
 
     // the lower the value (which represents the time it took to finish the game) the better
@@ -88,6 +95,14 @@ if ( scoreObj !== null )
     {
     HIGH_SCORE = scoreObj;
     }
+};
+
+
+HighScore.clear = function()
+{
+HIGH_SCORE.length = 0;
+
+HighScore.save();
 };
 
 

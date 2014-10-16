@@ -1,16 +1,25 @@
 #GameMenu
     {
     list-style-type: none;
+    padding: 0;
     }
 
 #GameMenu > *
     {
     display: inline-block;
+    margin: 0 10px;
     }
 
 .button
     {
     cursor: pointer;
+    background-color: rgba(255, 197, 103, 0.62);
+    padding: 0 10px;
+    }
+
+.button:hover
+    {
+    background-color: rgba(255, 233, 148, 0.82);
     }
 
 #HighScore > *
@@ -24,4 +33,10 @@
 #Menu
     {
     display: none;
+    }
+
+.value
+    {
+    color: #495edb;
+    font-weight: bold;
     }
