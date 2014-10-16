@@ -34,7 +34,16 @@ var manifest = [
         { id: 'car_5', src: BASE_URL + 'images/car5.png' },
         { id: 'car_6', src: BASE_URL + 'images/car6.png' },
 
-        { id: 'happy_tune', src: BASE_URL + 'music/happy_tune.ogg' }
+        { id: 'happy_tune', src: BASE_URL + 'music/happy_tune.ogg' },
+
+        { id: 'player_1', src: BASE_URL + 'images/player1.png' },
+        { id: 'player_2', src: BASE_URL + 'images/player2.png' },
+        { id: 'player_3', src: BASE_URL + 'images/player3.png' },
+        { id: 'player_4', src: BASE_URL + 'images/player4.png' },
+        { id: 'player_5', src: BASE_URL + 'images/player5.png' },
+        { id: 'player_6', src: BASE_URL + 'images/player6.png' },
+        { id: 'player_7', src: BASE_URL + 'images/player7.png' },
+        { id: 'player_8', src: BASE_URL + 'images/player8.png' }
     ];
 
     // add a loading message

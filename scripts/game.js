@@ -121,6 +121,7 @@ if ( levelInfo !== null )
     LEVEL = new Level( levelInfo );
     GameMenu.setLevel( CURRENT_LEVEL );
 
+    PLAYER.getNewRandomShape();
     PLAYER.bringToTop();
 
     Game.showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
@@ -128,9 +129,11 @@ if ( levelInfo !== null )
 
 else
     {
-    HighScore.add( GameMenu.getTimer().getTimeSeconds() );
+    var timer = GameMenu.getTimer();
+
+    HighScore.add( timer.getTimeSeconds() );
     Game.clear();
-    Game.showMessage( 'You Win!', 2000, function() { Game.loadInitialLevel(); } );
+    Game.showMessage( 'You Win! ' + timer.getTimeString(), 2000, function() { Game.loadInitialLevel(); } );
     }
 };
 

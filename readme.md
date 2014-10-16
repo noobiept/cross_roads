@@ -16,7 +16,8 @@ Description
 Images
 ======
 
-- [basic 2d car collection](http://opengameart.org/content/basic-2d-car-collection) (license: public domain)
+- [cars](http://opengameart.org/content/basic-2d-car-collection) (license: public domain)
+- [player](http://opengameart.org/content/30-sprites-made-in-30-minutes) (license: public domain)
 
 
 Music

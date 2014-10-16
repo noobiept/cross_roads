@@ -3,8 +3,8 @@
 function Player()
 {
 this.shape = null;
-this.width = 20;
-this.height = 20;
+this.width = 15;
+this.height = 15;
 this.movement_step = 10;
 this.movement_animation = 100;  // ease duration
 this.lives = 5;
@@ -12,20 +12,25 @@ this.lives = 5;
 this.setupShape();
 }
 
+
 Player.prototype.setupShape = function()
 {
-var shape = new createjs.Shape();
-
-var g = shape.graphics;
-
-g.beginFill( 'blue' );
-g.drawRect( 0, 0, this.width, this.height );
-g.endFill();
-
-G.STAGE.addChild( shape );
+var shape = new createjs.Bitmap();
 
 this.shape = shape;
+
+this.getNewRandomShape();
+
+G.STAGE.addChild( shape );
 };
+
+Player.prototype.getNewRandomShape = function()
+{
+var position = Utilities.getRandomInt( 1, 8 );
+
+this.shape.image = G.PRELOAD.getResult( 'player_' + position );
+};
+
 
 Player.prototype.positionIn = function( x, y )
 {
