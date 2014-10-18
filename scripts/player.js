@@ -7,7 +7,7 @@ this.width = 15;
 this.height = 15;
 this.movement_step = 10;
 this.movement_animation = 100;  // ease duration
-this.lives = 5;
+this.lives = 10;
 
 this.setupShape();
 }

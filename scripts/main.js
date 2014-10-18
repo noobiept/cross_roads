@@ -10,7 +10,7 @@ window.onload = function()
 {
 G.CANVAS = document.querySelector( '#MainCanvas' );
 G.CANVAS.width = 600;
-G.CANVAS.height = 500;
+G.CANVAS.height = 600;
 
 G.STAGE = new createjs.Stage( G.CANVAS );
 
@@ -26,6 +26,21 @@ var manifest = [
         { id: 'level_3', src: BASE_URL + 'levels/level3.json' },
         { id: 'level_4', src: BASE_URL + 'levels/level4.json' },
         { id: 'level_5', src: BASE_URL + 'levels/level5.json' },
+        { id: 'level_6', src: BASE_URL + 'levels/level6.json' },
+        { id: 'level_7', src: BASE_URL + 'levels/level7.json' },
+        { id: 'level_8', src: BASE_URL + 'levels/level8.json' },
+        { id: 'level_9', src: BASE_URL + 'levels/level9.json' },
+        { id: 'level_10', src: BASE_URL + 'levels/level10.json' },
+        { id: 'level_11', src: BASE_URL + 'levels/level11.json' },
+        { id: 'level_12', src: BASE_URL + 'levels/level12.json' },
+        { id: 'level_13', src: BASE_URL + 'levels/level13.json' },
+        { id: 'level_14', src: BASE_URL + 'levels/level14.json' },
+        { id: 'level_15', src: BASE_URL + 'levels/level15.json' },
+        { id: 'level_16', src: BASE_URL + 'levels/level16.json' },
+        { id: 'level_17', src: BASE_URL + 'levels/level17.json' },
+        { id: 'level_18', src: BASE_URL + 'levels/level18.json' },
+        { id: 'level_19', src: BASE_URL + 'levels/level19.json' },
+        { id: 'level_20', src: BASE_URL + 'levels/level20.json' },
 
         { id: 'car_1', src: BASE_URL + 'images/car1.png' },
         { id: 'car_2', src: BASE_URL + 'images/car2.png' },
