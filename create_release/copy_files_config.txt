@@ -1,0 +1,21 @@
+{
+    "resultingFolder": "cross_roads",
+    "basePath": "..",
+    "files":
+        [
+            "css/",
+            "images/",
+            "levels",
+            "libraries/",
+            "music/",
+            "manifest.json"
+        ],
+    "extensions":
+        [
+            ".css",
+            ".png",
+            ".js",
+            ".json",
+            ".ogg"
+        ]
+}
