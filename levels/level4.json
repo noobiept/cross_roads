@@ -1,31 +1,31 @@
 {
     "road": {
         "lanes": 6,
-        "side_walks": [ 0, 6 ]
+        "side_walks": [ 0, 5 ]
     },
     "cars": [
         {
             "type": "two",
             "start_seconds": 0,
-            "spawn_interval_seconds": 2,
+            "spawn_interval_seconds": 2.4,
             "lane": 1
         },
         {
             "type": "one",
             "start_seconds": 0,
-            "spawn_interval_seconds": 2,
+            "spawn_interval_seconds": 2.9,
             "lane": 2
         },
         {
             "type": "two",
-            "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "start_seconds": 1,
+            "spawn_interval_seconds": 2.4,
             "lane": 3
         },
         {
             "type": "one",
-            "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "start_seconds": 1.5,
+            "spawn_interval_seconds": 2.9,
             "lane": 4
         }
     ]

@@ -7,67 +7,67 @@
         {
             "type": "three",
             "start_seconds": 0,
-            "spawn_interval_seconds": 2,
+            "spawn_interval_seconds": 1.6,
             "lane": 1
         },
         {
             "type": "six",
-            "start_seconds": 0,
+            "start_seconds": 1,
             "spawn_interval_seconds": 2,
             "lane": 2
         },
         {
             "type": "two",
             "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "spawn_interval_seconds": 2.1,
             "lane": 3
         },
         {
             "type": "five",
             "start_seconds": 1.5,
-            "spawn_interval_seconds": 2.5,
+            "spawn_interval_seconds": 2.4,
             "lane": 4
         },
         {
             "type": "one",
             "start_seconds": 2,
-            "spawn_interval_seconds": 2,
+            "spawn_interval_seconds": 2.6,
             "lane": 5
         },
         {
             "type": "four",
             "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "spawn_interval_seconds": 1.5,
             "lane": 6
         },
         {
             "type": "three",
-            "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "start_seconds": 1,
+            "spawn_interval_seconds": 1.6,
             "lane": 8
         },
         {
             "type": "two",
             "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "spawn_interval_seconds": 2.1,
             "lane": 9
         },
         {
             "type": "six",
             "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "spawn_interval_seconds": 2,
             "lane": 10
         },
         {
             "type": "one",
             "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "spawn_interval_seconds": 2.6,
             "lane": 11
         },
         {
             "type": "five",
             "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "spawn_interval_seconds": 2.4,
             "lane": 12
         }
     ]

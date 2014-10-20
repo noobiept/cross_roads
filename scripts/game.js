@@ -104,13 +104,25 @@ Game.showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
 };
 
 
+/**
+    @param {Number} [levelPosition] - The level number to load. Otherwise it loads the next level.
+ */
 
-Game.nextLevel = function()
+Game.nextLevel = function( levelPosition )
 {
 LEVEL.clear();
 LEVEL = null;
 
-CURRENT_LEVEL++;
+if ( typeof levelPosition === 'undefined' )
+    {
+    CURRENT_LEVEL++;
+    }
+
+else
+    {
+    CURRENT_LEVEL = levelPosition;
+    }
+
 
 var next = 'level_' + CURRENT_LEVEL;
 

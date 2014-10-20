@@ -7,37 +7,37 @@
         {
             "type": "three",
             "start_seconds": 0,
-            "spawn_interval_seconds": 2,
+            "spawn_interval_seconds": 1.8,
             "lane": 1
         },
         {
             "type": "two",
             "start_seconds": 0,
-            "spawn_interval_seconds": 2,
+            "spawn_interval_seconds": 2.3,
             "lane": 2
         },
         {
             "type": "one",
             "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "spawn_interval_seconds": 2.8,
             "lane": 3
         },
         {
             "type": "one",
             "start_seconds": 1.5,
-            "spawn_interval_seconds": 3,
+            "spawn_interval_seconds": 2.8,
             "lane": 4
         },
         {
             "type": "two",
-            "start_seconds": 2,
-            "spawn_interval_seconds": 2,
+            "start_seconds": 1.5,
+            "spawn_interval_seconds": 2.3,
             "lane": 5
         },
         {
             "type": "three",
-            "start_seconds": 0.5,
-            "spawn_interval_seconds": 2.5,
+            "start_seconds": 1,
+            "spawn_interval_seconds": 1.8,
             "lane": 6
         }
     ]

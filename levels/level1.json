@@ -13,13 +13,13 @@
         {
             "type": "two",
             "start_seconds": 0,
-            "spawn_interval_seconds": 2,
+            "spawn_interval_seconds": 2.5,
             "lane": 3
         },
         {
             "type": "one",
-            "start_seconds": 1,
-            "spawn_interval_seconds": 2.5,
+            "start_seconds": 1.5,
+            "spawn_interval_seconds": 3,
             "lane": 4
         }
     ]

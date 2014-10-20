@@ -5,7 +5,7 @@ function Player()
 this.shape = null;
 this.width = 15;
 this.height = 15;
-this.movement_step = 10;
+this.movement_step = 11;
 this.movement_animation = 100;  // ease duration
 this.lives = 10;
 

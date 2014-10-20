@@ -62,7 +62,7 @@ Car.TYPES = {
         },
     four: {
         image: 'car_4',
-        speed: 120,
+        speed: 130,
         width: 16,
         height: 12
         },
