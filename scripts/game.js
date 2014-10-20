@@ -22,6 +22,11 @@ Game.loadInitialLevel();
 
 MUSIC = createjs.Sound.play( 'happy_tune', null, 0, 0, -1 );
 
+if ( Options.getMusicState() === false )
+    {
+    MUSIC.pause();
+    }
+
 GameMenu.show();
 
 createjs.Ticker.on( 'tick', tick );
@@ -212,6 +217,8 @@ else
     {
     MUSIC.pause();
     }
+
+Options.setMusicState( onOff );
 };
 
 

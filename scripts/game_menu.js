@@ -19,22 +19,26 @@ var container = document.querySelector( '#Menu' );
 var musicElement = container.querySelector( '#MusicState' );
 var musicElementInfo = musicElement.querySelector( 'span' );
 
-var isPlaying = true;
-musicElementInfo.innerHTML = 'On';
+var booleanToStr = function( boolValue )
+    {
+    if ( boolValue === true )
+        {
+        return 'On';
+        }
+
+    return 'Off';
+    };
+
+var isPlaying = Options.getMusicState();
+
+musicElementInfo.innerHTML = booleanToStr( isPlaying );
+
 
 musicElement.onclick = function()
     {
     isPlaying = !isPlaying;
 
-    if ( isPlaying === true )
-        {
-        musicElementInfo.innerHTML = 'On';
-        }
-
-    else
-        {
-        musicElementInfo.innerHTML = 'Off';
-        }
+    musicElementInfo.innerHTML = booleanToStr( isPlaying );
 
     Game.setMusicState( isPlaying );
     };
@@ -58,6 +62,7 @@ var timerElement = container.querySelector( '#Timer span' );
 
 TIMER = new Utilities.Timer( timerElement );
 };
+
 
 
 GameMenu.setLives = function( lives )

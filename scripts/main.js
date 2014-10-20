@@ -16,6 +16,7 @@ G.STAGE = new createjs.Stage( G.CANVAS );
 
 createjs.Ticker.setFPS( 60 );
 
+Options.load();
 GameMenu.init();
 HighScore.init();
 Keyboard.init();
@@ -91,3 +92,4 @@ G.PRELOAD.on( 'complete', function()
     });
 G.PRELOAD.loadManifest( manifest, true );
 };
+

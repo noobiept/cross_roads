@@ -1,13 +1,6 @@
-#GameMenu
+body
     {
-    list-style-type: none;
-    padding: 0;
-    }
-
-#GameMenu > *
-    {
-    display: inline-block;
-    margin: 0 10px;
+    background-color: rgb(250, 250, 250);
     }
 
 .button
@@ -22,6 +15,39 @@
     background-color: rgba(255, 233, 148, 0.82);
     }
 
+.value
+    {
+    color: #495edb;
+    font-weight: bold;
+    }
+
+#MainCanvas
+    {
+    margin: auto;
+    padding: 0;
+    display: block;
+    }
+
+    /* Menu */
+
+#Menu
+    {
+    display: none;
+    text-align: center;
+    }
+
+#GameMenu
+    {
+    list-style-type: none;
+    padding: 0;
+    }
+
+#GameMenu > *
+    {
+    display: inline-block;
+    margin: 0 10px;
+    }
+
 #HighScore > *
     {
     display: inline-block;
@@ -30,13 +56,7 @@
     padding: 0 5px;
     }
 
-#Menu
+#HighScore > .value:nth-child(odd)
     {
-    display: none;
-    }
-
-.value
-    {
-    color: #495edb;
-    font-weight: bold;
+    color: #db4060;
     }
