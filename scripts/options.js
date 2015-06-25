@@ -16,7 +16,7 @@ var options = Utilities.getObject( 'options' );
 
 if ( options !== null )
     {
-    if ( _.isBoolean( options.music_state ) )
+    if ( Utilities.isBoolean( options.music_state ) )
         {
         OPTIONS.music_state = options.music_state;
         }

@@ -30,8 +30,8 @@ Libraries
 =========
 
 - createjs
-    - preloadjs 0.4
-    - easeljs 0.7
-    - tweenjs 0.5
-- underscorejs 1.7
-- utilities 1.1
+    - preloadjs -- 0.6
+    - easeljs -- 0.8
+    - tweenjs -- 0.6
+    - soundjs -- 0.6
+- utilities -- 1.8

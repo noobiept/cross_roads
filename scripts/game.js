@@ -24,7 +24,7 @@ MUSIC = createjs.Sound.play( 'happy_tune', null, 0, 0, -1 );
 
 if ( Options.getMusicState() === false )
     {
-    MUSIC.pause();
+    MUSIC.stop();
     }
 
 GameMenu.show();
@@ -197,7 +197,7 @@ MESSAGE_TIMEOUT.start( function()
     {
     MESSAGE_CONTAINER.visible = false;
 
-    if ( _.isFunction( callback ) )
+    if ( Utilities.isFunction( callback ) )
         {
         callback();
         }
@@ -210,12 +210,12 @@ Game.setMusicState = function( onOff )
 {
 if ( onOff === true )
     {
-    MUSIC.resume();
+    MUSIC.play();
     }
 
 else
     {
-    MUSIC.pause();
+    MUSIC.stop();
     }
 
 Options.setMusicState( onOff );
