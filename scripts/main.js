@@ -19,7 +19,7 @@ G.CANVAS.height = 600;
 
 G.STAGE = new createjs.Stage( G.CANVAS );
 
-createjs.Ticker.setFPS( 60 );
+createjs.Ticker.timingMode = createjs.Ticker.RAF;
 createjs.Sound.alternateExtensions = [ 'mp3' ];
 
 Options.load( data[ 'cross_roads_options' ] );
