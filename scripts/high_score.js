@@ -9,7 +9,7 @@ var HIGH_SCORE = [];
 var SAVE_LIMIT = 5;     // how many scores to local storage
 var LIST_ITEMS = [];
 
-HighScore.init = function()
+HighScore.init = function( scoreData )
 {
 var ul = document.querySelector( '#HighScore' );
 
@@ -24,7 +24,11 @@ for (var a = 0 ; a < SAVE_LIMIT ; a++)
     LIST_ITEMS.push( li );
     }
 
-HighScore.load();
+if ( scoreData )
+    {
+    HIGH_SCORE = scoreData;
+    }
+
 HighScore.updateHtmlElement();
 };
 
@@ -80,21 +84,9 @@ for (var a = 0 ; a < SAVE_LIMIT ; a++)
 };
 
 
-
 HighScore.save = function()
 {
-Utilities.saveObject( 'cross_roads_high_score', HIGH_SCORE );
-};
-
-
-HighScore.load = function()
-{
-var scoreObj = Utilities.getObject( 'cross_roads_high_score' );
-
-if ( scoreObj !== null )
-    {
-    HIGH_SCORE = scoreObj;
-    }
+AppStorage.setData( { cross_roads_high_score: HIGH_SCORE } );
 };
 
 

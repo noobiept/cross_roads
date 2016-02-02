@@ -7,6 +7,12 @@ var G = {
 
 window.onload = function()
 {
+AppStorage.getData( [ 'cross_roads_high_score', 'cross_roads_options' ], initApp );
+};
+
+
+function initApp( data )
+{
 G.CANVAS = document.querySelector( '#MainCanvas' );
 G.CANVAS.width = 600;
 G.CANVAS.height = 600;
@@ -16,9 +22,9 @@ G.STAGE = new createjs.Stage( G.CANVAS );
 createjs.Ticker.setFPS( 60 );
 createjs.Sound.alternateExtensions = [ 'mp3' ];
 
-Options.load();
+Options.load( data[ 'cross_roads_options' ] );
 GameMenu.init();
-HighScore.init();
+HighScore.init( data[ 'cross_roads_high_score' ] );
 Keyboard.init();
 
 var manifest = [

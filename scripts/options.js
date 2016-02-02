@@ -10,15 +10,13 @@ var OPTIONS = {
     };
 
 
-Options.load = function()
+Options.load = function( optionsData )
 {
-var options = Utilities.getObject( 'options' );
-
-if ( options !== null )
+if ( optionsData )
     {
-    if ( Utilities.isBoolean( options.music_state ) )
+    if ( Utilities.isBoolean( optionsData.music_state ) )
         {
-        OPTIONS.music_state = options.music_state;
+        OPTIONS.music_state = optionsData.music_state;
         }
     }
 };
@@ -26,7 +24,7 @@ if ( options !== null )
 
 Options.save = function()
 {
-Utilities.saveObject( 'options', OPTIONS );
+AppStorage.setData( { cross_roads_options: OPTIONS } );
 };
 
 
