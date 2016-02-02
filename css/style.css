@@ -3,6 +3,16 @@ body
     background-color: rgb(250, 250, 250);
     }
 
+ul
+    {
+    list-style-type: none;
+    }
+
+h4
+    {
+    color: #495edb;
+    }
+
 .button
     {
     cursor: pointer;
@@ -26,6 +36,22 @@ body
     margin: auto;
     padding: 0;
     display: block;
+    }
+
+#Help
+    {
+    display: none;
+    text-align: center;
+    }
+
+#Help.show
+    {
+    display: block;
+    }
+
+#HelpStartGame
+    {
+    display: inline-block;
     }
 
     /* Menu */

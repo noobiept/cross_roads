@@ -7,7 +7,7 @@ var G = {
 
 window.onload = function()
 {
-AppStorage.getData( [ 'cross_roads_high_score', 'cross_roads_options' ], initApp );
+AppStorage.getData( [ 'cross_roads_high_score', 'cross_roads_options', 'cross_roads_has_run_before' ], initApp );
 };
 
 
@@ -92,9 +92,29 @@ G.PRELOAD.on( 'progress', function( event )
 G.PRELOAD.on( 'complete', function()
     {
     G.STAGE.removeChild( loadingMessage );
+    G.STAGE.update();
     createjs.Ticker.off( 'tick', tickFunction );
 
-    Game.start();
+        // show the help page on the first run of the game
+    if ( !data[ 'cross_roads_has_run_before' ] )
+        {
+        AppStorage.setData( { cross_roads_has_run_before: true } );
+
+        var help = document.getElementById( 'Help' );
+        help.className = 'show';
+
+        var start = document.getElementById( 'HelpStartGame' );
+        start.onclick = function()
+            {
+            help.className = '';
+            Game.start();
+            }
+        }
+
+    else
+        {
+        Game.start();
+        }
     });
 G.PRELOAD.loadManifest( manifest, true );
 };

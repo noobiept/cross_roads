@@ -13,6 +13,12 @@ Description
 - Try to finish all the levels in the shortest time.
 
 
+Controls
+========
+
+Use the arrow keys (or wasd keys) to control the player movement.
+
+
 Images
 ======
 
