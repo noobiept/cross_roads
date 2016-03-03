@@ -1,3 +1,5 @@
+/*global Game, Road, G, Car, Utilities*/
+
 (function(window)
 {
 function Level( info )
@@ -85,6 +87,7 @@ this.count_duration += delta;
 
 var a;
 var info;
+var car;
 
     // check if we need to activate any car info
 for (a = this.cars_info.length - 1 ; a >= 0 ; a--)
@@ -96,7 +99,7 @@ for (a = this.cars_info.length - 1 ; a >= 0 ; a--)
         this.active_cars_info.push( info );
         this.cars_info.splice( a, 1 );
 
-        var car = new Car({
+        car = new Car({
             y: this.road.laneToY( info.lane ),
             type: info.type,
             level: this
@@ -115,7 +118,7 @@ for (a = 0 ; a < this.active_cars_info.length ; a++)
 
     if ( info.count >= info.spawn_interval_seconds )
         {
-        var car = new Car({
+        car = new Car({
             y: this.road.laneToY( info.lane ),
             type: info.type,
             level: this

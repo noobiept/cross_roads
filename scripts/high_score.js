@@ -1,3 +1,5 @@
+/*global Utilities, AppStorage*/
+
 (function(window)
 {
 function HighScore()

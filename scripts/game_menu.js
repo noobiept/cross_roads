@@ -1,3 +1,5 @@
+/*global Options, Game, Utilities*/
+
 (function(window)
 {
 function GameMenu()

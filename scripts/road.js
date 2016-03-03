@@ -1,3 +1,5 @@
+/*global G, createjs*/
+
 (function(window)
 {
 /*
@@ -28,7 +30,7 @@ Road.prototype.setupShape = function()
 {
 var container = new createjs.Container();
 
-var g;
+var g, a;
 var linesColor = 'black';
 var sideWalkColor = 'gray';
 var lineHeight = 1;
@@ -37,7 +39,7 @@ var width = G.CANVAS.width;
 
     // :: Side walks :: //
 
-for (var a = 0 ; a < this.side_walks.length ; a++)
+for (a = 0 ; a < this.side_walks.length ; a++)
     {
     var sideWalk = new createjs.Shape();
 
@@ -60,7 +62,7 @@ var middleLineLength = 20;
 var lengthBetweenLines = middleLineLength / 2;
 
 
-for (var a = 0 ; a < this.lanes ; a++)
+for (a = 0 ; a < this.lanes ; a++)
     {
         // see if the next lane is not a sidewalk
         // that means we need to add a middle line

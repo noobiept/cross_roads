@@ -1,3 +1,5 @@
+/*global createjs, G, Utilities, GameMenu, Keyboard*/
+
 (function(window)
 {
 function Player()

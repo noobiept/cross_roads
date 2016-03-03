@@ -8,6 +8,13 @@ var dest = '../release/<%= pkg.name %> <%= pkg.version %>/';
 grunt.initConfig({
         pkg: grunt.file.readJSON( 'package.json' ),
 
+        eslint: {
+            options: {
+                configFile: root + '.eslintrc.js'
+            },
+            target: [ root + 'scripts/**' ]
+        },
+
             // delete the destination folder
         clean: {
             options: {
@@ -80,6 +87,7 @@ grunt.initConfig({
 
 
     // load the plugins
+grunt.loadNpmTasks( 'grunt-eslint' );
 grunt.loadNpmTasks( 'grunt-contrib-copy' );
 grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
@@ -87,5 +95,5 @@ grunt.loadNpmTasks( 'grunt-contrib-clean' );
 grunt.loadNpmTasks( 'grunt-processhtml' );
 
     // tasks
-grunt.registerTask( 'default', [ 'clean', 'copy', 'uglify', 'cssmin', 'processhtml' ] );
+grunt.registerTask( 'default', [ 'eslint', 'clean', 'copy', 'uglify', 'cssmin', 'processhtml' ] );
 };

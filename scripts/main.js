@@ -1,3 +1,5 @@
+/*global AppStorage, createjs, Options, GameMenu, HighScore, Keyboard, Game*/
+
 var G = {
     CANVAS: null,
     STAGE: null,
@@ -108,7 +110,7 @@ G.PRELOAD.on( 'complete', function()
             {
             help.className = '';
             Game.start();
-            }
+            };
         }
 
     else
@@ -117,5 +119,4 @@ G.PRELOAD.on( 'complete', function()
         }
     });
 G.PRELOAD.loadManifest( manifest, true );
-};
-
+}

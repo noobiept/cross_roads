@@ -1,3 +1,5 @@
+/*global G, createjs*/
+
 (function(window)
 {
 /*

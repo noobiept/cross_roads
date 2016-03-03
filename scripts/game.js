@@ -1,3 +1,5 @@
+/*global createjs, Options, GameMenu, G, Utilities, Keyboard, Player, Level, HighScore*/
+
 (function(window)
 {
 function Game()
