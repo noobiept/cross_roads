@@ -16,6 +16,7 @@ h4
 .button
     {
     cursor: pointer;
+    color: black;
     background-color: rgba(255, 197, 103, 0.62);
     padding: 0 10px;
     }

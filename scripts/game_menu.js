@@ -47,10 +47,16 @@ musicElement.onclick = function()
 
     // restart the game
 var restart = container.querySelector( '#Restart' );
-
 restart.onclick = function()
     {
     Game.restart();
+    };
+
+    // donate button
+var donate = container.querySelector( '#Donate' );
+donate.onclick = function()
+    {
+    window.open( 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UQ6ZF2JKUC626', '_blank' );
     };
 
     // lives count
