@@ -56,7 +56,7 @@ restart.onclick = function()
 var donate = container.querySelector( '#Donate' );
 donate.onclick = function()
     {
-    window.open( 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UQ6ZF2JKUC626', '_blank' );
+    window.open( 'http://nbpt.eu/donate/', '_blank' );
     };
 
     // lives count
