@@ -32,12 +32,6 @@ Music
 - [happy tune](http://opengameart.org/content/happy-tune) (license: creative commons attribution)
 
 
-Libraries
-=========
+# Commands #
 
-- createjs
-    - preloadjs -- 0.6
-    - easeljs -- 0.8
-    - tweenjs -- 0.6
-    - soundjs -- 0.6
-- utilities -- 1.8
+- `npm run dev`: Build the game and start a local server (at `localhost:8000/`).
