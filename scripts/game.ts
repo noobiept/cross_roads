@@ -78,7 +78,7 @@ loadInitialLevel();
 }
 
 
-function clear()
+export function clear()
 {
 if ( LEVEL )
     {
@@ -98,7 +98,7 @@ CURRENT_LEVEL = 1;
 }
 
 
-function loadInitialLevel()
+export function loadInitialLevel()
 {
 PLAYER = new Player();
 LEVEL = new Level( G.PRELOAD.getResult( 'level_1' ) );
@@ -115,7 +115,7 @@ showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
 /**
  * @param levelPosition - The level number to load. Otherwise it loads the next level.
  */
-export function nextLevel( levelPosition: number )
+export function nextLevel( levelPosition?: number )
 {
 LEVEL.clear();
 LEVEL = null;

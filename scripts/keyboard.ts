@@ -1,14 +1,5 @@
-/*global Utilities*/
-
-(function(window)
-{
-function Keyboard()
-{
-
-}
-
     // keys state (being pressed or not)
-var KEYS_HELD = {
+export var KEYS_HELD = {
     up: false,
     down: false,
     left: false,
@@ -16,23 +7,23 @@ var KEYS_HELD = {
 };
 
 
-Keyboard.init = function()
+export function init()
 {
 window.addEventListener( 'keydown', handleKeyDown, false );
 window.addEventListener( 'keyup', handleKeyUp, false );
-};
+}
 
 
-Keyboard.clearKeysHeld = function()
+export function clearKeysHeld()
 {
 KEYS_HELD.up = false;
 KEYS_HELD.down = false;
 KEYS_HELD.left = false;
 KEYS_HELD.right = false;
-};
+}
 
 
-function handleKeyDown( event )
+function handleKeyDown( event: KeyboardEvent )
 {
 switch( event.keyCode )
     {
@@ -63,7 +54,7 @@ switch( event.keyCode )
 }
 
 
-function handleKeyUp( event )
+function handleKeyUp( event: KeyboardEvent )
 {
 switch( event.keyCode )
     {
@@ -93,10 +84,3 @@ switch( event.keyCode )
     }
 }
 
-
-Keyboard.KEYS_HELD = KEYS_HELD;
-
-
-window.Keyboard = Keyboard;
-
-}(window));

@@ -1,8 +1,41 @@
-/*global Game, Road, G, Car, Utilities*/
+import * as Game from './game.js';
+import Car from './car.js';
+import Road from './road.js';
+import Player from './player.js';
+import { G } from './main.js';
 
-(function(window)
-{
-function Level( info )
+
+export interface CarsInfo {
+    type: "one" | "two" | "three" | "four" | "five" | "six",
+    start_seconds: number;
+    spawn_interval_seconds: number;
+    lane: number;
+}
+
+
+export interface LevelInfo {
+    road: {
+        lanes: number;
+        side_walks: number[];
+    },
+    cars: CarsInfo[]
+}
+
+
+export default class Level {
+
+    cars: Car[];
+    road: Road;
+    start_x: number;
+    start_y: number;
+    destination_y: number;
+    count_duration: number;
+    cars_info: CarsInfo[];
+    active_cars_info: CarsInfo[];
+    player: Player;
+
+
+constructor( info: LevelInfo )
 {
 var player = Game.getPlayer();
 
@@ -58,15 +91,15 @@ this.player = player;
 }
 
 
-Level.prototype.newLife = function()
+newLife()
 {
 this.player.positionIn( this.start_x, this.start_y );
 
 return this.player.oneLessLife();
-};
+}
 
 
-Level.prototype.clear = function()
+clear()
 {
 for (var a = 0 ; a < this.cars.length ; a++)
     {
@@ -77,10 +110,10 @@ this.cars.length = 0;
 this.count_duration = 0;
 
 this.road.clear();
-};
+}
 
 
-Level.prototype.tick = function( event )
+tick( event: createjs.TickerEvent )
 {
 var delta = event.delta / 1000;  // in seconds
 this.count_duration += delta;
@@ -160,7 +193,7 @@ if ( this.player.getY() > this.destination_y )
     Check collisions between the player and a car
  */
 
-Level.prototype.checkCollisions = function()
+checkCollisions()
 {
 var player = this.player;
 var cars = this.cars;
@@ -186,19 +219,15 @@ for (var a = 0 ; a < cars.length ; a++)
     }
 
 return false;
-};
+}
 
 
-Level.prototype.removeCar = function( car )
+removeCar( car: Car )
 {
 var index = this.cars.indexOf( car );
-
 this.cars.splice( index, 1 );
 
 car.clear();
-};
+}
 
-
-window.Level = Level;
-
-}(window));
+}
