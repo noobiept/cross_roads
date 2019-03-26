@@ -1,26 +1,27 @@
-/*global createjs, Options, GameMenu, G, Utilities, Keyboard, Player, Level, HighScore*/
+import * as GameMenu from './game_menu.js';
+import * as Options from './options.js';
+import * as HighScore from './high_score.js';
+import * as Keyboard from './keyboard.js';
+import Level from './level.js';
+import Player from './player.js';
+import { G } from './main.js';
 
-(function(window)
-{
-function Game()
-{
 
-}
-
-var PLAYER = null;
-var LEVEL = null;
+var PLAYER: Player | null = null;
+var LEVEL: Level | null = null;
 var CURRENT_LEVEL = 1;
 
-var MESSAGE = null;
-var MESSAGE_CONTAINER = null;
-var MESSAGE_TIMEOUT = null;
+var MESSAGE: createjs.Text;
+var MESSAGE_CONTAINER: createjs.Container;
+var MESSAGE_TIMEOUT: Utilities.Timeout;
 
-var MUSIC = null;
+var MUSIC: createjs.AbstractSoundInstance;
 
-Game.start = function()
+
+export function start()
 {
-Game.initMessage();
-Game.loadInitialLevel();
+initMessage();
+loadInitialLevel();
 
 MUSIC = createjs.Sound.play( 'happy_tune', null, 0, 0, -1 );
 
@@ -31,11 +32,11 @@ if ( Options.getMusicState() === false )
 
 GameMenu.show();
 
-createjs.Ticker.on( 'tick', tick );
-};
+createjs.Ticker.on( 'tick', tick as (event: Object) => void );
+}
 
 
-Game.initMessage = function()
+function initMessage()
 {
 var canvasWidth = G.CANVAS.width;
 
@@ -67,17 +68,17 @@ G.STAGE.addChild( MESSAGE_CONTAINER );
 
     // the timeout that will clear the message
 MESSAGE_TIMEOUT = new Utilities.Timeout();
-};
+}
 
 
-Game.restart = function()
+export function restart()
 {
-Game.clear();
-Game.loadInitialLevel();
-};
+clear();
+loadInitialLevel();
+}
 
 
-Game.clear = function()
+function clear()
 {
 if ( LEVEL )
     {
@@ -94,10 +95,10 @@ if ( PLAYER )
 Keyboard.clearKeysHeld();
 
 CURRENT_LEVEL = 1;
-};
+}
 
 
-Game.loadInitialLevel = function()
+function loadInitialLevel()
 {
 PLAYER = new Player();
 LEVEL = new Level( G.PRELOAD.getResult( 'level_1' ) );
@@ -107,15 +108,14 @@ CURRENT_LEVEL = 1;
 
 GameMenu.startGame();
 
-Game.showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
-};
+showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
+}
 
 
 /**
-    @param {Number} [levelPosition] - The level number to load. Otherwise it loads the next level.
+ * @param levelPosition - The level number to load. Otherwise it loads the next level.
  */
-
-Game.nextLevel = function( levelPosition )
+export function nextLevel( levelPosition: number )
 {
 LEVEL.clear();
 LEVEL = null;
@@ -143,7 +143,7 @@ if ( levelInfo !== null )
     PLAYER.getNewRandomShape();
     PLAYER.bringToTop();
 
-    Game.showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
+    showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
     }
 
 else
@@ -151,14 +151,14 @@ else
     var timer = GameMenu.getTimer();
 
     HighScore.add( timer.getTimeSeconds() );
-    Game.clear();
-    Game.showMessage( 'You Win! ' + timer.getTimeString(), 2000, function() { Game.loadInitialLevel(); } );
+    clear();
+    showMessage( 'You Win! ' + timer.getTimeString(), 2000, function() { loadInitialLevel(); } );
     }
 };
 
 
 
-function tick( event )
+function tick( event: createjs.TickerEvent )
 {
 if ( LEVEL )
     {
@@ -175,19 +175,19 @@ G.STAGE.update();
 }
 
 
-Game.getPlayer = function()
+export function getPlayer()
 {
 return PLAYER;
-};
+}
 
 
-Game.getCurrentLevel = function()
+export function getCurrentLevel()
 {
 return CURRENT_LEVEL;
-};
+}
 
 
-Game.showMessage = function( text, timeout, callback )
+export function showMessage( text: string, timeout: number, callback?: () => void )
 {
 MESSAGE.text = text;
 MESSAGE_CONTAINER.visible = true;
@@ -201,14 +201,14 @@ MESSAGE_TIMEOUT.start( function()
 
     if ( Utilities.isFunction( callback ) )
         {
-        callback();
+        callback!();
         }
 
     }, timeout );
-};
+}
 
 
-Game.setMusicState = function( onOff )
+export function setMusicState( onOff: boolean )
 {
 if ( onOff === true )
     {
@@ -221,9 +221,4 @@ else
     }
 
 Options.setMusicState( onOff );
-};
-
-
-window.Game = Game;
-
-}(window));
+}

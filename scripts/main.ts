@@ -11,7 +11,7 @@ interface Global {
     PRELOAD: createjs.LoadQueue;
 }
 
-var G: Global = {};
+export var G: Global = {};
 
 
 window.onload = function()
