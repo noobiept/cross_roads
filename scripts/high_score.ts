@@ -1,13 +1,8 @@
-/*global Utilities, AppStorage*/
 
-(function(window)
-{
-function HighScore()
-{
+export type HighScoreData = number[];
 
-}
 
-var HIGH_SCORE = [];
+var HIGH_SCORE: HighScoreData = [];
 var SAVE_LIMIT = 5;     // how many scores to local storage
 var LIST_ITEMS = [];
 
@@ -98,8 +93,3 @@ HIGH_SCORE.length = 0;
 
 HighScore.save();
 };
-
-
-window.HighScore = HighScore;
-
-})(window);

@@ -1,10 +1,10 @@
-/*global AppStorage, createjs, Options, GameMenu, HighScore, Keyboard, Game*/
+interface Global {
+    CANVAS: HTMLCanvasElement;
+    STAGE: createjs.Stage;
+    PRELOAD: createjs.LoadQueue;
+}
 
-var G = {
-    CANVAS: null,
-    STAGE: null,
-    PRELOAD: null
-};
+var G: Global = {};
 
 
 window.onload = function()
@@ -15,7 +15,7 @@ AppStorage.getData( [ 'cross_roads_high_score', 'cross_roads_options', 'cross_ro
 
 function initApp( data )
 {
-G.CANVAS = document.querySelector( '#MainCanvas' );
+G.CANVAS = document.getElementById( 'MainCanvas' ) as HTMLCanvasElement;
 G.CANVAS.width = 600;
 G.CANVAS.height = 600;
 

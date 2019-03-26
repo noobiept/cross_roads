@@ -1,13 +1,9 @@
-/*global Utilities, AppStorage*/
-
-(function(window)
-{
-function Options()
-{
-
+export interface OptionsData {
+    music_state: boolean;
 }
 
-var OPTIONS = {
+
+var OPTIONS: OptionsData = {
         music_state: true
     };
 
@@ -42,7 +38,3 @@ Options.getMusicState = function()
 {
 return OPTIONS.music_state;
 };
-
-window.Options = Options;
-
-}(window));
