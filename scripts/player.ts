@@ -1,10 +1,20 @@
-/*global createjs, G, Utilities, GameMenu, Keyboard*/
+import * as GameMenu from './game_menu.js';
+import * as Keyboard from './keyboard.js';
+import { G } from './main.js';
 
-(function(window)
+
+export default class Player {
+
+shape!: createjs.Bitmap;
+width: number;
+height: number;
+movement_step: number;
+movement_animation: number;
+lives: number;
+
+
+constructor()
 {
-function Player()
-{
-this.shape = null;
 this.width = 15;
 this.height = 15;
 this.movement_step = 11;
@@ -15,35 +25,35 @@ this.setupShape();
 }
 
 
-Player.prototype.setupShape = function()
+setupShape()
 {
 var shape = new createjs.Bitmap();
 
 this.shape = shape;
-
 this.getNewRandomShape();
 
 G.STAGE.addChild( shape );
-};
+}
 
-Player.prototype.getNewRandomShape = function()
+
+getNewRandomShape()
 {
 var position = Utilities.getRandomInt( 1, 8 );
 
 this.shape.image = G.PRELOAD.getResult( 'player_' + position );
-};
+}
 
 
-Player.prototype.positionIn = function( x, y )
+positionIn( x: number, y: number )
 {
 createjs.Tween.removeTweens( this.shape );
 
 this.shape.x = x;
 this.shape.y = y;
-};
+}
 
 
-Player.prototype.moveTo = function( xDirection, yDirection )
+moveTo( xDirection: number, yDirection: number )
 {
 var angle = Math.atan2( yDirection, xDirection );
 
@@ -77,23 +87,25 @@ createjs.Tween.get( this.shape, { override: true } ).to({
 
 
 
-Player.prototype.clear = function()
+clear()
 {
 G.STAGE.removeChild( this.shape );
-};
+}
 
 
-Player.prototype.getX = function()
+getX()
 {
 return this.shape.x;
-};
+}
 
-Player.prototype.getY = function()
+
+getY()
 {
 return this.shape.y;
-};
+}
 
-Player.prototype.oneLessLife = function()
+
+oneLessLife()
 {
 this.lives--;
 
@@ -105,10 +117,10 @@ if ( this.lives <= 0 )
     }
 
 return true;
-};
+}
 
 
-Player.prototype.tick = function( event )
+tick( event: createjs.TickerEvent )
 {
 var keysHeld = Keyboard.KEYS_HELD;
 
@@ -153,16 +165,12 @@ else if ( keysHeld.down )
     }
 };
 
-/*
-    Bring the player's shape to the top of other elements (z-index)
- */
 
-Player.prototype.bringToTop = function()
+/**
+ * Bring the player's shape to the top of other elements (z-index).
+ */
+bringToTop()
 {
 G.STAGE.addChild( this.shape );
-};
-
-
-window.Player = Player;
-
-}(window));
+}
+}
