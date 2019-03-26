@@ -1,17 +1,73 @@
-/*global G, createjs*/
+import Level from "./level";
+import { G } from './main.js';
 
-(function(window)
-{
-/*
-    args = {
-        x : Number (optional= 0),
-        y : Number,
-        type  : String,
-        level : Level
-    }
- */
 
-function Car( args )
+export type CarType = "one" | "two" | "three" | "four" | "five" | "six";
+
+export interface CarInfo {
+    image: string;
+    speed: number;
+    width: number;
+    height: number;
+}
+
+export interface CarArgs {
+    x?: number;
+    y: number;
+    type: CarType;
+    level: Level;
+}
+
+
+export default class Car {
+
+    static readonly TYPES = {
+        one: {
+            image: 'car_1',
+            speed: 50,
+            width: 47,
+            height: 24
+            },
+        two: {
+            image: 'car_2',
+            speed: 70,
+            width: 47,
+            height: 21
+            },
+        three: {
+            image: 'car_3',
+            speed: 100,
+            width: 31,
+            height: 11
+            },
+        four: {
+            image: 'car_4',
+            speed: 130,
+            width: 16,
+            height: 12
+            },
+        five: {
+            image: 'car_5',
+            speed: 60,
+            width: 20,
+            height: 16
+            },
+        six: {
+            image: 'car_6',
+            speed: 80,
+            width: 31,
+            height: 15
+            }
+    };
+
+    shape: createjs.Bitmap;
+    type: CarType;
+    info: CarInfo;
+    width: number;
+    height: number;
+
+
+constructor( args: CarArgs )
 {
 if ( typeof args.x === 'undefined' )
     {
@@ -20,14 +76,12 @@ if ( typeof args.x === 'undefined' )
 
 var _this = this;
 
-this.shape = null;
 this.type = args.type;
-
 this.info = Car.TYPES[ args.type ];
 this.width = this.info.width;
 this.height = this.info.height;
 
-this.setupShape();
+this.shape = this.setupShape();
 
 this.shape.x = args.x;
 this.shape.y = args.y - this.height / 2;
@@ -43,72 +97,33 @@ createjs.Tween.get( this.shape ).to( { x: canvasWidth }, travelDuration ).call( 
     });
 }
 
-Car.TYPES = {
-    one: {
-        image: 'car_1',
-        speed: 50,
-        width: 47,
-        height: 24
-        },
-    two: {
-        image: 'car_2',
-        speed: 70,
-        width: 47,
-        height: 21
-        },
-    three: {
-        image: 'car_3',
-        speed: 100,
-        width: 31,
-        height: 11
-        },
-    four: {
-        image: 'car_4',
-        speed: 130,
-        width: 16,
-        height: 12
-        },
-    five: {
-        image: 'car_5',
-        speed: 60,
-        width: 20,
-        height: 16
-        },
-    six: {
-        image: 'car_6',
-        speed: 80,
-        width: 31,
-        height: 15
-        }
-};
 
-Car.prototype.setupShape = function()
+
+setupShape()
 {
 var info = this.info;
 var shape = new createjs.Bitmap( G.PRELOAD.getResult( info.image ) );
 
 G.STAGE.addChild( shape );
 
-this.shape = shape;
-};
+return shape;
+}
 
 
-Car.prototype.clear = function()
+clear()
 {
 G.STAGE.removeChild( this.shape );
-};
+}
 
-Car.prototype.getX = function()
+
+getX()
 {
 return this.shape.x;
-};
+}
 
-Car.prototype.getY = function()
+
+getY()
 {
 return this.shape.y;
-};
-
-
-window.Car = Car;
-
-}(window));
+}
+}

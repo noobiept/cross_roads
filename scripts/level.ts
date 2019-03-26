@@ -1,12 +1,12 @@
 import * as Game from './game.js';
-import Car from './car.js';
+import Car, { CarType } from './car.js';
 import Road, { RoadInfo } from './road.js';
 import Player from './player.js';
 import { G } from './main.js';
 
 
 export interface CarsInfo {
-    type: "one" | "two" | "three" | "four" | "five" | "six",
+    type: CarType;
     start_seconds: number;
     spawn_interval_seconds: number;
     lane: number;
