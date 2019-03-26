@@ -1,3 +1,10 @@
+import * as AppStorage from './app_storage.js';
+import * as Options from './options.js';
+import * as GameMenu from './game_menu.js';
+import * as HighScore from './high_score.js';
+import * as Keyboard from './keyboard.js';
+
+
 interface Global {
     CANVAS: HTMLCanvasElement;
     STAGE: createjs.Stage;
@@ -13,7 +20,7 @@ AppStorage.getData( [ 'cross_roads_high_score', 'cross_roads_options', 'cross_ro
 };
 
 
-function initApp( data )
+function initApp( data: AppStorage.StorageData )
 {
 G.CANVAS = document.getElementById( 'MainCanvas' ) as HTMLCanvasElement;
 G.CANVAS.width = 600;

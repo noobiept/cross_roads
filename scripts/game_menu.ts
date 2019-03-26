@@ -1,118 +1,103 @@
-/*global Options, Game, Utilities*/
+import * as Options from './options.js';
+import * as Game from './game.js';
+import * as GameMenu from './game_menu.js';
 
-(function(window)
+
+var LIVES_ELEMENT: HTMLElement;
+var LEVEL_ELEMENT: HTMLElement;
+var TIMER: Utilities.Timer;
+
+
+export function init()
 {
-function GameMenu()
-{
-
-}
-
-var LIVES_ELEMENT = null;
-var LEVEL_ELEMENT = null;
-
-var TIMER = null;
-
-
-GameMenu.init = function()
-{
-var container = document.querySelector( '#Menu' );
+var container = document.getElementById( 'Menu' )!;
 
     // play/stop the music
-var musicElement = container.querySelector( '#MusicState' );
-var musicElementInfo = musicElement.querySelector( 'span' );
-
-var booleanToStr = function( boolValue )
-    {
-    if ( boolValue === true )
-        {
-        return 'On';
-        }
-
-    return 'Off';
-    };
-
+var musicElement = document.getElementById( 'MusicState' )!;
+var musicElementInfo = musicElement.querySelector( 'span' )!;
 var isPlaying = Options.getMusicState();
 
-musicElementInfo.innerHTML = booleanToStr( isPlaying );
-
-
+musicElementInfo.innerHTML = boolToString( isPlaying );
 musicElement.onclick = function()
     {
     isPlaying = !isPlaying;
-
-    musicElementInfo.innerHTML = booleanToStr( isPlaying );
+    musicElementInfo.innerHTML = boolToString( isPlaying );
 
     Game.setMusicState( isPlaying );
     };
 
     // restart the game
-var restart = container.querySelector( '#Restart' );
+var restart = document.getElementById( 'Restart' )!;
 restart.onclick = function()
     {
     Game.restart();
     };
 
     // donate button
-var donate = container.querySelector( '#Donate' );
+var donate = document.getElementById( 'Donate' )!;
 donate.onclick = function()
     {
     window.open( 'http://nbpt.eu/donate/', '_blank' );
     };
 
     // lives count
-LIVES_ELEMENT = container.querySelector( '#Lives span' );
+LIVES_ELEMENT = container.querySelector( '#Lives span' ) as HTMLElement;
 
     // current level
-LEVEL_ELEMENT = container.querySelector( '#Level span' );
+LEVEL_ELEMENT = container.querySelector( '#Level span' ) as HTMLElement;
 
     // timer
-var timerElement = container.querySelector( '#Timer span' );
+var timerElement = container.querySelector( '#Timer span' ) as HTMLElement;
 
 TIMER = new Utilities.Timer( timerElement );
-};
+}
 
 
-
-GameMenu.setLives = function( lives )
+export function setLives( lives: number )
 {
-LIVES_ELEMENT.innerHTML = lives;
-};
+LIVES_ELEMENT.innerHTML = lives.toString();
+}
 
 
-GameMenu.setLevel = function( level )
+export function setLevel( level: number )
 {
-LEVEL_ELEMENT.innerHTML = level;
-};
+LEVEL_ELEMENT.innerHTML = level.toString();
+}
 
-GameMenu.startGame = function()
+
+export function startGame()
 {
 TIMER.restart();
 GameMenu.setLevel( Game.getCurrentLevel() );
 GameMenu.setLives( Game.getPlayer().lives );
-};
+}
 
-GameMenu.getTimer = function()
+
+export function getTimer()
 {
 return TIMER;
-};
+}
 
 
-GameMenu.show = function()
+export function show()
 {
-var menu = document.querySelector( '#Menu' );
-
+var menu = document.getElementById( 'Menu' )!;
 menu.style.display = 'block';
-};
+}
 
 
-GameMenu.hide = function()
+export function hide()
 {
-var menu = document.querySelector( '#Menu' );
-
+var menu = document.getElementById( 'Menu' )!;
 menu.style.display = 'none';
-};
+}
 
 
-window.GameMenu = GameMenu;
+function boolToString( value: boolean ) {
+    if ( value === true )
+        {
+        return 'On';
+        }
 
-}(window));
+    return 'Off';
+}
