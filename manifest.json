@@ -1,9 +1,0 @@
-{
-    "name": "cross roads",
-    "version": "1.2.3",
-    "description": "Need to cross the road without colliding with a moving vehicle.",
-    "app": { "background": { "scripts": [ "background.js" ] } },
-    "manifest_version": 2,
-    "permissions": [ "storage" ],
-    "icons": { "128": "images/icon128.png", "48": "images/icon48.png" }
-}
