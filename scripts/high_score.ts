@@ -1,14 +1,17 @@
+/// <reference path="../libraries/utilities.1.8.0.d.ts" />
+import * as AppStorage from './app_storage.js';
 
 export type HighScoreData = number[];
 
 
 var HIGH_SCORE: HighScoreData = [];
-var SAVE_LIMIT = 5;     // how many scores to local storage
-var LIST_ITEMS = [];
+var SAVE_LIMIT = 5;     // the total scores we keep track of
+var LIST_ITEMS: HTMLElement[] = [];
 
-HighScore.init = function( scoreData )
+
+export function init( scoreData?: HighScoreData )
 {
-var ul = document.querySelector( '#HighScore' );
+var ul = document.getElementById( 'HighScore' )!;
 
     // add the list items that will have the high scores
 for (var a = 0 ; a < SAVE_LIMIT ; a++)
@@ -26,11 +29,11 @@ if ( scoreData )
     HIGH_SCORE = scoreData;
     }
 
-HighScore.updateHtmlElement();
+updateHtmlElement();
 };
 
 
-HighScore.add = function( value )
+export function add( value: number )
 {
     // don't add repeated values
 if ( HIGH_SCORE.indexOf( value ) >= 0 )
@@ -52,16 +55,15 @@ if ( HIGH_SCORE.length > SAVE_LIMIT )
     HIGH_SCORE.pop();
     }
 
-HighScore.save();
-HighScore.updateHtmlElement();
+save();
+updateHtmlElement();
 };
 
 
-/*
-    Update the html element, with the current high-scores
+/**
+ * Update the html element, with the current high-scores.
  */
-
-HighScore.updateHtmlElement = function()
+function updateHtmlElement()
 {
 for (var a = 0 ; a < SAVE_LIMIT ; a++)
     {
@@ -78,18 +80,17 @@ for (var a = 0 ; a < SAVE_LIMIT ; a++)
         li.innerHTML = Utilities.timeToString( value * 1000 );
         }
     }
-};
+}
 
 
-HighScore.save = function()
+function save()
 {
 AppStorage.setData( { cross_roads_high_score: HIGH_SCORE } );
-};
+}
 
 
-HighScore.clear = function()
+export function clear()
 {
 HIGH_SCORE.length = 0;
-
-HighScore.save();
-};
+save();
+}

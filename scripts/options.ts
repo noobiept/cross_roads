@@ -1,3 +1,6 @@
+import * as AppStorage from './app_storage.js';
+
+
 export interface OptionsData {
     music_state: boolean;
 }
@@ -8,7 +11,7 @@ var OPTIONS: OptionsData = {
     };
 
 
-Options.load = function( optionsData )
+export function load( optionsData: OptionsData )
 {
 if ( optionsData )
     {
@@ -17,24 +20,23 @@ if ( optionsData )
         OPTIONS.music_state = optionsData.music_state;
         }
     }
-};
+}
 
 
-Options.save = function()
+function save()
 {
 AppStorage.setData( { cross_roads_options: OPTIONS } );
-};
+}
 
 
-Options.setMusicState = function( state )
+export function setMusicState( state: boolean )
 {
 OPTIONS.music_state = state;
+save();
+}
 
-Options.save();
-};
 
-
-Options.getMusicState = function()
+export function getMusicState()
 {
 return OPTIONS.music_state;
-};
+}
