@@ -1,6 +1,6 @@
 import * as Game from './game.js';
 import Car from './car.js';
-import Road from './road.js';
+import Road, { RoadInfo } from './road.js';
 import Player from './player.js';
 import { G } from './main.js';
 
@@ -14,10 +14,7 @@ export interface CarsInfo {
 
 
 export interface LevelInfo {
-    road: {
-        lanes: number;
-        side_walks: number[];
-    },
+    road: RoadInfo[],
     cars: CarsInfo[]
 }
 

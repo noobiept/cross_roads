@@ -1,32 +1,39 @@
-/*global G, createjs*/
+import { G } from './main.js';
 
-(function(window)
-{
-/*
-    info = {
-        lanes      : Number,
-        side_walks : Number[]
-    }
- */
 
-function Road( info )
+export interface RoadInfo {
+    lanes: number;
+    side_walks: number[];
+}
+
+
+export default class Road {
+
+    // height of each lane, as well of the side walks
+    static readonly LANE_HEIGHT = 30;
+
+    lines: createjs.Shape[];
+    container: createjs.Container;
+    lanes: number;
+    side_walks: number[];
+    width: number;
+    height: number;
+
+
+constructor( info: RoadInfo )
 {
 this.lines = [];        // array of createjs.Shape()
-this.container = null;
 this.lanes = info.lanes;
 this.side_walks = info.side_walks;
 this.width = G.CANVAS.width;
-this.height = this.lanes * LANE_HEIGHT;
+this.height = this.lanes * Road.LANE_HEIGHT;
+this.container = this.setupShape();
 
-this.setupShape();
 this.positionIn( 0, G.CANVAS.height / 2 - this.height / 2 );
 }
 
-    // height of each lane, as well of the side walks
-var LANE_HEIGHT = 30;
 
-
-Road.prototype.setupShape = function()
+setupShape()
 {
 var container = new createjs.Container();
 
@@ -35,7 +42,6 @@ var linesColor = 'black';
 var sideWalkColor = 'gray';
 var lineHeight = 1;
 var width = G.CANVAS.width;
-
 
     // :: Side walks :: //
 
@@ -46,7 +52,7 @@ for (a = 0 ; a < this.side_walks.length ; a++)
     g = sideWalk.graphics;
 
     g.beginFill( sideWalkColor );
-    g.drawRect( 0, (this.side_walks[ a ]) * LANE_HEIGHT, width, LANE_HEIGHT );
+    g.drawRect( 0, (this.side_walks[ a ]) * Road.LANE_HEIGHT, width, Road.LANE_HEIGHT );
     g.endFill();
 
     container.addChild( sideWalk );
@@ -89,7 +95,7 @@ for (a = 0 ; a < this.lanes ; a++)
             g = shape.graphics;
 
             g.beginFill( linesColor );
-            g.drawRect( midLength, LANE_HEIGHT + a * LANE_HEIGHT, length, lineHeight );
+            g.drawRect( midLength, Road.LANE_HEIGHT + a * Road.LANE_HEIGHT, length, lineHeight );
             g.endFill();
 
             container.addChild( shape );
@@ -104,44 +110,37 @@ for (a = 0 ; a < this.lanes ; a++)
     // :: Container :: //
 G.STAGE.addChild( container );
 
-this.container = container;
-};
+return container;
+}
 
-Road.prototype.positionIn = function( x, y )
+
+positionIn( x: number, y: number )
 {
 this.container.x = x;
 this.container.y = y;
-};
+}
 
-Road.prototype.clear = function()
+
+clear()
 {
 G.STAGE.removeChild( this.container );
 this.lines.length = 0;
-};
+}
 
 
-Road.prototype.laneToY = function( lane )
+laneToY( lane: number )
 {
-return this.getY() + lane * LANE_HEIGHT + LANE_HEIGHT / 2;
-};
+return this.getY() + lane * Road.LANE_HEIGHT + Road.LANE_HEIGHT / 2;
+}
 
 
-Road.getLaneHeight = function()
-{
-return LANE_HEIGHT;
-};
-
-Road.prototype.getX = function()
+getX()
 {
 return this.container.x;
-};
+}
 
-Road.prototype.getY = function()
+getY()
 {
 return this.container.y;
-};
-
-
-window.Road = Road;
-
-}(window));
+}
+}
