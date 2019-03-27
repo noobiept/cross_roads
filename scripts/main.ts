@@ -158,3 +158,8 @@ export function removeFromStage( element: createjs.DisplayObject ) {
 export function getAsset( id: string ) {
     return PRELOAD.getResult( id );
 }
+
+
+export function updateStage() {
+    STAGE.update();
+}

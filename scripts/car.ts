@@ -1,5 +1,5 @@
-import Level from "./level";
-import { getCanvasDimensions, getAsset, addToStage, removeFromStage } from "./main";
+import Level from "./level.js";
+import { getCanvasDimensions, getAsset, addToStage, removeFromStage } from "./main.js";
 
 
 export type CarType = "one" | "two" | "three" | "four" | "five" | "six";

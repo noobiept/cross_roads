@@ -4,7 +4,7 @@ import * as HighScore from './high_score.js';
 import * as Keyboard from './keyboard.js';
 import Level, { LevelInfo } from './level.js';
 import Player from './player.js';
-import { getCanvasDimensions, addToStage, getAsset } from './main.js';
+import { getCanvasDimensions, addToStage, getAsset, updateStage } from './main.js';
 
 
 var PLAYER: Player | null = null;
@@ -176,8 +176,7 @@ if ( PLAYER )
     PLAYER.tick( event );
     }
 
-
-G.STAGE.update();
+updateStage();
 }
 
 

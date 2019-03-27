@@ -1,6 +1,6 @@
+/// <reference path="../libraries/utilities/utilities.1.8.0.d.ts" />
 import * as Options from './options.js';
 import * as Game from './game.js';
-import * as GameMenu from './game_menu.js';
 
 
 var LIVES_ELEMENT: HTMLElement;
@@ -68,8 +68,8 @@ LEVEL_ELEMENT.innerHTML = level.toString();
 export function startGame()
 {
 TIMER.restart();
-GameMenu.setLevel( Game.getCurrentLevel() );
-GameMenu.setLives( Game.getPlayer()!.lives );
+setLevel( Game.getCurrentLevel() );
+setLives( Game.getPlayer()!.lives );
 }
 
 

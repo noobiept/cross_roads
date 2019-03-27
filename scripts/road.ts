@@ -1,4 +1,4 @@
-import { getCanvasDimensions, addToStage, removeFromStage } from "./main";
+import { getCanvasDimensions, addToStage, removeFromStage } from "./main.js";
 
 
 export interface RoadInfo {
