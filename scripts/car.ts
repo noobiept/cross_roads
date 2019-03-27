@@ -1,6 +1,10 @@
 import Level from "./level.js";
-import { getCanvasDimensions, getAsset, addToStage, removeFromStage } from "./main.js";
-
+import {
+    getCanvasDimensions,
+    getAsset,
+    addToStage,
+    removeFromStage,
+} from "./main.js";
 
 export type CarType = "one" | "two" | "three" | "four" | "five" | "six";
 
@@ -18,46 +22,44 @@ export interface CarArgs {
     level: Level;
 }
 
-
 export default class Car {
-
     static readonly TYPES = {
         one: {
-            image: 'car_1',
+            image: "car_1",
             speed: 50,
             width: 47,
-            height: 24
-            },
+            height: 24,
+        },
         two: {
-            image: 'car_2',
+            image: "car_2",
             speed: 70,
             width: 47,
-            height: 21
-            },
+            height: 21,
+        },
         three: {
-            image: 'car_3',
+            image: "car_3",
             speed: 100,
             width: 31,
-            height: 11
-            },
+            height: 11,
+        },
         four: {
-            image: 'car_4',
+            image: "car_4",
             speed: 130,
             width: 16,
-            height: 12
-            },
+            height: 12,
+        },
         five: {
-            image: 'car_5',
+            image: "car_5",
             speed: 60,
             width: 20,
-            height: 16
-            },
+            height: 16,
+        },
         six: {
-            image: 'car_6',
+            image: "car_6",
             speed: 80,
             width: 31,
-            height: 15
-            }
+            height: 15,
+        },
     };
 
     shape: createjs.Bitmap;
@@ -66,63 +68,51 @@ export default class Car {
     width: number;
     height: number;
 
+    constructor(args: CarArgs) {
+        if (typeof args.x === "undefined") {
+            args.x = 0;
+        }
 
-constructor( args: CarArgs )
-{
-if ( typeof args.x === 'undefined' )
-    {
-    args.x = 0;
+        var _this = this;
+
+        this.type = args.type;
+        this.info = Car.TYPES[args.type];
+        this.width = this.info.width;
+        this.height = this.info.height;
+
+        this.shape = this.setupShape();
+
+        this.shape.x = args.x;
+        this.shape.y = args.y - this.height / 2;
+
+        const canvas = getCanvasDimensions();
+        var travelDuration = ((canvas.width - args.x) / this.info.speed) * 1000;
+
+        createjs.Tween.get(this.shape)
+            .to({ x: canvas.width }, travelDuration)
+            .call(function() {
+                args.level.removeCar(_this);
+            });
     }
 
-var _this = this;
+    setupShape() {
+        var info = this.info;
+        var shape = new createjs.Bitmap(getAsset(info.image));
 
-this.type = args.type;
-this.info = Car.TYPES[ args.type ];
-this.width = this.info.width;
-this.height = this.info.height;
+        addToStage(shape);
 
-this.shape = this.setupShape();
+        return shape;
+    }
 
-this.shape.x = args.x;
-this.shape.y = args.y - this.height / 2;
+    clear() {
+        removeFromStage(this.shape);
+    }
 
-const canvas = getCanvasDimensions();
-var travelDuration = (canvas.width - args.x) / this.info.speed * 1000;
+    getX() {
+        return this.shape.x;
+    }
 
-
-createjs.Tween.get( this.shape ).to( { x: canvas.width }, travelDuration ).call( function()
-    {
-    args.level.removeCar( _this );
-    });
-}
-
-
-
-setupShape()
-{
-var info = this.info;
-var shape = new createjs.Bitmap( getAsset( info.image ) );
-
-addToStage( shape );
-
-return shape;
-}
-
-
-clear()
-{
-removeFromStage( this.shape );
-}
-
-
-getX()
-{
-return this.shape.x;
-}
-
-
-getY()
-{
-return this.shape.y;
-}
+    getY() {
+        return this.shape.y;
+    }
 }

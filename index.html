@@ -4,50 +4,65 @@
         <meta charset="utf-8" />
         <title>Cross Roads</title>
 
-        <script type="text/javascript" src="libraries/preloadjs.min.js"></script>
+        <script
+            type="text/javascript"
+            src="libraries/preloadjs.min.js"
+        ></script>
         <script type="text/javascript" src="libraries/soundjs.min.js"></script>
         <script type="text/javascript" src="libraries/easeljs.min.js"></script>
         <script type="text/javascript" src="libraries/tweenjs.min.js"></script>
-        <script type="text/javascript" src="libraries/utilities/utilities.1.8.0.min.js"></script>
+        <script
+            type="text/javascript"
+            src="libraries/utilities/utilities.1.8.0.min.js"
+        ></script>
 
         <script type="module" src="scripts/main.js"></script>
 
         <link rel="stylesheet" href="css/style.css" />
     </head>
-<body>
-    <div id="Help">
-        <h4>Help</h4>
-        <ul>
-            <li>You have to cross the road to the other side.</li>
-            <li>There are cars moving in the road, at different speeds.</li>
-            <li>You can't collide with them.</li>
-            <li>If a collision occurs, the player is moved back to the starting point, and a life is taken away.</li>
-            <li>Once there's no more lives, the game ends.</li>
-            <li>If the player crosses the road, that level is successfully completed.</li>
-            <li>Try to finish all the levels in the shortest time.</li>
-        </ul>
+    <body>
+        <div id="Help">
+            <h4>Help</h4>
+            <ul>
+                <li>You have to cross the road to the other side.</li>
+                <li>There are cars moving in the road, at different speeds.</li>
+                <li>You can't collide with them.</li>
+                <li
+                    >If a collision occurs, the player is moved back to the
+                    starting point, and a life is taken away.</li
+                >
+                <li>Once there's no more lives, the game ends.</li>
+                <li
+                    >If the player crosses the road, that level is successfully
+                    completed.</li
+                >
+                <li>Try to finish all the levels in the shortest time.</li>
+            </ul>
 
-        <h4>Controls</h4>
-        <p>Use the arrow keys (or wasd keys) to control the player movement.</p>
+            <h4>Controls</h4>
+            <p
+                >Use the arrow keys (or wasd keys) to control the player
+                movement.</p
+            >
 
-        <div id="HelpStartGame" class="button">Got it.</div>
-    </div>
+            <div id="HelpStartGame" class="button">Got it.</div>
+        </div>
 
-    <canvas id="MainCanvas"></canvas>
+        <canvas id="MainCanvas"></canvas>
 
-    <div id="Menu">
-        <ul id="GameMenu">
-            <li id="MusicState" class="button">Music: <span></span></li>
-            <li id="Restart" class="button">restart</li>
-            <li id="Donate" class="button">Donate</li>
-            <li id="Lives">lives: <span class="value"></span></li>
-            <li id="Level">level: <span class="value"></span></li>
-            <li id="Timer">timer: <span class="value"></span></li>
-        </ul>
+        <div id="Menu">
+            <ul id="GameMenu">
+                <li id="MusicState" class="button">Music: <span></span></li>
+                <li id="Restart" class="button">restart</li>
+                <li id="Donate" class="button">Donate</li>
+                <li id="Lives">lives: <span class="value"></span></li>
+                <li id="Level">level: <span class="value"></span></li>
+                <li id="Timer">timer: <span class="value"></span></li>
+            </ul>
 
-        <ul id="HighScore">
-            <li id="HighScore-header">High-score:</li>
-        </ul>
-    </div>
-</body>
+            <ul id="HighScore">
+                <li id="HighScore-header">High-score:</li>
+            </ul>
+        </div>
+    </body>
 </html>

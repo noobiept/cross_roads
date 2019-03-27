@@ -1,26 +1,21 @@
-const Fs = require('fs');
-const Path = require('path');
+const Fs = require("fs");
+const Path = require("path");
 
 const PACKAGE = JSON.parse(Fs.readFileSync("package.json", "utf8"));
 const ROOT = "./";
 const DEST = `./release/${PACKAGE.name} ${PACKAGE.version}/`;
 
-module.exports = function( grunt )
-{
-grunt.initConfig({
-        pkg: grunt.file.readJSON( 'package.json' ),
+module.exports = function(grunt) {
+    grunt.initConfig({
+        pkg: grunt.file.readJSON("package.json"),
 
-            // delete the destination folder
+        // delete the destination folder
         clean: {
-            release: [
-                DEST, Path.join(ROOT, "scripts/**/*.js")
-            ],
-            libraries: [
-                Path.join(ROOT, "libraries/*.js")
-            ]
+            release: [DEST, Path.join(ROOT, "scripts/**/*.js")],
+            libraries: [Path.join(ROOT, "libraries/*.js")],
         },
 
-            // copy the necessary files
+        // copy the necessary files
         copy: {
             libraries: {
                 files: [
@@ -54,39 +49,45 @@ grunt.initConfig({
                 expand: true,
                 cwd: ROOT,
                 src: [
-                    'images/**',
-                    'levels/**',
-                    'libraries/**',
-                    'music/**',
-                    'index.html',
-                    'package.json'
+                    "images/**",
+                    "levels/**",
+                    "libraries/**",
+                    "music/**",
+                    "index.html",
+                    "package.json",
                 ],
-                dest: DEST
-            }
+                dest: DEST,
+            },
         },
 
         cssmin: {
             release: {
-                files: [{
-                    expand: true,
-                    cwd: ROOT + 'css',
-                    src: '*.css',
-                    dest: DEST + 'css/'
-                }]
-            }
+                files: [
+                    {
+                        expand: true,
+                        cwd: ROOT + "css",
+                        src: "*.css",
+                        dest: DEST + "css/",
+                    },
+                ],
+            },
         },
     });
 
-
     // load the plugins
-grunt.loadNpmTasks( 'grunt-contrib-copy' );
-grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
-grunt.loadNpmTasks( 'grunt-contrib-clean' );
+    grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-cssmin");
+    grunt.loadNpmTasks("grunt-contrib-clean");
 
     // tasks
-grunt.registerTask( 'update_libraries', [
-    "clean:libraries",
-    "copy:libraries"
-]);
-grunt.registerTask( 'default', [ 'clean', 'copy:libraries', 'copy:release', 'cssmin' ] );
+    grunt.registerTask("update_libraries", [
+        "clean:libraries",
+        "copy:libraries",
+    ]);
+    grunt.registerTask("default", [
+        "clean",
+        "copy:libraries",
+        "copy:release",
+        "cssmin",
+    ]);
 };
