@@ -1,0 +1,11 @@
+.vscode/
+images/
+levels/
+libraries/
+music/
+promotion/
+release/
+node_modules/
+package-lock.json
+scripts/**/*.js
+*.yml
