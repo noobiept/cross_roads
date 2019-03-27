@@ -1,64 +1,67 @@
-var PATH = require( 'path' );
+const Fs = require('fs');
+const Path = require('path');
+
+const PACKAGE = JSON.parse(Fs.readFileSync("package.json", "utf8"));
+const ROOT = "./";
+const DEST = `./release/${PACKAGE.name} ${PACKAGE.version}/`;
 
 module.exports = function( grunt )
 {
-var root = '../';
-var dest = '../release/<%= pkg.name %> <%= pkg.version %>/';
-
 grunt.initConfig({
         pkg: grunt.file.readJSON( 'package.json' ),
 
-        eslint: {
-            options: {
-                configFile: root + '.eslintrc.js'
-            },
-            target: [ root + 'scripts/**' ]
-        },
-
             // delete the destination folder
         clean: {
-            options: {
-                force: true
-            },
             release: [
-                dest
+                DEST, Path.join(ROOT, "scripts/**/*.js")
+            ],
+            libraries: [
+                Path.join(ROOT, "libraries/*.js")
             ]
         },
 
             // copy the necessary files
         copy: {
+            libraries: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: Path.join(ROOT, "node_modules/easeljs/lib/"),
+                        src: "easeljs.min.js",
+                        dest: Path.join(ROOT, "libraries/"),
+                    },
+                    {
+                        expand: true,
+                        cwd: Path.join(ROOT, "node_modules/preloadjs/lib/"),
+                        src: "preloadjs.min.js",
+                        dest: Path.join(ROOT, "libraries/"),
+                    },
+                    {
+                        expand: true,
+                        cwd: Path.join(ROOT, "node_modules/soundjs/lib/"),
+                        src: "soundjs.min.js",
+                        dest: Path.join(ROOT, "libraries/"),
+                    },
+                    {
+                        expand: true,
+                        cwd: Path.join(ROOT, "node_modules/tweenjs/lib/"),
+                        src: "tweenjs.min.js",
+                        dest: Path.join(ROOT, "libraries/"),
+                    },
+                ],
+            },
             release: {
                 expand: true,
-                cwd: root,
+                cwd: ROOT,
                 src: [
                     'images/**',
                     'levels/**',
                     'libraries/**',
                     'music/**',
-                    'background.js',
-                    'manifest.json'
+                    'index.html',
+                    'package.json'
                 ],
-                dest: dest
-            }
-        },
-
-        uglify: {
-            release: {
-                files: {
-                    '../release/<%= pkg.name %> <%= pkg.version %>/min.js': [
-                        '../scripts/app_storage.js',
-                        '../scripts/car.js',
-                        '../scripts/player.js',
-                        '../scripts/road.js',
-                        '../scripts/level.js',
-                        '../scripts/keyboard.js',
-                        '../scripts/high_score.js',
-                        '../scripts/game_menu.js',
-                        '../scripts/options.js',
-                        '../scripts/game.js',
-                        '../scripts/main.js'
-                    ]
-                }
+                dest: DEST
             }
         },
 
@@ -66,34 +69,24 @@ grunt.initConfig({
             release: {
                 files: [{
                     expand: true,
-                    cwd: root + 'css',
-                    src: 'style.css',
-                    dest: dest + 'css/'
+                    cwd: ROOT + 'css',
+                    src: '*.css',
+                    dest: DEST + 'css/'
                 }]
             }
         },
-
-        processhtml: {
-            release: {
-                files: [{
-                    expand: true,
-                    cwd: root,
-                    src: 'index.html',
-                    dest: dest
-                }]
-            }
-        }
     });
 
 
     // load the plugins
-grunt.loadNpmTasks( 'grunt-eslint' );
 grunt.loadNpmTasks( 'grunt-contrib-copy' );
-grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
 grunt.loadNpmTasks( 'grunt-contrib-clean' );
-grunt.loadNpmTasks( 'grunt-processhtml' );
 
     // tasks
-grunt.registerTask( 'default', [ 'eslint', 'clean', 'copy', 'uglify', 'cssmin', 'processhtml' ] );
+grunt.registerTask( 'update_libraries', [
+    "clean:libraries",
+    "copy:libraries"
+]);
+grunt.registerTask( 'default', [ 'clean', 'copy:libraries', 'copy:release', 'cssmin' ] );
 };
