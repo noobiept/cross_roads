@@ -1,4 +1,4 @@
-import { G } from './main.js';
+import { getCanvasDimensions, addToStage, removeFromStage } from "./main";
 
 
 export interface RoadInfo {
@@ -22,26 +22,29 @@ export default class Road {
 
 constructor( info: RoadInfo )
 {
+const canvas = getCanvasDimensions();
+
 this.lines = [];        // array of createjs.Shape()
 this.lanes = info.lanes;
 this.side_walks = info.side_walks;
-this.width = G.CANVAS.width;
+this.width = canvas.width;
 this.height = this.lanes * Road.LANE_HEIGHT;
 this.container = this.setupShape();
 
-this.positionIn( 0, G.CANVAS.height / 2 - this.height / 2 );
+this.positionIn( 0, canvas.height / 2 - this.height / 2 );
 }
 
 
 setupShape()
 {
+const canvas = getCanvasDimensions();
 var container = new createjs.Container();
 
 var g, a;
 var linesColor = 'black';
 var sideWalkColor = 'gray';
 var lineHeight = 1;
-var width = G.CANVAS.width;
+var width = canvas.width;
 
     // :: Side walks :: //
 
@@ -108,7 +111,7 @@ for (a = 0 ; a < this.lanes ; a++)
 
 
     // :: Container :: //
-G.STAGE.addChild( container );
+addToStage( container );
 
 return container;
 }
@@ -123,7 +126,7 @@ this.container.y = y;
 
 clear()
 {
-G.STAGE.removeChild( this.container );
+removeFromStage( this.container );
 this.lines.length = 0;
 }
 

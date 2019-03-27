@@ -1,5 +1,5 @@
 import Level from "./level";
-import { G } from './main.js';
+import { getCanvasDimensions, getAsset, addToStage, removeFromStage } from "./main";
 
 
 export type CarType = "one" | "two" | "three" | "four" | "five" | "six";
@@ -86,12 +86,11 @@ this.shape = this.setupShape();
 this.shape.x = args.x;
 this.shape.y = args.y - this.height / 2;
 
-var canvasWidth = G.CANVAS.width;
+const canvas = getCanvasDimensions();
+var travelDuration = (canvas.width - args.x) / this.info.speed * 1000;
 
-var travelDuration = (canvasWidth - args.x) / this.info.speed * 1000;
 
-
-createjs.Tween.get( this.shape ).to( { x: canvasWidth }, travelDuration ).call( function()
+createjs.Tween.get( this.shape ).to( { x: canvas.width }, travelDuration ).call( function()
     {
     args.level.removeCar( _this );
     });
@@ -102,9 +101,9 @@ createjs.Tween.get( this.shape ).to( { x: canvasWidth }, travelDuration ).call( 
 setupShape()
 {
 var info = this.info;
-var shape = new createjs.Bitmap( G.PRELOAD.getResult( info.image ) );
+var shape = new createjs.Bitmap( getAsset( info.image ) );
 
-G.STAGE.addChild( shape );
+addToStage( shape );
 
 return shape;
 }
@@ -112,7 +111,7 @@ return shape;
 
 clear()
 {
-G.STAGE.removeChild( this.shape );
+removeFromStage( this.shape );
 }
 
 

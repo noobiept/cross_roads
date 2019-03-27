@@ -1,6 +1,6 @@
 import * as GameMenu from './game_menu.js';
 import * as Keyboard from './keyboard.js';
-import { G } from './main.js';
+import { getAsset, addToStage, getCanvasDimensions, removeFromStage } from './main.js';
 
 
 export default class Player {
@@ -27,20 +27,20 @@ this.setupShape();
 
 setupShape()
 {
-const image = G.PRELOAD.getResult('player_1');
+const image = getAsset( 'player_1' );
 const shape = new createjs.Bitmap( image );
 
 this.shape = shape;
 this.getNewRandomShape();
 
-G.STAGE.addChild( shape );
+addToStage( shape );
 }
 
 
 getNewRandomShape()
 {
 var position = Utilities.getRandomInt( 1, 8 );
-this.shape.image = G.PRELOAD.getResult( 'player_' + position ) as HTMLImageElement;
+this.shape.image = getAsset( 'player_' + position ) as HTMLImageElement;
 }
 
 
@@ -55,6 +55,7 @@ this.shape.y = y;
 
 moveTo( xDirection: number, yDirection: number )
 {
+const canvas = getCanvasDimensions();
 var angle = Math.atan2( yDirection, xDirection );
 
 var nextX = this.shape.x + Math.cos( angle ) * this.movement_step;
@@ -65,9 +66,9 @@ if ( nextX < 0 )
     nextX = 0;
     }
 
-else if ( nextX > G.CANVAS.width - this.width )
+else if ( nextX > canvas.width - this.width )
     {
-    nextX = G.CANVAS.width - this.width;
+    nextX = canvas.width - this.width;
     }
 
 if ( nextY < 0 )
@@ -75,9 +76,9 @@ if ( nextY < 0 )
     nextY = 0;
     }
 
-else if ( nextY > G.CANVAS.height - this.height )
+else if ( nextY > canvas.height - this.height )
     {
-    nextY = G.CANVAS.height - this.height;
+    nextY = canvas.height - this.height;
     }
 
 createjs.Tween.get( this.shape, { override: true } ).to({
@@ -89,7 +90,7 @@ createjs.Tween.get( this.shape, { override: true } ).to({
 
 clear()
 {
-G.STAGE.removeChild( this.shape );
+removeFromStage( this.shape );
 }
 
 
@@ -171,6 +172,6 @@ else if ( keysHeld.down )
  */
 bringToTop()
 {
-G.STAGE.addChild( this.shape );
+addToStage( this.shape );
 }
 }

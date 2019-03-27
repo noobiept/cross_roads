@@ -5,14 +5,9 @@ import * as HighScore from './high_score.js';
 import * as Keyboard from './keyboard.js';
 import * as Game from './game.js';
 
-
-interface Global {
-    CANVAS: HTMLCanvasElement;
-    STAGE: createjs.Stage;
-    PRELOAD: createjs.LoadQueue;
-}
-
-export var G: Global = {};
+let CANVAS: HTMLCanvasElement;
+let STAGE: createjs.Stage;
+let PRELOAD: createjs.LoadQueue;
 
 
 window.onload = function()
@@ -23,11 +18,11 @@ AppStorage.getData( [ 'cross_roads_high_score', 'cross_roads_options', 'cross_ro
 
 function initApp( data: AppStorage.StorageData )
 {
-G.CANVAS = document.getElementById( 'MainCanvas' ) as HTMLCanvasElement;
-G.CANVAS.width = 600;
-G.CANVAS.height = 600;
+CANVAS = document.getElementById( 'MainCanvas' ) as HTMLCanvasElement;
+CANVAS.width = 600;
+CANVAS.height = 600;
 
-G.STAGE = new createjs.Stage( G.CANVAS );
+STAGE = new createjs.Stage( CANVAS );
 
 createjs.Ticker.timingMode = createjs.Ticker.RAF;
 createjs.Sound.alternateExtensions = [ 'mp3' ];
@@ -82,27 +77,27 @@ var manifest = [
 var loadingMessage = new createjs.Text( '', '30px monospace' );
 
 loadingMessage.textAlign = 'center';
-loadingMessage.x = G.CANVAS.width / 2;
-loadingMessage.y = G.CANVAS.height / 2;
+loadingMessage.x = CANVAS.width / 2;
+loadingMessage.y = CANVAS.height / 2;
 
 var tickFunction = createjs.Ticker.on( 'tick', function()
     {
-    G.STAGE.update();
+    STAGE.update();
     });
 
-G.STAGE.addChild( loadingMessage );
+STAGE.addChild( loadingMessage );
 
 
-G.PRELOAD = new createjs.LoadQueue();
-G.PRELOAD.installPlugin( createjs.Sound );
-G.PRELOAD.on( 'progress', function( event: createjs.ProgressEvent )
+PRELOAD = new createjs.LoadQueue();
+PRELOAD.installPlugin( createjs.Sound );
+PRELOAD.on( 'progress', function( event: createjs.ProgressEvent )
     {
     loadingMessage.text = 'Loading.. ' + (event.progress * 100 | 0) + '%';
     } as (event: Object) => void);
-G.PRELOAD.on( 'complete', function()
+PRELOAD.on( 'complete', function()
     {
-    G.STAGE.removeChild( loadingMessage );
-    G.STAGE.update();
+    STAGE.removeChild( loadingMessage );
+    STAGE.update();
     createjs.Ticker.off( 'tick', tickFunction );
 
         // show the help page on the first run of the game
@@ -126,5 +121,40 @@ G.PRELOAD.on( 'complete', function()
         Game.start();
         }
     });
-G.PRELOAD.loadManifest( manifest, true );
+PRELOAD.loadManifest( manifest, true );
+}
+
+
+/**
+ * Get the width/height of the canvas.
+ */
+export function getCanvasDimensions() {
+    return {
+        width: CANVAS.width,
+        height: CANVAS.height
+    };
+}
+
+
+/**
+ * Add an element to the stage (to be shown on the canvas).
+ */
+export function addToStage( element: createjs.DisplayObject ) {
+    STAGE.addChild( element );
+}
+
+
+/**
+ * Remove an element from the stage.
+ */
+export function removeFromStage( element: createjs.DisplayObject ) {
+    STAGE.removeChild( element );
+}
+
+
+/**
+ * Get a previously pre-loaded asset (image, sound, map, etc).
+ */
+export function getAsset( id: string ) {
+    return PRELOAD.getResult( id );
 }

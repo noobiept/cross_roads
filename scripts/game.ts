@@ -4,7 +4,7 @@ import * as HighScore from './high_score.js';
 import * as Keyboard from './keyboard.js';
 import Level, { LevelInfo } from './level.js';
 import Player from './player.js';
-import { G } from './main.js';
+import { getCanvasDimensions, addToStage, getAsset } from './main.js';
 
 
 var PLAYER: Player | null = null;
@@ -38,7 +38,7 @@ createjs.Ticker.on( 'tick', tick as (event: Object) => void );
 
 function initMessage()
 {
-var canvasWidth = G.CANVAS.width;
+const canvas = getCanvasDimensions();
 
     // the text part
 MESSAGE = new createjs.Text( '', '30px monospace' );
@@ -51,7 +51,7 @@ var backgroundHeight = 40;
 var g = background.graphics;
 
 g.beginFill( 'lightblue' );
-g.drawRect( -canvasWidth / 2, 0, G.CANVAS.width, backgroundHeight );
+g.drawRect( -canvas.width / 2, 0, canvas.width, backgroundHeight );
 g.endFill();
 
     // the container
@@ -61,10 +61,10 @@ MESSAGE_CONTAINER.visible = false;
 MESSAGE_CONTAINER.addChild( background );
 MESSAGE_CONTAINER.addChild( MESSAGE );
 
-MESSAGE_CONTAINER.x = G.CANVAS.width / 2;
+MESSAGE_CONTAINER.x = canvas.width / 2;
 MESSAGE_CONTAINER.y = 0;
 
-G.STAGE.addChild( MESSAGE_CONTAINER );
+addToStage( MESSAGE_CONTAINER );
 
     // the timeout that will clear the message
 MESSAGE_TIMEOUT = new Utilities.Timeout();
@@ -100,7 +100,7 @@ CURRENT_LEVEL = 1;
 
 export function loadInitialLevel()
 {
-let first = G.PRELOAD.getResult( 'level_1' ) as LevelInfo;
+let first = getAsset( 'level_1' ) as LevelInfo;
 
 PLAYER = new Player();
 LEVEL = new Level( first );
@@ -137,7 +137,7 @@ else
 
 var next = 'level_' + CURRENT_LEVEL;
 
-var levelInfo = G.PRELOAD.getResult( next ) as LevelInfo;
+var levelInfo = getAsset( next ) as LevelInfo;
 
 if ( levelInfo !== null )
     {
@@ -164,7 +164,7 @@ else
 
 
 
-function tick( event: createjs.TickerEvent )
+export function tick( event: createjs.TickerEvent )
 {
 if ( LEVEL )
     {
@@ -199,7 +199,7 @@ MESSAGE.text = text;
 MESSAGE_CONTAINER.visible = true;
 
     // re-add the element so that it stays on top of other elements (z-index)
-G.STAGE.addChild( MESSAGE_CONTAINER );
+addToStage( MESSAGE_CONTAINER );
 
 MESSAGE_TIMEOUT.start( function()
     {

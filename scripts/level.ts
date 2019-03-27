@@ -2,7 +2,7 @@ import * as Game from './game.js';
 import Car, { CarType } from './car.js';
 import Road, { RoadInfo } from './road.js';
 import Player from './player.js';
-import { G } from './main.js';
+import { getCanvasDimensions } from './main.js';
 
 
 export interface CarsInfo {
@@ -35,13 +35,14 @@ export default class Level {
 
 constructor( info: LevelInfo )
 {
-var player = Game.getPlayer()!;
+const player = Game.getPlayer()!;
+const canvas = getCanvasDimensions();
 
 this.cars = [];
 this.road = new Road( info.road );
 
-this.start_x = G.CANVAS.width / 2 - player.width / 2;
-this.start_y = G.CANVAS.height / 2 - this.road.height / 2 - player.height - 5;
+this.start_x = canvas.width / 2 - player.width / 2;
+this.start_y = canvas.height / 2 - this.road.height / 2 - player.height - 5;
 
 player.positionIn( this.start_x, this.start_y );
 
@@ -64,7 +65,7 @@ for (var a = 0 ; a < this.cars_info.length ; a++)
         // starting 'x'
     var x = carTypeInfo.speed * (carInfo.spawn_interval_seconds - carInfo.start_seconds);
 
-    while( x < G.CANVAS.width )
+    while( x < canvas.width )
         {
         var car = new Car({
                 x: x,
