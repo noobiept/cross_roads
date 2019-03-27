@@ -10,6 +10,7 @@ export interface CarsInfo {
     start_seconds: number;
     spawn_interval_seconds: number;
     lane: number;
+    count: number;
 }
 
 

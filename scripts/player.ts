@@ -27,7 +27,8 @@ this.setupShape();
 
 setupShape()
 {
-var shape = new createjs.Bitmap();
+const image = G.PRELOAD.getResult('player_1');
+const shape = new createjs.Bitmap( image );
 
 this.shape = shape;
 this.getNewRandomShape();
@@ -39,8 +40,7 @@ G.STAGE.addChild( shape );
 getNewRandomShape()
 {
 var position = Utilities.getRandomInt( 1, 8 );
-
-this.shape.image = G.PRELOAD.getResult( 'player_' + position );
+this.shape.image = G.PRELOAD.getResult( 'player_' + position ) as HTMLImageElement;
 }
 
 

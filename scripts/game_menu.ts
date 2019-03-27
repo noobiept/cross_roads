@@ -69,7 +69,7 @@ export function startGame()
 {
 TIMER.restart();
 GameMenu.setLevel( Game.getCurrentLevel() );
-GameMenu.setLives( Game.getPlayer().lives );
+GameMenu.setLives( Game.getPlayer()!.lives );
 }
 
 
