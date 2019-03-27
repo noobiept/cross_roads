@@ -80,13 +80,9 @@ loadingMessage.textAlign = 'center';
 loadingMessage.x = CANVAS.width / 2;
 loadingMessage.y = CANVAS.height / 2;
 
-var tickFunction = createjs.Ticker.on( 'tick', function()
-    {
-    STAGE.update();
-    });
+createjs.Ticker.on( 'tick', mainTick as (event: Object) => void );
 
 STAGE.addChild( loadingMessage );
-
 
 PRELOAD = new createjs.LoadQueue();
 PRELOAD.installPlugin( createjs.Sound );
@@ -98,7 +94,6 @@ PRELOAD.on( 'complete', function()
     {
     STAGE.removeChild( loadingMessage );
     STAGE.update();
-    createjs.Ticker.off( 'tick', tickFunction );
 
         // show the help page on the first run of the game
     if ( !data[ 'cross_roads_has_run_before' ] )
@@ -160,6 +155,10 @@ export function getAsset( id: string ) {
 }
 
 
-export function updateStage() {
+/**
+ * The main game loop, calls other updates from here.
+ */
+function mainTick(event: createjs.TickerEvent) {
+    Game.tick( event );
     STAGE.update();
 }

@@ -4,7 +4,7 @@ import * as HighScore from './high_score.js';
 import * as Keyboard from './keyboard.js';
 import Level, { LevelInfo } from './level.js';
 import Player from './player.js';
-import { getCanvasDimensions, addToStage, getAsset, updateStage } from './main.js';
+import { getCanvasDimensions, addToStage, getAsset } from './main.js';
 
 
 var PLAYER: Player | null = null;
@@ -163,7 +163,9 @@ else
 };
 
 
-
+/**
+ * Update the level and player state.
+ */
 export function tick( event: createjs.TickerEvent )
 {
 if ( LEVEL )
@@ -175,8 +177,6 @@ if ( PLAYER )
     {
     PLAYER.tick( event );
     }
-
-updateStage();
 }
 
 
