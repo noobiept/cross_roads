@@ -2,6 +2,7 @@ import * as GameMenu from './game_menu.js';
 import * as Options from './options.js';
 import * as HighScore from './high_score.js';
 import * as Keyboard from './keyboard.js';
+import * as Music from './music.js';
 import Level, { LevelInfo } from './level.js';
 import Player from './player.js';
 import { getCanvasDimensions, addToStage, getAsset } from './main.js';
@@ -15,20 +16,11 @@ var MESSAGE: createjs.Text;
 var MESSAGE_CONTAINER: createjs.Container;
 var MESSAGE_TIMEOUT: Utilities.Timeout;
 
-var MUSIC: createjs.AbstractSoundInstance;
-
 
 export function start()
 {
 initMessage();
 loadInitialLevel();
-
-MUSIC = createjs.Sound.play( 'happy_tune', null, 0, 0, -1 );
-
-if ( Options.getMusicState() === false )
-    {
-    MUSIC.stop();
-    }
 
 GameMenu.show();
 }
@@ -213,15 +205,16 @@ MESSAGE_TIMEOUT.start( function()
 
 export function setMusicState( onOff: boolean )
 {
+Options.setMusicState( onOff );
+
 if ( onOff === true )
     {
-    MUSIC.play();
+
+    Music.play();
     }
 
 else
     {
-    MUSIC.stop();
+    Music.stop();
     }
-
-Options.setMusicState( onOff );
 }

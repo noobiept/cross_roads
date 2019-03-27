@@ -4,6 +4,7 @@ import * as GameMenu from './game_menu.js';
 import * as HighScore from './high_score.js';
 import * as Keyboard from './keyboard.js';
 import * as Game from './game.js';
+import * as Music from './music.js';
 
 let CANVAS: HTMLCanvasElement;
 let STAGE: createjs.Stage;
@@ -30,7 +31,7 @@ createjs.Sound.alternateExtensions = [ 'mp3' ];
 Options.load( data[ 'cross_roads_options' ] );
 GameMenu.init();
 HighScore.init( data[ 'cross_roads_high_score' ] );
-Keyboard.init();
+Keyboard.init([ Music.play ]);
 
 var manifest = [
         { id: 'level_1', src: 'levels/level1.json' },

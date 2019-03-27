@@ -6,11 +6,20 @@ export var KEYS_HELD = {
     right: false
 };
 
+    // tells us if the user has started playing the game yet or not
+    // some code can only run after some user input (like the music)
+let GOT_INITIAL_USER_INPUT = false;
+let INITIAL_USER_INPUT_CALLBACKS: (() => void)[] = [];
 
-export function init()
+
+export function init( onInitialInput?: (() => void)[] )
 {
 window.addEventListener( 'keydown', handleKeyDown, false );
 window.addEventListener( 'keyup', handleKeyUp, false );
+
+if ( onInitialInput ) {
+    INITIAL_USER_INPUT_CALLBACKS = onInitialInput;
+}
 }
 
 
@@ -25,6 +34,10 @@ KEYS_HELD.right = false;
 
 function handleKeyDown( event: KeyboardEvent )
 {
+if ( !GOT_INITIAL_USER_INPUT ) {
+    handleInitialInput();
+}
+
 switch( event.keyCode )
     {
     case Utilities.KEY_CODE.a:
@@ -84,3 +97,11 @@ switch( event.keyCode )
     }
 }
 
+
+function handleInitialInput() {
+    for (let a = 0 ; a < INITIAL_USER_INPUT_CALLBACKS.length ; a++) {
+        INITIAL_USER_INPUT_CALLBACKS[ a ]();
+    }
+
+    GOT_INITIAL_USER_INPUT = true;
+}
