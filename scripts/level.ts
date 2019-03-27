@@ -117,21 +117,18 @@ tick( event: createjs.TickerEvent )
 var delta = event.delta / 1000;  // in seconds
 this.count_duration += delta;
 
-var a;
-var info;
-var car;
 
     // check if we need to activate any car info
-for (a = this.cars_info.length - 1 ; a >= 0 ; a--)
+for (let a = this.cars_info.length - 1 ; a >= 0 ; a--)
     {
-    info = this.cars_info[ a ];
+    const info = this.cars_info[ a ];
 
     if ( this.count_duration >= info.start_seconds )
         {
         this.active_cars_info.push( info );
         this.cars_info.splice( a, 1 );
 
-        car = new Car({
+        const car = new Car({
             y: this.road.laneToY( info.lane ),
             type: info.type,
             level: this
@@ -142,15 +139,15 @@ for (a = this.cars_info.length - 1 ; a >= 0 ; a--)
     }
 
     // add new cars, according to its spawn interval
-for (a = 0 ; a < this.active_cars_info.length ; a++)
+for (let a = 0 ; a < this.active_cars_info.length ; a++)
     {
-    info = this.active_cars_info[ a ];
+    const info = this.active_cars_info[ a ];
 
     info.count += delta;
 
     if ( info.count >= info.spawn_interval_seconds )
         {
-        car = new Car({
+        const car = new Car({
             y: this.road.laneToY( info.lane ),
             type: info.type,
             level: this
@@ -187,11 +184,9 @@ if ( this.player.getY() > this.destination_y )
 };
 
 
-
 /*
     Check collisions between the player and a car
  */
-
 checkCollisions()
 {
 var player = this.player;

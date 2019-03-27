@@ -31,8 +31,6 @@ if ( Options.getMusicState() === false )
     }
 
 GameMenu.show();
-
-createjs.Ticker.on( 'tick', tick as (event: Object) => void );
 }
 
 
