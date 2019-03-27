@@ -11,7 +11,7 @@ var OPTIONS: OptionsData = {
     };
 
 
-export function load( optionsData: OptionsData )
+export function load( optionsData?: OptionsData )
 {
 if ( optionsData )
     {

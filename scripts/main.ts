@@ -3,6 +3,7 @@ import * as Options from './options.js';
 import * as GameMenu from './game_menu.js';
 import * as HighScore from './high_score.js';
 import * as Keyboard from './keyboard.js';
+import * as Game from './game.js';
 
 
 interface Global {
@@ -94,10 +95,10 @@ G.STAGE.addChild( loadingMessage );
 
 G.PRELOAD = new createjs.LoadQueue();
 G.PRELOAD.installPlugin( createjs.Sound );
-G.PRELOAD.on( 'progress', function( event )
+G.PRELOAD.on( 'progress', function( event: createjs.ProgressEvent )
     {
     loadingMessage.text = 'Loading.. ' + (event.progress * 100 | 0) + '%';
-    });
+    } as (event: Object) => void);
 G.PRELOAD.on( 'complete', function()
     {
     G.STAGE.removeChild( loadingMessage );
@@ -109,10 +110,10 @@ G.PRELOAD.on( 'complete', function()
         {
         AppStorage.setData( { cross_roads_has_run_before: true } );
 
-        var help = document.getElementById( 'Help' );
+        var help = document.getElementById( 'Help' )!;
         help.className = 'show';
 
-        var start = document.getElementById( 'HelpStartGame' );
+        var start = document.getElementById( 'HelpStartGame' )!;
         start.onclick = function()
             {
             help.className = '';

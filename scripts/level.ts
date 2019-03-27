@@ -14,7 +14,7 @@ export interface CarsInfo {
 
 
 export interface LevelInfo {
-    road: RoadInfo[],
+    road: RoadInfo,
     cars: CarsInfo[]
 }
 
@@ -34,7 +34,7 @@ export default class Level {
 
 constructor( info: LevelInfo )
 {
-var player = Game.getPlayer();
+var player = Game.getPlayer()!;
 
 this.cars = [];
 this.road = new Road( info.road );
@@ -82,7 +82,7 @@ for (var a = 0 ; a < this.cars_info.length ; a++)
 this.active_cars_info = [];
 
     // need to move here to pass the level
-this.destination_y = this.road.getY() + info.road.lanes * Road.getLaneHeight() + 10;
+this.destination_y = this.road.getY() + info.road.lanes * Road.LANE_HEIGHT + 10;
 
 this.player = player;
 }

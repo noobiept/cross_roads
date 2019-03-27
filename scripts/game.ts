@@ -2,7 +2,7 @@ import * as GameMenu from './game_menu.js';
 import * as Options from './options.js';
 import * as HighScore from './high_score.js';
 import * as Keyboard from './keyboard.js';
-import Level from './level.js';
+import Level, { LevelInfo } from './level.js';
 import Player from './player.js';
 import { G } from './main.js';
 
@@ -100,8 +100,10 @@ CURRENT_LEVEL = 1;
 
 export function loadInitialLevel()
 {
+let first = G.PRELOAD.getResult( 'level_1' ) as LevelInfo;
+
 PLAYER = new Player();
-LEVEL = new Level( G.PRELOAD.getResult( 'level_1' ) );
+LEVEL = new Level( first );
 PLAYER.bringToTop();
 
 CURRENT_LEVEL = 1;
@@ -117,7 +119,9 @@ showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
  */
 export function nextLevel( levelPosition?: number )
 {
-LEVEL.clear();
+if ( LEVEL ) {
+    LEVEL.clear();
+}
 LEVEL = null;
 
 if ( typeof levelPosition === 'undefined' )
@@ -133,15 +137,17 @@ else
 
 var next = 'level_' + CURRENT_LEVEL;
 
-var levelInfo = G.PRELOAD.getResult( next );
+var levelInfo = G.PRELOAD.getResult( next ) as LevelInfo;
 
 if ( levelInfo !== null )
     {
     LEVEL = new Level( levelInfo );
     GameMenu.setLevel( CURRENT_LEVEL );
 
-    PLAYER.getNewRandomShape();
-    PLAYER.bringToTop();
+    if ( PLAYER ) {
+        PLAYER.getNewRandomShape();
+        PLAYER.bringToTop();
+    }
 
     showMessage( 'Level ' + CURRENT_LEVEL, 2000 );
     }
