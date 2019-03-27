@@ -1,7 +1,7 @@
 {
     "road": {
         "lanes": 10,
-        "side_walks": [ 0, 5, 9 ]
+        "side_walks": [0, 5, 9]
     },
     "cars": [
         {
@@ -40,7 +40,7 @@
             "spawn_interval_seconds": 1.7,
             "lane": 7
         },
-            {
+        {
             "type": "three",
             "start_seconds": 0.5,
             "spawn_interval_seconds": 1.8,

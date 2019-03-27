@@ -1,7 +1,7 @@
 {
     "road": {
         "lanes": 13,
-        "side_walks": [ 0, 4, 8, 12 ]
+        "side_walks": [0, 4, 8, 12]
     },
     "cars": [
         {
