@@ -80,12 +80,15 @@ export function loadInitialLevel() {
     let first = getAsset("level_1") as LevelInfo;
 
     PLAYER = new Player();
-    LEVEL = new Level(first);
+    LEVEL = new Level({
+        info: first,
+        player: PLAYER,
+    });
     PLAYER.bringToTop();
 
     CURRENT_LEVEL = 1;
 
-    GameMenu.startGame();
+    GameMenu.startGame(CURRENT_LEVEL, PLAYER.lives);
 
     showMessage("Level " + CURRENT_LEVEL, 2000);
 }
@@ -94,6 +97,12 @@ export function loadInitialLevel() {
  * @param levelPosition - The level number to load. Otherwise it loads the next level.
  */
 export function nextLevel(levelPosition?: number) {
+    if (!PLAYER) {
+        throw new Error(
+            "Trying to load the next level without a player defined."
+        );
+    }
+
     if (LEVEL) {
         LEVEL.clear();
     }
@@ -110,13 +119,14 @@ export function nextLevel(levelPosition?: number) {
     var levelInfo = getAsset(next) as LevelInfo;
 
     if (levelInfo !== null) {
-        LEVEL = new Level(levelInfo);
+        LEVEL = new Level({
+            info: levelInfo,
+            player: PLAYER,
+        });
         GameMenu.setLevel(CURRENT_LEVEL);
 
-        if (PLAYER) {
-            PLAYER.getNewRandomShape();
-            PLAYER.bringToTop();
-        }
+        PLAYER.getNewRandomShape();
+        PLAYER.bringToTop();
 
         showMessage("Level " + CURRENT_LEVEL, 2000);
     } else {
@@ -141,10 +151,6 @@ export function tick(event: createjs.TickerEvent) {
     if (PLAYER) {
         PLAYER.tick(event);
     }
-}
-
-export function getPlayer() {
-    return PLAYER;
 }
 
 export function getCurrentLevel() {

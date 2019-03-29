@@ -17,6 +17,11 @@ export interface LevelInfo {
     cars: CarsInfo[];
 }
 
+export interface LevelArgs {
+    info: LevelInfo;
+    player: Player;
+}
+
 export default class Level {
     cars: Car[];
     road: Road;
@@ -28,8 +33,9 @@ export default class Level {
     active_cars_info: CarsInfo[];
     player: Player;
 
-    constructor(info: LevelInfo) {
-        const player = Game.getPlayer()!;
+    constructor(args: LevelArgs) {
+        const player = args.player;
+        const info = args.info;
         const canvas = getCanvasDimensions();
 
         this.cars = [];

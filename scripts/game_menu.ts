@@ -48,10 +48,10 @@ export function setLevel(level: number) {
     LEVEL_ELEMENT.innerHTML = level.toString();
 }
 
-export function startGame() {
+export function startGame(level: number, lives: number) {
     TIMER.restart();
-    setLevel(Game.getCurrentLevel());
-    setLives(Game.getPlayer()!.lives);
+    setLevel(level);
+    setLives(lives);
 }
 
 export function getTimer() {
