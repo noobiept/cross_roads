@@ -60,12 +60,12 @@ export function getTimer() {
 
 export function show() {
     var menu = document.getElementById("Menu")!;
-    menu.style.display = "block";
+    menu.classList.remove("hidden");
 }
 
 export function hide() {
     var menu = document.getElementById("Menu")!;
-    menu.style.display = "none";
+    menu.classList.add("hidden");
 }
 
 function boolToString(value: boolean) {

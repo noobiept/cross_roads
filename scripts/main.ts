@@ -102,11 +102,11 @@ function initApp(data: AppStorage.StorageData) {
             AppStorage.setData({ cross_roads_has_run_before: true });
 
             var help = document.getElementById("Help")!;
-            help.className = "show";
+            help.classList.remove("hidden");
 
             var start = document.getElementById("HelpStartGame")!;
             start.onclick = function() {
-                help.className = "";
+                help.classList.add("hidden");
                 Game.start();
             };
         } else {
