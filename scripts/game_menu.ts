@@ -28,12 +28,6 @@ export function init() {
         Game.restart();
     };
 
-    // donate button
-    var donate = document.getElementById("Donate")!;
-    donate.onclick = function() {
-        window.open("http://nbpt.eu/donate/", "_blank");
-    };
-
     // lives count
     LIVES_ELEMENT = container.querySelector("#Lives span") as HTMLElement;
 
