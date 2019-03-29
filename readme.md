@@ -16,8 +16,9 @@ Use the arrow keys (or wasd keys) to control the player movement.
 
 # Images
 
--   [cars](http://opengameart.org/content/basic-2d-car-collection) (license: public domain)
--   [player](http://opengameart.org/content/30-sprites-made-in-30-minutes) (license: public domain)
+-   [cars](http://opengameart.org/content/basic-2d-car-collection) (license: `public domain`)
+-   [player](http://opengameart.org/content/30-sprites-made-in-30-minutes) (license: `public domain`)
+-   [explosion](https://opengameart.org/content/explosion-3) (license: `public domain`)
 
 # Music
 

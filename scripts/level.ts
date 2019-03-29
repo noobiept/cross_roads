@@ -2,6 +2,7 @@ import * as Game from "./game.js";
 import Car, { CarType } from "./car.js";
 import Road, { RoadInfo } from "./road.js";
 import Player from "./player.js";
+import Explosion from "./explosion.js";
 import { getCanvasDimensions } from "./main.js";
 
 export interface CarsInfo {
@@ -151,6 +152,11 @@ export default class Level {
 
         if (this.checkCollisions()) {
             Game.showMessage("Collision!", 500);
+
+            const explosion = new Explosion({
+                x: this.player.getX(),
+                y: this.player.getY(),
+            });
 
             // no more new lives
             if (!this.newLife()) {

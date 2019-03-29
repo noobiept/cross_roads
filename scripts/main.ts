@@ -65,6 +65,7 @@ function initApp(data: AppStorage.StorageData) {
         { id: "car_5", src: "images/car5.png" },
         { id: "car_6", src: "images/car6.png" },
 
+        { id: "explosion", src: "images/explosion.png" },
         { id: "happy_tune", src: "music/happy_tune.ogg" },
 
         { id: "player_1", src: "images/player1.png" },
