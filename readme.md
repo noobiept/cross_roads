@@ -26,3 +26,4 @@ Use the arrow keys (or wasd keys) to control the player movement.
 # Commands
 
 -   `npm run dev`: Build the game and start a local server (at `localhost:8000/`).
+-   `npm run build`: Build the release version of the game.
