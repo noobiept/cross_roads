@@ -4,6 +4,7 @@ import * as Game from "./game.js";
 
 var LIVES_ELEMENT: HTMLElement;
 var LEVEL_ELEMENT: HTMLElement;
+var HELP_SECTION: HTMLElement;
 var TIMER: Utilities.Timer;
 
 export function init() {
@@ -21,6 +22,15 @@ export function init() {
 
         Game.setMusicState(isPlaying);
     };
+
+    // help section
+    HELP_SECTION = document.getElementById("HelpSection")!;
+
+    var openHelp = document.getElementById("Help")!;
+    openHelp.onclick = toggleHelpSection;
+
+    var closeHelp = document.getElementById("HelpClose")!;
+    closeHelp.onclick = toggleHelpSection;
 
     // restart the game
     var restart = document.getElementById("Restart")!;
@@ -74,4 +84,29 @@ function boolToString(value: boolean) {
     }
 
     return "Off";
+}
+
+/**
+ * Show/hide the help section on the center of the screen.
+ */
+export function toggleHelpSection() {
+    HELP_SECTION.classList.toggle("hidden");
+}
+
+/**
+ * The first time the application is opened, we show the help section and wait for the close button to be pressed before starting the game.
+ */
+export async function openInitialHelpSection() {
+    return new Promise((resolve) => {
+        var closeHelp = document.getElementById("HelpClose")!;
+        closeHelp.onclick = () => {
+            toggleHelpSection();
+
+            // set the default listener back
+            closeHelp.onclick = toggleHelpSection;
+            resolve();
+        };
+
+        toggleHelpSection();
+    });
 }

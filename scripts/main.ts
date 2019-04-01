@@ -94,22 +94,15 @@ function initApp(data: AppStorage.StorageData) {
     PRELOAD.on("progress", function(event: createjs.ProgressEvent) {
         loadingMessage.text = "Loading.. " + ((event.progress * 100) | 0) + "%";
     } as (event: Object) => void);
-    PRELOAD.on("complete", function() {
+    PRELOAD.on("complete", async function() {
         STAGE.removeChild(loadingMessage);
         STAGE.update();
 
         // show the help page on the first run of the game
         if (!data["cross_roads_has_run_before"]) {
             AppStorage.setData({ cross_roads_has_run_before: true });
-
-            var help = document.getElementById("Help")!;
-            help.classList.remove("hidden");
-
-            var start = document.getElementById("HelpStartGame")!;
-            start.onclick = function() {
-                help.classList.add("hidden");
-                Game.start();
-            };
+            await GameMenu.openInitialHelpSection();
+            Game.start();
         } else {
             Game.start();
         }
