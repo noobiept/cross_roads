@@ -47,6 +47,7 @@ h4 {
 }
 
 #CanvasContainer {
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
