@@ -10,12 +10,12 @@ export default class Road implements GameElement {
     // height of each lane, as well of the side walks
     static readonly LANE_HEIGHT = 30;
 
-    lines: createjs.Shape[];
-    container: createjs.Container;
-    lanes: number;
-    side_walks: number[];
-    width: number;
-    height: number;
+    private lines: createjs.Shape[];
+    private container: createjs.Container;
+    private lanes: number;
+    private side_walks: number[];
+    private width: number;
+    private height: number;
 
     constructor(info: RoadInfo) {
         const canvas = getCanvasDimensions();

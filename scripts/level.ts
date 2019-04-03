@@ -24,15 +24,15 @@ export interface LevelArgs {
 }
 
 export default class Level {
-    cars: Car[];
-    road: Road;
-    start_x: number;
-    start_y: number;
-    destination_y: number;
-    count_duration: number;
-    cars_info: CarsInfo[];
-    active_cars_info: CarsInfo[];
-    player: Player;
+    private cars: Car[];
+    private road: Road;
+    private start_x: number;
+    private start_y: number;
+    private destination_y: number;
+    private count_duration: number;
+    private cars_info: CarsInfo[];
+    private active_cars_info: CarsInfo[];
+    private player: Player;
 
     constructor(args: LevelArgs) {
         const player = args.player;
@@ -42,9 +42,12 @@ export default class Level {
         this.cars = [];
         this.road = new Road(info.road);
 
-        this.start_x = canvas.width / 2 - player.width / 2;
+        this.start_x = canvas.width / 2 - player.getWidth() / 2;
         this.start_y =
-            canvas.height / 2 - this.road.height / 2 - player.height - 5;
+            canvas.height / 2 -
+            this.road.getHeight() / 2 -
+            player.getHeight() -
+            5;
 
         player.positionIn(this.start_x, this.start_y);
 
@@ -186,12 +189,12 @@ export default class Level {
             var collision = Utilities.boxBoxCollision(
                 player.getX(),
                 player.getY(),
-                player.width,
-                player.height,
+                player.getWidth(),
+                player.getHeight(),
                 car.getX(),
                 car.getY(),
-                car.width,
-                car.height
+                car.getWidth(),
+                car.getHeight()
             );
 
             if (collision) {

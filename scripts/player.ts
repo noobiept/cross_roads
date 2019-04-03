@@ -9,12 +9,12 @@ import {
 import { GameElement } from "./game.js";
 
 export default class Player implements GameElement {
-    shape!: createjs.Bitmap;
-    width: number;
-    height: number;
-    movement_step: number;
-    movement_animation: number;
-    lives: number;
+    private shape!: createjs.Bitmap;
+    private width: number;
+    private height: number;
+    private movement_step: number;
+    private movement_animation: number;
+    private lives: number;
 
     constructor() {
         this.width = 15;
@@ -94,6 +94,10 @@ export default class Player implements GameElement {
 
     getHeight() {
         return this.height;
+    }
+
+    getCurrentLives() {
+        return this.lives;
     }
 
     oneLessLife() {

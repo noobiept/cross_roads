@@ -63,11 +63,11 @@ export default class Car implements GameElement {
         },
     };
 
-    shape: createjs.Bitmap;
-    type: CarType;
-    info: CarInfo;
-    width: number;
-    height: number;
+    private shape: createjs.Bitmap;
+    private type: CarType;
+    private info: CarInfo;
+    private width: number;
+    private height: number;
 
     constructor(args: CarArgs) {
         if (typeof args.x === "undefined") {

@@ -95,7 +95,7 @@ export function loadInitialLevel() {
 
     CURRENT_LEVEL = 1;
 
-    GameMenu.startGame(CURRENT_LEVEL, PLAYER.lives);
+    GameMenu.startGame(CURRENT_LEVEL, PLAYER.getCurrentLives());
 
     showMessage("Level " + CURRENT_LEVEL, 2000);
 }
