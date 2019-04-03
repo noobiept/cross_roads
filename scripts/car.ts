@@ -5,6 +5,7 @@ import {
     addToStage,
     removeFromStage,
 } from "./main.js";
+import { GameElement } from "./game.js";
 
 export type CarType = "one" | "two" | "three" | "four" | "five" | "six";
 
@@ -22,7 +23,7 @@ export interface CarArgs {
     level: Level;
 }
 
-export default class Car {
+export default class Car implements GameElement {
     static readonly TYPES = {
         one: {
             image: "car_1",
@@ -114,5 +115,13 @@ export default class Car {
 
     getY() {
         return this.shape.y;
+    }
+
+    getWidth() {
+        return this.width;
+    }
+
+    getHeight() {
+        return this.height;
     }
 }

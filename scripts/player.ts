@@ -6,8 +6,9 @@ import {
     getCanvasDimensions,
     removeFromStage,
 } from "./main.js";
+import { GameElement } from "./game.js";
 
-export default class Player {
+export default class Player implements GameElement {
     shape!: createjs.Bitmap;
     width: number;
     height: number;
@@ -85,6 +86,14 @@ export default class Player {
 
     getY() {
         return this.shape.y;
+    }
+
+    getWidth() {
+        return this.width;
+    }
+
+    getHeight() {
+        return this.height;
     }
 
     oneLessLife() {

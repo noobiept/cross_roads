@@ -1,19 +1,31 @@
 import { getAsset, addToStage, removeFromStage } from "./main.js";
+import { GameElement } from "./game.js";
 
 export interface ExplosionArgs {
     x: number;
     y: number;
 }
 
-export default class Explosion {
-    sprite: createjs.Sprite;
+export default class Explosion implements GameElement {
+    private sprite: createjs.Sprite;
+    private width: number;
+    private height: number;
 
-    constructor(args: ExplosionArgs) {
+    constructor(args?: ExplosionArgs) {
+        if (!args) {
+            args = {
+                x: 0,
+                y: 0,
+            };
+        }
+
+        const width = 32;
+        const height = 32;
         const data = {
             images: [getAsset("explosion")],
             frames: {
-                width: 32,
-                height: 32,
+                width: width,
+                height: height,
                 count: 6,
                 regX: 0,
                 regY: 0,
@@ -37,9 +49,32 @@ export default class Explosion {
         addToStage(sprite);
 
         this.sprite = sprite;
+        this.width = width;
+        this.height = height;
+    }
+
+    setPosition(position: { x: number; y: number }) {
+        this.sprite.x = position.x;
+        this.sprite.y = position.y;
     }
 
     clear() {
         removeFromStage(this.sprite);
+    }
+
+    getX() {
+        return this.sprite.x;
+    }
+
+    getY() {
+        return this.sprite.y;
+    }
+
+    getWidth() {
+        return this.width;
+    }
+
+    getHeight() {
+        return this.height;
     }
 }

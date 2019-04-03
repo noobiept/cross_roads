@@ -1,11 +1,12 @@
 import { getCanvasDimensions, addToStage, removeFromStage } from "./main.js";
+import { GameElement } from "./game.js";
 
 export interface RoadInfo {
     lanes: number;
     side_walks: number[];
 }
 
-export default class Road {
+export default class Road implements GameElement {
     // height of each lane, as well of the side walks
     static readonly LANE_HEIGHT = 30;
 
@@ -130,5 +131,13 @@ export default class Road {
 
     getY() {
         return this.container.y;
+    }
+
+    getWidth() {
+        return this.width;
+    }
+
+    getHeight() {
+        return this.height;
     }
 }

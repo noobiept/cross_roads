@@ -153,10 +153,10 @@ export default class Level {
         if (this.checkCollisions()) {
             Game.showMessage("Collision!", 500);
 
-            const explosion = new Explosion({
-                x: this.player.getX(),
-                y: this.player.getY(),
-            });
+            // center the explosion around the player
+            const explosion = new Explosion();
+            const centeredPosition = Game.centerElement(this.player, explosion);
+            explosion.setPosition(centeredPosition);
 
             // no more new lives
             if (!this.newLife()) {
