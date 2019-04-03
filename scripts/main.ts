@@ -90,6 +90,8 @@ function initApp(data: AppStorage.StorageData) {
     STAGE.addChild(loadingMessage);
 
     PRELOAD = new createjs.LoadQueue();
+    PRELOAD.setMaxConnections(10);
+    PRELOAD.maintainScriptOrder = false;
     PRELOAD.installPlugin(createjs.Sound);
     PRELOAD.on("progress", function(event: createjs.ProgressEvent) {
         loadingMessage.text = "Loading.. " + ((event.progress * 100) | 0) + "%";
