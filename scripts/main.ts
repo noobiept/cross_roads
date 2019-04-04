@@ -21,6 +21,9 @@ window.onload = function() {
     );
 };
 
+/**
+ * Initialize the application with the data we got from the storage.
+ */
 function initApp(data: AppStorage.StorageData) {
     CANVAS = document.getElementById("MainCanvas") as HTMLCanvasElement;
     CANVAS.width = 600;
@@ -98,7 +101,6 @@ function initApp(data: AppStorage.StorageData) {
     } as (event: Object) => void);
     PRELOAD.on("complete", async function() {
         STAGE.removeChild(loadingMessage);
-        STAGE.update();
 
         // show the help page on the first run of the game
         if (!data["cross_roads_has_run_before"]) {

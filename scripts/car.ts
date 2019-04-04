@@ -64,7 +64,6 @@ export default class Car implements GameElement {
     };
 
     private shape: createjs.Bitmap;
-    private type: CarType;
     private info: CarInfo;
     private width: number;
     private height: number;
@@ -76,7 +75,6 @@ export default class Car implements GameElement {
 
         var _this = this;
 
-        this.type = args.type;
         this.info = Car.TYPES[args.type];
         this.width = this.info.width;
         this.height = this.info.height;

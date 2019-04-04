@@ -12,6 +12,7 @@ export interface GameElement {
     getY(): number;
     getWidth(): number;
     getHeight(): number;
+    clear(): void;
 }
 
 var PLAYER: Player | null = null;
