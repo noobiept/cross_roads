@@ -1,4 +1,5 @@
 import * as Game from "./game.js";
+import * as Message from "./message.js";
 import Car, { CarType } from "./car.js";
 import Road, { RoadInfo } from "./road.js";
 import Player from "./player.js";
@@ -154,7 +155,7 @@ export default class Level {
         }
 
         if (this.checkCollisions()) {
-            Game.showMessage("Collision!", 500);
+            Message.show("Collision!", 500);
 
             // center the explosion around the player
             const explosion = new Explosion();
@@ -164,7 +165,7 @@ export default class Level {
             // no more new lives
             if (!this.newLife()) {
                 Game.clear();
-                Game.showMessage("No more lives, you loose!", 2000, function() {
+                Message.show("No more lives, you loose!", 2000, function() {
                     Game.loadInitialLevel();
                 });
                 return;
