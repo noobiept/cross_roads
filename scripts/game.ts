@@ -6,7 +6,7 @@ import * as Music from "./music.js";
 import * as Message from "./message.js";
 import Level, { LevelInfo } from "./level.js";
 import Player from "./player.js";
-import { addToStage, getAsset } from "./main.js";
+import { getAsset } from "./main.js";
 
 export interface GameElement {
     getX(): number;
@@ -21,9 +21,7 @@ var LEVEL: Level | null = null;
 var CURRENT_LEVEL = 1;
 
 export function start() {
-    Message.init();
     loadInitialLevel();
-
     GameMenu.show();
 }
 

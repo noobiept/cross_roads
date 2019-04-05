@@ -1,8 +1,9 @@
-import { getCanvasDimensions, addToStage } from "./main.js";
+import { getCanvasDimensions, addToStage, removeFromStage } from "./main.js";
 
 var MESSAGE: createjs.Text;
 var MESSAGE_CONTAINER: createjs.Container;
 var MESSAGE_TIMEOUT: Utilities.Timeout;
+var LOADING: createjs.Text;
 
 /**
  * Initialize the module.
@@ -38,6 +39,12 @@ export function init() {
 
     // the timeout that will clear the message
     MESSAGE_TIMEOUT = new Utilities.Timeout();
+
+    // the loading message
+    LOADING = new createjs.Text("", "30px monospace");
+    LOADING.textAlign = "center";
+    LOADING.x = canvas.width / 2;
+    LOADING.y = canvas.height / 2;
 }
 
 /**
@@ -57,4 +64,25 @@ export function show(text: string, timeout: number, callback?: () => void) {
             callback!();
         }
     }, timeout);
+}
+
+/**
+ * Show a loading message in the center of the canvas.
+ */
+export function addLoading() {
+    addToStage(LOADING);
+}
+
+/**
+ * Update the loading progress value.
+ */
+export function updateLoading(progress: number) {
+    LOADING.text = "Loading.. " + progress + "%";
+}
+
+/**
+ * Remove the loading message.
+ */
+export function removeLoading() {
+    removeFromStage(LOADING);
 }

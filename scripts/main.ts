@@ -5,6 +5,7 @@ import * as HighScore from "./high_score.js";
 import * as Keyboard from "./keyboard.js";
 import * as Game from "./game.js";
 import * as Music from "./music.js";
+import * as Message from "./message.js";
 
 let CANVAS: HTMLCanvasElement;
 let STAGE: createjs.Stage;
@@ -38,6 +39,7 @@ function initApp(data: AppStorage.StorageData) {
     GameMenu.init();
     HighScore.init(data["cross_roads_high_score"]);
     Keyboard.init([Music.play]);
+    Message.init();
 
     var manifest = [
         { id: "level_1", src: "levels/level1.json" },
@@ -81,26 +83,18 @@ function initApp(data: AppStorage.StorageData) {
         { id: "player_8", src: "images/player8.png" },
     ];
 
-    // add a loading message
-    var loadingMessage = new createjs.Text("", "30px monospace");
-
-    loadingMessage.textAlign = "center";
-    loadingMessage.x = CANVAS.width / 2;
-    loadingMessage.y = CANVAS.height / 2;
-
     createjs.Ticker.on("tick", mainTick as (event: Object) => void);
-
-    STAGE.addChild(loadingMessage);
+    Message.addLoading();
 
     PRELOAD = new createjs.LoadQueue();
     PRELOAD.setMaxConnections(10);
     PRELOAD.maintainScriptOrder = false;
     PRELOAD.installPlugin(createjs.Sound);
     PRELOAD.on("progress", function(event: createjs.ProgressEvent) {
-        loadingMessage.text = "Loading.. " + ((event.progress * 100) | 0) + "%";
+        Message.updateLoading((event.progress * 100) | 0);
     } as (event: Object) => void);
     PRELOAD.on("complete", async function() {
-        STAGE.removeChild(loadingMessage);
+        Message.removeLoading();
 
         // show the help page on the first run of the game
         if (!data["cross_roads_has_run_before"]) {
