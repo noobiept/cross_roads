@@ -4,10 +4,13 @@ import {
     getAsset,
     addToStage,
     removeFromStage,
+    getCarInfo,
 } from "./main.js";
 import { GameElement } from "./game.js";
 
 export type CarType = "one" | "two" | "three" | "four" | "five" | "six";
+
+export type AllCarsInfo = { [key in CarType]: CarInfo };
 
 export interface CarInfo {
     image: string;
@@ -24,45 +27,6 @@ export interface CarArgs {
 }
 
 export default class Car implements GameElement {
-    static readonly TYPES = {
-        one: {
-            image: "car_1",
-            speed: 50,
-            width: 47,
-            height: 24,
-        },
-        two: {
-            image: "car_2",
-            speed: 70,
-            width: 47,
-            height: 21,
-        },
-        three: {
-            image: "car_3",
-            speed: 100,
-            width: 31,
-            height: 11,
-        },
-        four: {
-            image: "car_4",
-            speed: 130,
-            width: 16,
-            height: 12,
-        },
-        five: {
-            image: "car_5",
-            speed: 60,
-            width: 20,
-            height: 16,
-        },
-        six: {
-            image: "car_6",
-            speed: 80,
-            width: 31,
-            height: 15,
-        },
-    };
-
     private shape: createjs.Bitmap;
     private info: CarInfo;
     private width: number;
@@ -75,7 +39,7 @@ export default class Car implements GameElement {
 
         var _this = this;
 
-        this.info = Car.TYPES[args.type];
+        this.info = getCarInfo(args.type);
         this.width = this.info.width;
         this.height = this.info.height;
 

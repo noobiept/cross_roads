@@ -4,9 +4,9 @@ import Car, { CarType } from "./car.js";
 import Road, { RoadInfo } from "./road.js";
 import Player from "./player.js";
 import Explosion from "./explosion.js";
-import { getCanvasDimensions } from "./main.js";
+import { getCanvasDimensions, getCarInfo } from "./main.js";
 
-export interface CarsInfo {
+export interface CarsInLevelInfo {
     type: CarType;
     start_seconds: number;
     spawn_interval_seconds: number;
@@ -16,7 +16,7 @@ export interface CarsInfo {
 
 export interface LevelInfo {
     road: RoadInfo;
-    cars: CarsInfo[];
+    cars: CarsInLevelInfo[];
 }
 
 export interface LevelArgs {
@@ -31,8 +31,8 @@ export default class Level {
     private start_y: number;
     private destination_y: number;
     private count_duration: number;
-    private cars_info: CarsInfo[];
-    private active_cars_info: CarsInfo[];
+    private cars_info: CarsInLevelInfo[];
+    private active_cars_info: CarsInLevelInfo[];
     private player: Player;
 
     constructor(args: LevelArgs) {
@@ -64,7 +64,7 @@ export default class Level {
 
             // start the level already with some cars in the road
             var carInfo = this.cars_info[a];
-            var carTypeInfo = Car.TYPES[carInfo.type];
+            var carTypeInfo = getCarInfo(carInfo.type);
             var xStep = carTypeInfo.speed * carInfo.spawn_interval_seconds;
 
             // starting 'x'

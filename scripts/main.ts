@@ -6,6 +6,7 @@ import * as Keyboard from "./keyboard.js";
 import * as Game from "./game.js";
 import * as Music from "./music.js";
 import * as Message from "./message.js";
+import { CarType, AllCarsInfo } from "./car.js";
 
 let CANVAS: HTMLCanvasElement;
 let STAGE: createjs.Stage;
@@ -42,6 +43,8 @@ function initApp(data: AppStorage.StorageData) {
     Message.init();
 
     var manifest = [
+        { id: "cars", src: "levels/cars.json" },
+
         { id: "level_1", src: "levels/level1.json" },
         { id: "level_2", src: "levels/level2.json" },
         { id: "level_3", src: "levels/level3.json" },
@@ -71,6 +74,7 @@ function initApp(data: AppStorage.StorageData) {
         { id: "car_6", src: "images/car6.png" },
 
         { id: "explosion", src: "images/explosion.png" },
+
         { id: "happy_tune", src: "music/happy_tune.ogg" },
 
         { id: "player_1", src: "images/player1.png" },
@@ -137,6 +141,14 @@ export function removeFromStage(element: createjs.DisplayObject) {
  */
 export function getAsset(id: string) {
     return PRELOAD.getResult(id);
+}
+
+/**
+ * Get the info a specific car type (to know the speed, width, etc).
+ */
+export function getCarInfo(type: CarType) {
+    const cars = PRELOAD.getResult("cars") as AllCarsInfo;
+    return cars[type];
 }
 
 /**
