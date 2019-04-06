@@ -13,13 +13,13 @@
     },
     "three": {
         "image": "car_3",
-        "speed": 100,
+        "speed": 120,
         "width": 31,
         "height": 11
     },
     "four": {
         "image": "car_4",
-        "speed": 130,
+        "speed": 150,
         "width": 16,
         "height": 12
     },
@@ -31,7 +31,7 @@
     },
     "six": {
         "image": "car_6",
-        "speed": 80,
+        "speed": 90,
         "width": 31,
         "height": 15
     }

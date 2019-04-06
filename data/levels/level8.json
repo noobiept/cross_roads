@@ -7,7 +7,7 @@
         {
             "type": "three",
             "start_seconds": 0,
-            "spawn_interval_seconds": 1.8,
+            "spawn_interval_seconds": 1.7,
             "lane": 1
         },
         {
@@ -37,7 +37,7 @@
         {
             "type": "three",
             "start_seconds": 1,
-            "spawn_interval_seconds": 1.8,
+            "spawn_interval_seconds": 1.7,
             "lane": 6
         }
     ]
