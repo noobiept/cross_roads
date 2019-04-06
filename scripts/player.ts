@@ -20,7 +20,7 @@ export default class Player implements GameElement {
         this.width = 15;
         this.height = 15;
         this.movement_step = 11;
-        this.movement_animation = 100; // ease duration
+        this.movement_animation = 90; // ease duration
         this.lives = 10;
 
         this.setupShape();

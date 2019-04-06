@@ -19,7 +19,7 @@
         {
             "type": "three",
             "start_seconds": 0.5,
-            "spawn_interval_seconds": 1.9,
+            "spawn_interval_seconds": 1.8,
             "lane": 3
         },
         {
