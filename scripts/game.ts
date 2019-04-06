@@ -42,6 +42,7 @@ export function clear() {
     }
 
     Keyboard.clearKeysHeld();
+    GameMenu.toggleHelpSection(true);
 
     CURRENT_LEVEL = 1;
 }

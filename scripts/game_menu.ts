@@ -26,11 +26,11 @@ export function init() {
     // help section
     HELP_SECTION = document.getElementById("HelpSection")!;
 
-    var openHelp = document.getElementById("Help")!;
-    openHelp.onclick = toggleHelpSection;
+    const openHelp = document.getElementById("Help")!;
+    openHelp.onclick = toggleHelpListener;
 
-    var closeHelp = document.getElementById("HelpClose")!;
-    closeHelp.onclick = toggleHelpSection;
+    const closeHelp = document.getElementById("HelpClose")!;
+    closeHelp.onclick = toggleHelpListener;
 
     // restart the game
     var restart = document.getElementById("Restart")!;
@@ -87,10 +87,18 @@ function boolToString(value: boolean) {
 }
 
 /**
- * Show/hide the help section on the center of the screen.
+ * Toggle the help section on mouse click (on the menu help button).
  */
-export function toggleHelpSection() {
-    HELP_SECTION.classList.toggle("hidden");
+function toggleHelpListener(event: MouseEvent) {
+    toggleHelpSection();
+}
+
+/**
+ * Show/hide the help section on the center of the screen.
+ * You can force a certain state (hidden, or shown) by passing an argument.
+ */
+export function toggleHelpSection(forceHidden?: boolean) {
+    HELP_SECTION.classList.toggle("hidden", forceHidden);
 }
 
 /**
@@ -103,7 +111,7 @@ export async function openInitialHelpSection() {
             toggleHelpSection();
 
             // set the default listener back
-            closeHelp.onclick = toggleHelpSection;
+            closeHelp.onclick = toggleHelpListener;
             resolve();
         };
 
