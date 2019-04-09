@@ -29,6 +29,9 @@ export default class Road implements GameElement {
         this.positionIn(0, canvas.height / 2 - this.height / 2);
     }
 
+    /**
+     * Setup the all the road elements (side walks, and lane separators), and add that to the stage.
+     */
     setupShape() {
         const canvas = getCanvasDimensions();
         var container = new createjs.Container();
@@ -110,32 +113,53 @@ export default class Road implements GameElement {
         return container;
     }
 
+    /**
+     * Position the road in the given position.
+     */
     positionIn(x: number, y: number) {
         this.container.x = x;
         this.container.y = y;
     }
 
+    /**
+     * Remove all the road elements from the stage.
+     */
     clear() {
         removeFromStage(this.container);
         this.lines.length = 0;
     }
 
+    /**
+     * Return the `y` position of the given lane (so you know where to add the cars).
+     */
     laneToY(lane: number) {
         return this.getY() + lane * Road.LANE_HEIGHT + Road.LANE_HEIGHT / 2;
     }
 
+    /**
+     * Get the `x` position of the road.
+     */
     getX() {
         return this.container.x;
     }
 
+    /**
+     * Get the `y` position of the road.
+     */
     getY() {
         return this.container.y;
     }
 
+    /**
+     * Get the road's `width`.
+     */
     getWidth() {
         return this.width;
     }
 
+    /**
+     * Get the road's `height`.
+     */
     getHeight() {
         return this.height;
     }

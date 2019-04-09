@@ -11,6 +11,9 @@ export var KEYS_HELD = {
 let GOT_INITIAL_USER_INPUT = false;
 let INITIAL_USER_INPUT_CALLBACKS: (() => void)[] = [];
 
+/**
+ * Initialize the module, called at the start.
+ */
 export function init(onInitialInput?: (() => void)[]) {
     window.addEventListener("keydown", handleKeyDown, false);
     window.addEventListener("keyup", handleKeyUp, false);
@@ -20,6 +23,9 @@ export function init(onInitialInput?: (() => void)[]) {
     }
 }
 
+/**
+ * Reset the 'keys held' state.
+ */
 export function clearKeysHeld() {
     KEYS_HELD.up = false;
     KEYS_HELD.down = false;
@@ -27,6 +33,11 @@ export function clearKeysHeld() {
     KEYS_HELD.right = false;
 }
 
+/**
+ * `keydown` event listener.
+ * Detect when we have any initial input.
+ * Also keep track of which keys are being held.
+ */
 function handleKeyDown(event: KeyboardEvent) {
     if (!GOT_INITIAL_USER_INPUT) {
         handleInitialInput();
@@ -55,6 +66,10 @@ function handleKeyDown(event: KeyboardEvent) {
     }
 }
 
+/**
+ * `keyup` event listener.
+ * Detect when a certain key stops being held.
+ */
 function handleKeyUp(event: KeyboardEvent) {
     switch (event.keyCode) {
         case Utilities.KEY_CODE.a:
@@ -79,6 +94,9 @@ function handleKeyUp(event: KeyboardEvent) {
     }
 }
 
+/**
+ * Call the associated functions when an initial input occurs.
+ */
 function handleInitialInput() {
     for (let a = 0; a < INITIAL_USER_INPUT_CALLBACKS.length; a++) {
         INITIAL_USER_INPUT_CALLBACKS[a]();

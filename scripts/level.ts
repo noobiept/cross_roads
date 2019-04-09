@@ -96,12 +96,18 @@ export default class Level {
         this.player = player;
     }
 
+    /**
+     * Re-position the player on the initial position and remove one life from him.
+     * Returns whether the player still has lives left or not.
+     */
     newLife() {
         this.player.positionIn(this.start_x, this.start_y);
-
         return this.player.oneLessLife();
     }
 
+    /**
+     * Clear the level related elements (cars, road, etc).
+     */
     clear() {
         for (var a = 0; a < this.cars.length; a++) {
             this.cars[a].clear();
@@ -113,6 +119,10 @@ export default class Level {
         this.road.clear();
     }
 
+    /**
+     * Gets called in the game loop.
+     * Adds the new cars on the set interval, checks for collisions, etc.
+     */
     tick(event: createjs.TickerEvent) {
         var delta = event.delta / 1000; // in seconds
         this.count_duration += delta;
@@ -177,9 +187,9 @@ export default class Level {
         }
     }
 
-    /*
-    Check collisions between the player and a car
- */
+    /**
+     * Check collisions between the player and a car.
+     */
     checkCollisions() {
         var player = this.player;
         var cars = this.cars;
@@ -206,6 +216,9 @@ export default class Level {
         return false;
     }
 
+    /**
+     * Remove a `car` from the game.
+     */
     removeCar(car: Car) {
         var index = this.cars.indexOf(car);
         this.cars.splice(index, 1);

@@ -58,6 +58,9 @@ export default class Car implements GameElement {
             });
     }
 
+    /**
+     * Setup the display object of the car (an image).
+     */
     setupShape() {
         var info = this.info;
         var shape = new createjs.Bitmap(getAsset(info.image));
@@ -67,22 +70,37 @@ export default class Car implements GameElement {
         return shape;
     }
 
+    /**
+     * Remove the car from the stage (so it isn't displayed anymore).
+     */
     clear() {
         removeFromStage(this.shape);
     }
 
+    /**
+     * Get the current `x` position value.
+     */
     getX() {
         return this.shape.x;
     }
 
+    /**
+     * Get the current `y` position value.
+     */
     getY() {
         return this.shape.y;
     }
 
+    /**
+     * Get the car's `width` value.
+     */
     getWidth() {
         return this.width;
     }
 
+    /**
+     * Get the car's `height` value.
+     */
     getHeight() {
         return this.height;
     }

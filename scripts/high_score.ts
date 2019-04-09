@@ -1,4 +1,3 @@
-/// <reference path="../libraries/utilities/utilities.1.8.0.d.ts" />
 import * as AppStorage from "./app_storage.js";
 
 export type HighScoreData = number[];
@@ -7,6 +6,9 @@ var HIGH_SCORE: HighScoreData = [];
 var SAVE_LIMIT = 5; // the total scores we keep track of
 var LIST_ITEMS: HTMLElement[] = [];
 
+/**
+ * Initialize the module with some optional previous scores.
+ */
 export function init(scoreData?: HighScoreData) {
     var ul = document.getElementById("HighScore")!;
 
@@ -27,6 +29,9 @@ export function init(scoreData?: HighScoreData) {
     updateHtmlElement();
 }
 
+/**
+ * Add a new high-score.
+ */
 export function add(value: number) {
     // don't add repeated values
     if (HIGH_SCORE.indexOf(value) >= 0) {
@@ -65,10 +70,16 @@ function updateHtmlElement() {
     }
 }
 
+/**
+ * Save the current high-scores to the local storage.
+ */
 function save() {
     AppStorage.setData({ cross_roads_high_score: HIGH_SCORE });
 }
 
+/**
+ * Remove all the high-scores from the game and from the local storage.
+ */
 export function clear() {
     HIGH_SCORE.length = 0;
     save();

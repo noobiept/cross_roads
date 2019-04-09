@@ -20,16 +20,25 @@ var PLAYER: Player | null = null;
 var LEVEL: Level | null = null;
 var CURRENT_LEVEL = 1;
 
+/**
+ * Initial load of the game. Only call it once at the start.
+ */
 export function start() {
     loadInitialLevel();
     GameMenu.show();
 }
 
+/**
+ * Restart the game starting from the first level.
+ */
 export function restart() {
     clear();
     loadInitialLevel();
 }
 
+/**
+ * Clear the game state.
+ */
 export function clear() {
     if (LEVEL) {
         LEVEL.clear();
@@ -47,6 +56,9 @@ export function clear() {
     CURRENT_LEVEL = 1;
 }
 
+/**
+ * Load the first level, and configure the player, etc.
+ */
 export function loadInitialLevel() {
     let first = getAsset("level_1") as LevelInfo;
 
@@ -112,7 +124,7 @@ export function nextLevel(levelPosition?: number) {
 }
 
 /**
- * Update the level and player state.
+ * Update the level and player state. Its called continuously at a given interval.
  */
 export function tick(event: createjs.TickerEvent) {
     if (LEVEL) {
@@ -124,10 +136,16 @@ export function tick(event: createjs.TickerEvent) {
     }
 }
 
+/**
+ * Get the current level.
+ */
 export function getCurrentLevel() {
     return CURRENT_LEVEL;
 }
 
+/**
+ * Change the music state.
+ */
 export function setMusicState(onOff: boolean) {
     Options.setMusicState(onOff);
 

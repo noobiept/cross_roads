@@ -53,27 +53,45 @@ export default class Explosion implements GameElement {
         this.height = height;
     }
 
+    /**
+     * Position the element in the given position.
+     */
     setPosition(position: { x: number; y: number }) {
         this.sprite.x = position.x;
         this.sprite.y = position.y;
     }
 
+    /**
+     * Remove the element from the stage.
+     */
     clear() {
         removeFromStage(this.sprite);
     }
 
+    /**
+     * Get the current `x` position.
+     */
     getX() {
         return this.sprite.x;
     }
 
+    /**
+     * Get the current `y` position.
+     */
     getY() {
         return this.sprite.y;
     }
 
+    /**
+     * Get the element's `width` value.
+     */
     getWidth() {
         return this.width;
     }
 
+    /**
+     * Get the element's `height` value.
+     */
     getHeight() {
         return this.height;
     }

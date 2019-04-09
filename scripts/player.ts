@@ -26,6 +26,9 @@ export default class Player implements GameElement {
         this.setupShape();
     }
 
+    /**
+     * Setup the shape (image) of the player.
+     */
     setupShape() {
         const image = getAsset("player_1");
         const shape = new createjs.Bitmap(image);
@@ -36,11 +39,17 @@ export default class Player implements GameElement {
         addToStage(shape);
     }
 
+    /**
+     * Get a random image for the player.
+     */
     getNewRandomShape() {
         var position = Utilities.getRandomInt(1, 8);
         this.shape.image = getAsset("player_" + position) as HTMLImageElement;
     }
 
+    /**
+     * Position immediately the player in the given position.
+     */
     positionIn(x: number, y: number) {
         createjs.Tween.removeTweens(this.shape);
 
@@ -48,6 +57,9 @@ export default class Player implements GameElement {
         this.shape.y = y;
     }
 
+    /**
+     * Move over time the player in the given direction by a certain amount (the movement step).
+     */
     moveTo(xDirection: number, yDirection: number) {
         const canvas = getCanvasDimensions();
         var angle = Math.atan2(yDirection, xDirection);
@@ -76,30 +88,51 @@ export default class Player implements GameElement {
         );
     }
 
+    /**
+     * Remove the player's shape from the stage.
+     */
     clear() {
         removeFromStage(this.shape);
     }
 
+    /**
+     * Get the current `x` position value.
+     */
     getX() {
         return this.shape.x;
     }
 
+    /**
+     * Get the current `y` position value.
+     */
     getY() {
         return this.shape.y;
     }
 
+    /**
+     * Get the current `width` value.
+     */
     getWidth() {
         return this.width;
     }
 
+    /**
+     * Get the current `height` value.
+     */
     getHeight() {
         return this.height;
     }
 
+    /**
+     * Get the number of lives the player has.
+     */
     getCurrentLives() {
         return this.lives;
     }
 
+    /**
+     * Reduce the life of the player, and return whether there's still lives left or not.
+     */
     oneLessLife() {
         this.lives--;
 
@@ -112,6 +145,9 @@ export default class Player implements GameElement {
         return true;
     }
 
+    /**
+     * Move the player in a direction based on which keys are being held.
+     */
     tick(event: createjs.TickerEvent) {
         var keysHeld = Keyboard.KEYS_HELD;
 

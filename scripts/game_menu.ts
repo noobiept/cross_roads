@@ -1,4 +1,3 @@
-/// <reference path="../libraries/utilities/utilities.1.8.0.d.ts" />
 import * as Options from "./options.js";
 import * as Game from "./game.js";
 
@@ -7,6 +6,9 @@ var LEVEL_ELEMENT: HTMLElement;
 var HELP_SECTION: HTMLElement;
 var TIMER: Utilities.Timer;
 
+/**
+ * Initialize the game menu elements. Called only once.
+ */
 export function init() {
     var container = document.getElementById("Menu")!;
 
@@ -50,34 +52,55 @@ export function init() {
     TIMER = new Utilities.Timer(timerElement);
 }
 
+/**
+ * Update the number of lives value in the UI.
+ */
 export function setLives(lives: number) {
     LIVES_ELEMENT.innerHTML = lives.toString();
 }
 
+/**
+ * Update the current level in the game menu UI.
+ */
 export function setLevel(level: number) {
     LEVEL_ELEMENT.innerHTML = level.toString();
 }
 
+/**
+ * The start of a new game, reset the state/values.
+ */
 export function startGame(level: number, lives: number) {
     TIMER.restart();
     setLevel(level);
     setLives(lives);
 }
 
+/**
+ * Get the timer object.
+ */
 export function getTimer() {
     return TIMER;
 }
 
+/**
+ * Show the game menu.
+ */
 export function show() {
     var menu = document.getElementById("Menu")!;
     menu.classList.remove("hidden");
 }
 
+/**
+ * Hide the game menu.
+ */
 export function hide() {
     var menu = document.getElementById("Menu")!;
     menu.classList.add("hidden");
 }
 
+/**
+ * Convert a boolean to the equivalent string.
+ */
 function boolToString(value: boolean) {
     if (value === true) {
         return "On";
