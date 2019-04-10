@@ -1,5 +1,5 @@
 import { getAsset, addToStage, removeFromStage } from "./main.js";
-import { GameElement } from "./game.js";
+import { GameElement, CanvasPosition } from "./game.js";
 
 export interface ExplosionArgs {
     x: number;
@@ -56,7 +56,7 @@ export default class Explosion implements GameElement {
     /**
      * Position the element in the given position.
      */
-    setPosition(position: { x: number; y: number }) {
+    positionIn(position: CanvasPosition) {
         this.sprite.x = position.x;
         this.sprite.y = position.y;
     }

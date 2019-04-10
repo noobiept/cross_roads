@@ -50,7 +50,7 @@ export default class Level {
             player.getHeight() -
             5;
 
-        player.positionIn(this.start_x, this.start_y);
+        player.positionIn({ x: this.start_x, y: this.start_y });
 
         // counts the time since the level started (useful to know when to start adding the cars)
         this.count_duration = 0;
@@ -101,7 +101,7 @@ export default class Level {
      * Returns whether the player still has lives left or not.
      */
     newLife() {
-        this.player.positionIn(this.start_x, this.start_y);
+        this.player.positionIn({ x: this.start_x, y: this.start_y });
         return this.player.oneLessLife();
     }
 
@@ -170,7 +170,7 @@ export default class Level {
             // center the explosion around the player
             const explosion = new Explosion();
             const centeredPosition = Game.centerElement(this.player, explosion);
-            explosion.setPosition(centeredPosition);
+            explosion.positionIn(centeredPosition);
 
             // no more new lives
             if (!this.newLife()) {

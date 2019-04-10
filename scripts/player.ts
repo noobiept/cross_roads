@@ -6,7 +6,7 @@ import {
     getCanvasDimensions,
     removeFromStage,
 } from "./main.js";
-import { GameElement } from "./game.js";
+import { GameElement, CanvasPosition } from "./game.js";
 
 export default class Player implements GameElement {
     private shape!: createjs.Bitmap;
@@ -50,11 +50,11 @@ export default class Player implements GameElement {
     /**
      * Position immediately the player in the given position.
      */
-    positionIn(x: number, y: number) {
+    positionIn(position: CanvasPosition) {
         createjs.Tween.removeTweens(this.shape);
 
-        this.shape.x = x;
-        this.shape.y = y;
+        this.shape.x = position.x;
+        this.shape.y = position.y;
     }
 
     /**

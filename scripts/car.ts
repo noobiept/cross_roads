@@ -6,7 +6,7 @@ import {
     removeFromStage,
     getCarInfo,
 } from "./main.js";
-import { GameElement } from "./game.js";
+import { GameElement, CanvasPosition } from "./game.js";
 
 export type CarType = "one" | "two" | "three" | "four" | "five" | "six";
 
@@ -45,8 +45,10 @@ export default class Car implements GameElement {
 
         this.shape = this.setupShape();
 
-        this.shape.x = args.x;
-        this.shape.y = args.y - this.height / 2;
+        this.positionIn({
+            x: args.x,
+            y: args.y - this.height / 2,
+        });
 
         const canvas = getCanvasDimensions();
         var travelDuration = ((canvas.width - args.x) / this.info.speed) * 1000;
@@ -68,6 +70,14 @@ export default class Car implements GameElement {
         addToStage(shape);
 
         return shape;
+    }
+
+    /**
+     * Position the car in the given x/y position.
+     */
+    positionIn(position: CanvasPosition) {
+        this.shape.x = position.x;
+        this.shape.y = position.y;
     }
 
     /**

@@ -1,5 +1,5 @@
 import { getCanvasDimensions, addToStage, removeFromStage } from "./main.js";
-import { GameElement } from "./game.js";
+import { GameElement, CanvasPosition } from "./game.js";
 
 export interface RoadInfo {
     lanes: number;
@@ -26,7 +26,7 @@ export default class Road implements GameElement {
         this.height = this.lanes * Road.LANE_HEIGHT;
         this.container = this.setupShape();
 
-        this.positionIn(0, canvas.height / 2 - this.height / 2);
+        this.positionIn({ x: 0, y: canvas.height / 2 - this.height / 2 });
     }
 
     /**
@@ -116,9 +116,9 @@ export default class Road implements GameElement {
     /**
      * Position the road in the given position.
      */
-    positionIn(x: number, y: number) {
-        this.container.x = x;
-        this.container.y = y;
+    positionIn(position: CanvasPosition) {
+        this.container.x = position.x;
+        this.container.y = position.y;
     }
 
     /**

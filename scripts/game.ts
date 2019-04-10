@@ -14,6 +14,12 @@ export interface GameElement {
     getWidth(): number;
     getHeight(): number;
     clear(): void;
+    positionIn(position: CanvasPosition): void;
+}
+
+export interface CanvasPosition {
+    x: number;
+    y: number;
 }
 
 var TIMER: Utilities.Timer;
