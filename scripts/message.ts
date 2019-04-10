@@ -10,16 +10,18 @@ var LOADING: createjs.Text;
  */
 export function init() {
     const canvas = getCanvasDimensions();
+    const backgroundHeight = 40;
 
     // the text part
     MESSAGE = new createjs.Text("", "30px monospace");
     MESSAGE.textAlign = "center";
+    MESSAGE.textBaseline = "middle";
+    MESSAGE.x = 0;
+    MESSAGE.y = backgroundHeight / 2;
 
     // the background color
-    var background = new createjs.Shape();
-    var backgroundHeight = 40;
-
-    var g = background.graphics;
+    const background = new createjs.Shape();
+    const g = background.graphics;
 
     g.beginFill("lightblue");
     g.drawRect(-canvas.width / 2, 0, canvas.width, backgroundHeight);
