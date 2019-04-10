@@ -16,6 +16,7 @@ export interface GameElement {
     clear(): void;
 }
 
+var TIMER: Utilities.Timer;
 var PLAYER: Player | null = null;
 var LEVEL: Level | null = null;
 var CURRENT_LEVEL = 1;
@@ -23,8 +24,10 @@ var CURRENT_LEVEL = 1;
 /**
  * Initial load of the game. Only call it once at the start.
  */
-export function start() {
-    loadInitialLevel();
+export function init() {
+    var timerElement = GameMenu.getTimerElement();
+    TIMER = new Utilities.Timer(timerElement);
+
     GameMenu.show();
 }
 
@@ -70,9 +73,9 @@ export function loadInitialLevel() {
     PLAYER.bringToTop();
 
     CURRENT_LEVEL = 1;
+    TIMER.restart();
 
     GameMenu.startGame(CURRENT_LEVEL, PLAYER.getCurrentLives());
-
     Message.show("Level " + CURRENT_LEVEL, 2000);
 }
 
@@ -113,11 +116,10 @@ export function nextLevel(levelPosition?: number) {
 
         Message.show("Level " + CURRENT_LEVEL, 2000);
     } else {
-        var timer = GameMenu.getTimer();
-
-        HighScore.add(timer.getTimeSeconds());
+        HighScore.add(TIMER.getTimeSeconds());
         clear();
-        Message.show("You Win! " + timer.getTimeString(), 2000, function() {
+
+        Message.show("You Win! " + TIMER.getTimeString(), 2000, function() {
             loadInitialLevel();
         });
     }

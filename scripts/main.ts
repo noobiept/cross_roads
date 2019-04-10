@@ -105,10 +105,10 @@ function initApp(data: AppStorage.StorageData) {
         if (!data["cross_roads_has_run_before"]) {
             AppStorage.setData({ cross_roads_has_run_before: true });
             await GameMenu.openInitialHelpSection();
-            Game.start();
-        } else {
-            Game.start();
         }
+
+        Game.init();
+        Game.loadInitialLevel();
     });
     PRELOAD.loadManifest(manifest, true);
 }

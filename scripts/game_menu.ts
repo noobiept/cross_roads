@@ -4,7 +4,6 @@ import * as Game from "./game.js";
 var LIVES_ELEMENT: HTMLElement;
 var LEVEL_ELEMENT: HTMLElement;
 var HELP_SECTION: HTMLElement;
-var TIMER: Utilities.Timer;
 
 /**
  * Initialize the game menu elements. Called only once.
@@ -45,11 +44,16 @@ export function init() {
 
     // current level
     LEVEL_ELEMENT = container.querySelector("#Level span") as HTMLElement;
+}
 
-    // timer
-    var timerElement = container.querySelector("#Timer span") as HTMLElement;
+/**
+ * Get the timer element where you can update the timer value.
+ */
+export function getTimerElement() {
+    const timer = document.getElementById("Timer")!;
+    const value = timer.querySelector("span")!;
 
-    TIMER = new Utilities.Timer(timerElement);
+    return value;
 }
 
 /**
@@ -70,16 +74,8 @@ export function setLevel(level: number) {
  * The start of a new game, reset the state/values.
  */
 export function startGame(level: number, lives: number) {
-    TIMER.restart();
     setLevel(level);
     setLives(lives);
-}
-
-/**
- * Get the timer object.
- */
-export function getTimer() {
-    return TIMER;
 }
 
 /**
