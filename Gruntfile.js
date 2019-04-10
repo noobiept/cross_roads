@@ -52,8 +52,8 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: ROOT,
                 src: [
+                    "data/**",
                     "images/**",
-                    "levels/**",
                     "libraries/**",
                     "music/**",
                     "index.html",
