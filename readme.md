@@ -1,4 +1,4 @@
-[try it out here](http://nbpt.eu/games/cross_roads/)
+# [Try it out here!](https://nbpt.eu/games/cross_roads/)
 
 # Description
 
