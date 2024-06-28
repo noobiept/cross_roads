@@ -176,7 +176,7 @@ export default class Level {
             // no more new lives
             if (!this.newLife()) {
                 Game.clear();
-                Message.show("No more lives, you loose!", 2000, function() {
+                Message.show("No more lives, you loose!", 2000, function () {
                     Game.loadInitialLevel();
                 });
                 return;

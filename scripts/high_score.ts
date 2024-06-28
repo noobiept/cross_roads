@@ -42,7 +42,7 @@ export function add(value: number) {
     HIGH_SCORE.push(value);
 
     // the lower the value (which represents the time it took to finish the game) the better
-    HIGH_SCORE.sort(function(a, b) {
+    HIGH_SCORE.sort(function (a, b) {
         return a - b;
     });
 

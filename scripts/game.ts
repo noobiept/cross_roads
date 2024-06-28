@@ -130,7 +130,7 @@ export function nextLevel(levelPosition?: number) {
         HighScore.add(TIMER.getTimeSeconds());
         clear();
 
-        Message.show("You Win! " + TIMER.getTimeString(), 2000, function() {
+        Message.show("You Win! " + TIMER.getTimeString(), 2000, function () {
             loadInitialLevel();
         });
     }

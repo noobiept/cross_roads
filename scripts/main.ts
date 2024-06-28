@@ -14,7 +14,7 @@ let CANVAS: HTMLCanvasElement;
 let STAGE: createjs.Stage;
 let PRELOAD: createjs.LoadQueue;
 
-window.onload = function() {
+window.onload = function () {
     AppStorage.getData(
         [
             "cross_roads_high_score",
@@ -96,10 +96,10 @@ function initApp(data: AppStorage.StorageData) {
     PRELOAD.setMaxConnections(10);
     PRELOAD.maintainScriptOrder = false;
     PRELOAD.installPlugin(createjs.Sound);
-    PRELOAD.on("progress", function(event: createjs.ProgressEvent) {
+    PRELOAD.on("progress", function (event: createjs.ProgressEvent) {
         Message.updateLoading((event.progress * 100) | 0);
     } as (event: Object) => void);
-    PRELOAD.on("complete", async function() {
+    PRELOAD.on("complete", async function () {
         Message.removeLoading();
 
         // show the help page on the first run of the game

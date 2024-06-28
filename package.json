@@ -13,7 +13,7 @@
     },
     "devDependencies": {
         "@types/createjs": "~0.0.29",
-        "prettier": "^1.16.4",
+        "prettier": "^3",
         "typescript": "^5",
         "vite": "^5"
     },

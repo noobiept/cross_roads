@@ -55,7 +55,7 @@ export default class Car implements GameElement {
 
         createjs.Tween.get(this.shape)
             .to({ x: canvas.width }, travelDuration)
-            .call(function() {
+            .call(function () {
                 args.level.removeCar(_this);
             });
     }

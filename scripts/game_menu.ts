@@ -17,7 +17,7 @@ export function init() {
     var isPlaying = Options.getMusicState();
 
     musicElementInfo.innerHTML = boolToString(isPlaying);
-    musicElement.onclick = function() {
+    musicElement.onclick = function () {
         isPlaying = !isPlaying;
         musicElementInfo.innerHTML = boolToString(isPlaying);
 
@@ -35,7 +35,7 @@ export function init() {
 
     // restart the game
     var restart = document.getElementById("Restart")!;
-    restart.onclick = function() {
+    restart.onclick = function () {
         Game.restart();
     };
 

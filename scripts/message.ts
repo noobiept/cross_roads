@@ -60,7 +60,7 @@ export function show(text: string, timeout: number, callback?: () => void) {
     // re-add the element so that it stays on top of other elements (z-index)
     addToStage(MESSAGE_CONTAINER);
 
-    MESSAGE_TIMEOUT.start(function() {
+    MESSAGE_TIMEOUT.start(function () {
         MESSAGE_CONTAINER.visible = false;
 
         if (isFunction(callback)) {
