@@ -8,10 +8,7 @@ import * as Music from "./music.js";
 import * as Message from "./message.js";
 import { CarType, AllCarsInfo } from "./car.js";
 
-// import "easeljs";
-// import "preloadjs";
-// import "soundjs";
-// import "tweenjs";
+import "../css/style.css";
 
 let CANVAS: HTMLCanvasElement;
 let STAGE: createjs.Stage;
