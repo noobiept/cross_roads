@@ -7,6 +7,7 @@ import {
     removeFromStage,
 } from "./main.js";
 import { GameElement, CanvasPosition } from "./game.js";
+import { getRandomInt } from "@drk4/utilities";
 
 export default class Player implements GameElement {
     private shape!: createjs.Bitmap;
@@ -43,7 +44,7 @@ export default class Player implements GameElement {
      * Get a random image for the player.
      */
     getNewRandomShape() {
-        var position = Utilities.getRandomInt(1, 8);
+        var position = getRandomInt(1, 8);
         this.shape.image = getAsset("player_" + position) as HTMLImageElement;
     }
 
@@ -148,7 +149,7 @@ export default class Player implements GameElement {
     /**
      * Move the player in a direction based on which keys are being held.
      */
-    tick(event: createjs.TickerEvent) {
+    tick(_event: createjs.TickerEvent) {
         var keysHeld = Keyboard.KEYS_HELD;
 
         if (keysHeld.left && keysHeld.up) {

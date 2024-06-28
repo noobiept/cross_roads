@@ -108,7 +108,7 @@ function boolToString(value: boolean) {
 /**
  * Toggle the help section on mouse click (on the menu help button).
  */
-function toggleHelpListener(event: MouseEvent) {
+function toggleHelpListener(_event: MouseEvent) {
     toggleHelpSection();
 }
 
@@ -124,7 +124,7 @@ export function toggleHelpSection(forceHidden?: boolean) {
  * The first time the application is opened, we show the help section and wait for the close button to be pressed before starting the game.
  */
 export async function openInitialHelpSection() {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
         var closeHelp = document.getElementById("HelpClose")!;
         closeHelp.onclick = () => {
             toggleHelpSection();

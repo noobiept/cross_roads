@@ -1,8 +1,9 @@
 import { getCanvasDimensions, addToStage, removeFromStage } from "./main.js";
+import { Timeout, isFunction } from "@drk4/utilities";
 
 var MESSAGE: createjs.Text;
 var MESSAGE_CONTAINER: createjs.Container;
-var MESSAGE_TIMEOUT: Utilities.Timeout;
+var MESSAGE_TIMEOUT: Timeout;
 var LOADING: createjs.Text;
 
 /**
@@ -40,7 +41,7 @@ export function init() {
     addToStage(MESSAGE_CONTAINER);
 
     // the timeout that will clear the message
-    MESSAGE_TIMEOUT = new Utilities.Timeout();
+    MESSAGE_TIMEOUT = new Timeout();
 
     // the loading message
     LOADING = new createjs.Text("", "30px monospace");
@@ -62,7 +63,7 @@ export function show(text: string, timeout: number, callback?: () => void) {
     MESSAGE_TIMEOUT.start(function() {
         MESSAGE_CONTAINER.visible = false;
 
-        if (Utilities.isFunction(callback)) {
+        if (isFunction(callback)) {
             callback!();
         }
     }, timeout);

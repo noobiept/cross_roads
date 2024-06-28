@@ -1,8 +1,11 @@
 {
     "name": "cross_roads",
-    "version": "1.3.0",
+    "version": "2.0.0",
     "description": "Need to cross the road without colliding with a moving vehicle.",
+    "packageManager": "npm@10.7.0",
+    "type": "module",
     "dependencies": {
+        "@drk4/utilities": "^6.2.0",
         "easeljs": "^1.0.2",
         "preloadjs": "^1.0.1",
         "soundjs": "^1.0.1",
@@ -10,16 +13,9 @@
     },
     "devDependencies": {
         "@types/createjs": "~0.0.29",
-        "glob": "^7.1.3",
-        "grunt": "~1.0.4",
-        "grunt-contrib-clean": "~2.0.0",
-        "grunt-contrib-copy": "~1.0.0",
-        "grunt-contrib-cssmin": "~3.0.0",
-        "http-server": "^0.11.1",
-        "npm-run-all": "^4.1.5",
         "prettier": "^1.16.4",
-        "terser": "^3.17.0",
-        "typescript": "~3.4.3"
+        "typescript": "^5",
+        "vite": "^5"
     },
     "prettier": {
         "printWidth": 80,
@@ -34,12 +30,11 @@
         "endOfLine": "lf"
     },
     "scripts": {
-        "dev": "npm-run-all --parallel dev:*",
-        "dev:typescript": "tsc -w",
-        "dev:update_libraries": "grunt update_libraries",
-        "dev:server": "http-server -p 8000 --silent",
-        "formatting:check": "prettier --check \"**/*.{html,css,json,js,ts,md}\"",
-        "formatting:run": "prettier --write \"**/*.{html,css,json,js,ts,md}\"",
-        "build": "grunt"
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "format:check": "prettier --check \"**/*.{html,css,json,js,ts,md}\"",
+        "format:run": "prettier --write \"**/*.{html,css,json,js,ts,md}\"",
+        "check:types": "tsc -p tsconfig.json --noEmit --skipLibCheck"
     }
 }

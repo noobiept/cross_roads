@@ -1,4 +1,3 @@
-/// <reference path="../libraries/utilities/utilities.1.8.0.d.ts" />
 import * as AppStorage from "./app_storage.js";
 import * as Options from "./options.js";
 import * as GameMenu from "./game_menu.js";
@@ -8,6 +7,11 @@ import * as Game from "./game.js";
 import * as Music from "./music.js";
 import * as Message from "./message.js";
 import { CarType, AllCarsInfo } from "./car.js";
+
+// import "easeljs";
+// import "preloadjs";
+// import "soundjs";
+// import "tweenjs";
 
 let CANVAS: HTMLCanvasElement;
 let STAGE: createjs.Stage;

@@ -1,3 +1,4 @@
+import { isBoolean } from "@drk4/utilities";
 import * as AppStorage from "./app_storage.js";
 
 export interface OptionsData {
@@ -13,7 +14,7 @@ var OPTIONS: OptionsData = {
  */
 export function load(optionsData?: OptionsData) {
     if (optionsData) {
-        if (Utilities.isBoolean(optionsData.music_state)) {
+        if (isBoolean(optionsData.music_state)) {
             OPTIONS.music_state = optionsData.music_state;
         }
     }

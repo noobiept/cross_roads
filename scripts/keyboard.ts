@@ -43,24 +43,24 @@ function handleKeyDown(event: KeyboardEvent) {
         handleInitialInput();
     }
 
-    switch (event.keyCode) {
-        case Utilities.KEY_CODE.a:
-        case Utilities.KEY_CODE.leftArrow:
+    switch (event.code) {
+        case "KeyA":
+        case "ArrowLeft":
             KEYS_HELD.left = true;
             break;
 
-        case Utilities.KEY_CODE.d:
-        case Utilities.KEY_CODE.rightArrow:
+        case "KeyD":
+        case "ArrowRight":
             KEYS_HELD.right = true;
             break;
 
-        case Utilities.KEY_CODE.w:
-        case Utilities.KEY_CODE.upArrow:
+        case "KeyW":
+        case "ArrowUp":
             KEYS_HELD.up = true;
             break;
 
-        case Utilities.KEY_CODE.s:
-        case Utilities.KEY_CODE.downArrow:
+        case "KeyS":
+        case "ArrowDown":
             KEYS_HELD.down = true;
             break;
     }
@@ -71,24 +71,24 @@ function handleKeyDown(event: KeyboardEvent) {
  * Detect when a certain key stops being held.
  */
 function handleKeyUp(event: KeyboardEvent) {
-    switch (event.keyCode) {
-        case Utilities.KEY_CODE.a:
-        case Utilities.KEY_CODE.leftArrow:
+    switch (event.code) {
+        case "KeyA":
+        case "ArrowLeft":
             KEYS_HELD.left = false;
             break;
 
-        case Utilities.KEY_CODE.d:
-        case Utilities.KEY_CODE.rightArrow:
+        case "KeyD":
+        case "ArrowRight":
             KEYS_HELD.right = false;
             break;
 
-        case Utilities.KEY_CODE.w:
-        case Utilities.KEY_CODE.upArrow:
+        case "KeyW":
+        case "ArrowUp":
             KEYS_HELD.up = false;
             break;
 
-        case Utilities.KEY_CODE.s:
-        case Utilities.KEY_CODE.downArrow:
+        case "KeyS":
+        case "ArrowDown":
             KEYS_HELD.down = false;
             break;
     }

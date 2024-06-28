@@ -5,6 +5,7 @@ import Road, { RoadInfo } from "./road.js";
 import Player from "./player.js";
 import Explosion from "./explosion.js";
 import { getCanvasDimensions, getCarInfo } from "./main.js";
+import { boxBoxCollision, deepClone } from "@drk4/utilities";
 
 export interface CarsInLevelInfo {
     type: CarType;
@@ -57,7 +58,7 @@ export default class Level {
 
         // has the info of the cars to be added (which lane, spawn interval, etc)
         // these still haven't started
-        this.cars_info = Utilities.deepClone(info.cars);
+        this.cars_info = deepClone(info.cars);
 
         for (var a = 0; a < this.cars_info.length; a++) {
             this.cars_info[a].count = 0;
@@ -197,7 +198,7 @@ export default class Level {
         for (var a = 0; a < cars.length; a++) {
             var car = cars[a];
 
-            var collision = Utilities.boxBoxCollision(
+            var collision = boxBoxCollision(
                 player.getX(),
                 player.getY(),
                 player.getWidth(),

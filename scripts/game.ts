@@ -7,6 +7,7 @@ import * as Message from "./message.js";
 import Level, { LevelInfo } from "./level.js";
 import Player from "./player.js";
 import { getAsset } from "./main.js";
+import { Timer } from "@drk4/utilities";
 
 export interface GameElement {
     getX(): number;
@@ -22,7 +23,7 @@ export interface CanvasPosition {
     y: number;
 }
 
-var TIMER: Utilities.Timer;
+var TIMER: Timer;
 var PLAYER: Player | null = null;
 var LEVEL: Level | null = null;
 var CURRENT_LEVEL = 1;
@@ -32,7 +33,11 @@ var CURRENT_LEVEL = 1;
  */
 export function init() {
     var timerElement = GameMenu.getTimerElement();
-    TIMER = new Utilities.Timer(timerElement);
+    TIMER = new Timer({
+        updateElement: {
+            element: timerElement,
+        },
+    });
 
     GameMenu.show();
 }

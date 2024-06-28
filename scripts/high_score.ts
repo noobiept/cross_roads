@@ -1,3 +1,4 @@
+import { timeToString } from "@drk4/utilities";
 import * as AppStorage from "./app_storage.js";
 
 export type HighScoreData = number[];
@@ -65,7 +66,9 @@ function updateHtmlElement() {
         if (typeof value === "undefined") {
             li.innerHTML = "-";
         } else {
-            li.innerHTML = Utilities.timeToString(value * 1000);
+            li.innerHTML = timeToString({
+                time: value * 1000,
+            });
         }
     }
 }
