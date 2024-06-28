@@ -1,7 +1,4 @@
 {
-    "files.exclude": {
-        "scripts/**/*.js": true
-    },
     "search.exclude": {
         "release/**": true
     },
