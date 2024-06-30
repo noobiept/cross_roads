@@ -27,5 +27,7 @@ export function play() {
  * Stop playing the background music.
  */
 export function stop() {
-    MUSIC.paused = true;
+    if (MUSIC) {
+        MUSIC.paused = true;
+    }
 }
