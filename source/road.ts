@@ -34,20 +34,19 @@ export default class Road implements GameElement {
      */
     setupShape() {
         const canvas = getCanvasDimensions();
-        var container = new createjs.Container();
+        const container = new createjs.Container();
 
-        var g, a;
-        var linesColor = "black";
-        var sideWalkColor = "gray";
-        var lineHeight = 1;
-        var width = canvas.width;
+        const linesColor = "black";
+        const sideWalkColor = "gray";
+        const lineHeight = 1;
+        const width = canvas.width;
 
         // :: Side walks :: //
 
-        for (a = 0; a < this.side_walks.length; a++) {
-            var sideWalk = new createjs.Shape();
+        for (let a = 0; a < this.side_walks.length; a++) {
+            const sideWalk = new createjs.Shape();
 
-            g = sideWalk.graphics;
+            const g = sideWalk.graphics;
 
             g.beginFill(sideWalkColor);
             g.drawRect(
@@ -66,18 +65,18 @@ export default class Road implements GameElement {
 
         // a lane is where the car will move
         // between each lane, there is a middle line separating the lanes
-        var middleLineLength = 20;
-        var lengthBetweenLines = middleLineLength / 2;
+        const middleLineLength = 20;
+        const lengthBetweenLines = middleLineLength / 2;
 
-        for (a = 0; a < this.lanes; a++) {
+        for (let a = 0; a < this.lanes; a++) {
             // see if the next lane is not a sidewalk
             // that means we need to add a middle line
             if (
                 this.side_walks.indexOf(a) < 0 &&
                 this.side_walks.indexOf(a + 1) < 0
             ) {
-                var midLength = 0;
-                var length;
+                let midLength = 0;
+                let length;
 
                 while (midLength < width) {
                     if (midLength + middleLineLength < width) {
@@ -86,9 +85,8 @@ export default class Road implements GameElement {
                         length = width - midLength;
                     }
 
-                    var shape = new createjs.Shape();
-
-                    g = shape.graphics;
+                    const shape = new createjs.Shape();
+                    const g = shape.graphics;
 
                     g.beginFill(linesColor);
                     g.drawRect(

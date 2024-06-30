@@ -60,21 +60,21 @@ export default class Level {
         // these still haven't started
         this.cars_info = deepClone(info.cars);
 
-        for (var a = 0; a < this.cars_info.length; a++) {
+        for (let a = 0; a < this.cars_info.length; a++) {
             this.cars_info[a].count = 0;
 
             // start the level already with some cars in the road
-            var carInfo = this.cars_info[a];
-            var carTypeInfo = getCarInfo(carInfo.type);
-            var xStep = carTypeInfo.speed * carInfo.spawn_interval_seconds;
+            const carInfo = this.cars_info[a];
+            const carTypeInfo = getCarInfo(carInfo.type);
+            const xStep = carTypeInfo.speed * carInfo.spawn_interval_seconds;
 
             // starting 'x'
-            var x =
+            let x =
                 carTypeInfo.speed *
                 (carInfo.spawn_interval_seconds - carInfo.start_seconds);
 
             while (x < canvas.width) {
-                var car = new Car({
+                const car = new Car({
                     x: x,
                     y: this.road.laneToY(carInfo.lane),
                     type: carInfo.type,
@@ -110,7 +110,7 @@ export default class Level {
      * Clear the level related elements (cars, road, etc).
      */
     clear() {
-        for (var a = 0; a < this.cars.length; a++) {
+        for (let a = 0; a < this.cars.length; a++) {
             this.cars[a].clear();
         }
 
@@ -125,7 +125,7 @@ export default class Level {
      * Adds the new cars on the set interval, checks for collisions, etc.
      */
     tick(event: createjs.TickerEvent) {
-        var delta = event.delta / 1000; // in seconds
+        const delta = event.delta / 1000; // in seconds
         this.count_duration += delta;
 
         // check if we need to activate any car info
@@ -192,13 +192,13 @@ export default class Level {
      * Check collisions between the player and a car.
      */
     checkCollisions() {
-        var player = this.player;
-        var cars = this.cars;
+        const player = this.player;
+        const cars = this.cars;
 
-        for (var a = 0; a < cars.length; a++) {
-            var car = cars[a];
+        for (let a = 0; a < cars.length; a++) {
+            const car = cars[a];
 
-            var collision = boxBoxCollision(
+            const collision = boxBoxCollision(
                 player.getX(),
                 player.getY(),
                 player.getWidth(),
@@ -221,7 +221,7 @@ export default class Level {
      * Remove a `car` from the game.
      */
     removeCar(car: Car) {
-        var index = this.cars.indexOf(car);
+        const index = this.cars.indexOf(car);
         this.cars.splice(index, 1);
 
         car.clear();

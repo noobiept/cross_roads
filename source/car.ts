@@ -37,8 +37,6 @@ export default class Car implements GameElement {
             args.x = 0;
         }
 
-        var _this = this;
-
         this.info = getCarInfo(args.type);
         this.width = this.info.width;
         this.height = this.info.height;
@@ -51,12 +49,13 @@ export default class Car implements GameElement {
         });
 
         const canvas = getCanvasDimensions();
-        var travelDuration = ((canvas.width - args.x) / this.info.speed) * 1000;
+        const travelDuration =
+            ((canvas.width - args.x) / this.info.speed) * 1000;
 
         createjs.Tween.get(this.shape)
             .to({ x: canvas.width }, travelDuration)
-            .call(function () {
-                args.level.removeCar(_this);
+            .call(() => {
+                args.level.removeCar(this);
             });
     }
 
@@ -64,8 +63,8 @@ export default class Car implements GameElement {
      * Setup the display object of the car (an image).
      */
     setupShape() {
-        var info = this.info;
-        var shape = new createjs.Bitmap(getAsset(info.image));
+        const info = this.info;
+        const shape = new createjs.Bitmap(getAsset(info.image));
 
         addToStage(shape);
 

@@ -44,7 +44,7 @@ export default class Player implements GameElement {
      * Get a random image for the player.
      */
     getNewRandomShape() {
-        var position = getRandomInt(1, 8);
+        const position = getRandomInt(1, 8);
         this.shape.image = getAsset("player_" + position) as HTMLImageElement;
     }
 
@@ -63,10 +63,10 @@ export default class Player implements GameElement {
      */
     moveTo(xDirection: number, yDirection: number) {
         const canvas = getCanvasDimensions();
-        var angle = Math.atan2(yDirection, xDirection);
+        const angle = Math.atan2(yDirection, xDirection);
 
-        var nextX = this.shape.x + Math.cos(angle) * this.movement_step;
-        var nextY = this.shape.y + Math.sin(angle) * this.movement_step;
+        let nextX = this.shape.x + Math.cos(angle) * this.movement_step;
+        let nextY = this.shape.y + Math.sin(angle) * this.movement_step;
 
         if (nextX < 0) {
             nextX = 0;
@@ -149,8 +149,9 @@ export default class Player implements GameElement {
     /**
      * Move the player in a direction based on which keys are being held.
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     tick(_event: createjs.TickerEvent) {
-        var keysHeld = Keyboard.KEYS_HELD;
+        const keysHeld = Keyboard.KEYS_HELD;
 
         if (keysHeld.left && keysHeld.up) {
             this.moveTo(-1, -1);

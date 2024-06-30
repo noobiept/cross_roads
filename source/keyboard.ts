@@ -1,5 +1,5 @@
 // keys state (being pressed or not)
-export var KEYS_HELD = {
+export const KEYS_HELD = {
     up: false,
     down: false,
     left: false,

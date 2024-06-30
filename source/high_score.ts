@@ -3,19 +3,19 @@ import * as AppStorage from "./app_storage.js";
 
 export type HighScoreData = number[];
 
-var HIGH_SCORE: HighScoreData = [];
-var SAVE_LIMIT = 5; // the total scores we keep track of
-var LIST_ITEMS: HTMLElement[] = [];
+let HIGH_SCORE: HighScoreData = [];
+const SAVE_LIMIT = 5; // the total scores we keep track of
+const LIST_ITEMS: HTMLElement[] = [];
 
 /**
  * Initialize the module with some optional previous scores.
  */
 export function init(scoreData?: HighScoreData) {
-    var ul = document.getElementById("HighScore")!;
+    const ul = document.getElementById("HighScore")!;
 
     // add the list items that will have the high scores
-    for (var a = 0; a < SAVE_LIMIT; a++) {
-        var li = document.createElement("li");
+    for (let a = 0; a < SAVE_LIMIT; a++) {
+        const li = document.createElement("li");
 
         li.className = "value";
         ul.appendChild(li);
@@ -59,9 +59,9 @@ export function add(value: number) {
  * Update the html element, with the current high-scores.
  */
 function updateHtmlElement() {
-    for (var a = 0; a < SAVE_LIMIT; a++) {
-        var value = HIGH_SCORE[a];
-        var li = LIST_ITEMS[a];
+    for (let a = 0; a < SAVE_LIMIT; a++) {
+        const value = HIGH_SCORE[a];
+        const li = LIST_ITEMS[a];
 
         if (typeof value === "undefined") {
             li.innerHTML = "-";

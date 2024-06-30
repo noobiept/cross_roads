@@ -1,10 +1,10 @@
 import { getCanvasDimensions, addToStage, removeFromStage } from "./main.js";
 import { Timeout, isFunction } from "@drk4/utilities";
 
-var MESSAGE: createjs.Text;
-var MESSAGE_CONTAINER: createjs.Container;
-var MESSAGE_TIMEOUT: Timeout;
-var LOADING: createjs.Text;
+let MESSAGE: createjs.Text;
+let MESSAGE_CONTAINER: createjs.Container;
+let MESSAGE_TIMEOUT: Timeout;
+let LOADING: createjs.Text;
 
 /**
  * Initialize the module.

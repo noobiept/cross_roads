@@ -5,7 +5,7 @@ export interface OptionsData {
     music_state: boolean;
 }
 
-var OPTIONS: OptionsData = {
+const OPTIONS: OptionsData = {
     music_state: true,
 };
 

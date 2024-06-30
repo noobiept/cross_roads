@@ -23,16 +23,16 @@ export interface CanvasPosition {
     y: number;
 }
 
-var TIMER: Timer;
-var PLAYER: Player | null = null;
-var LEVEL: Level | null = null;
-var CURRENT_LEVEL = 1;
+let TIMER: Timer;
+let PLAYER: Player | null = null;
+let LEVEL: Level | null = null;
+let CURRENT_LEVEL = 1;
 
 /**
  * Initial load of the game. Only call it once at the start.
  */
 export function init() {
-    var timerElement = GameMenu.getTimerElement();
+    const timerElement = GameMenu.getTimerElement();
     TIMER = new Timer({
         updateElement: {
             element: timerElement,
@@ -74,7 +74,7 @@ export function clear() {
  * Load the first level, and configure the player, etc.
  */
 export function loadInitialLevel() {
-    let first = getAsset("level_1") as LevelInfo;
+    const first = getAsset("level_1") as LevelInfo;
 
     PLAYER = new Player();
     LEVEL = new Level({
@@ -111,9 +111,8 @@ export function nextLevel(levelPosition?: number) {
         CURRENT_LEVEL = levelPosition;
     }
 
-    var next = "level_" + CURRENT_LEVEL;
-
-    var levelInfo = getAsset(next) as LevelInfo;
+    const next = "level_" + CURRENT_LEVEL;
+    const levelInfo = getAsset(next) as LevelInfo;
 
     if (levelInfo !== null) {
         LEVEL = new Level({

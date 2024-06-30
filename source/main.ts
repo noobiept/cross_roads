@@ -44,7 +44,7 @@ function initApp(data: AppStorage.StorageData) {
     Keyboard.init([Music.play]);
     Message.init();
 
-    var manifest = [
+    const manifest = [
         { id: "cars", src: "data/cars.json" },
 
         { id: "level_1", src: "data/levels/level1.json" },
@@ -89,7 +89,7 @@ function initApp(data: AppStorage.StorageData) {
         { id: "player_8", src: "images/player8.png" },
     ];
 
-    createjs.Ticker.on("tick", mainTick as (event: Object) => void);
+    createjs.Ticker.on("tick", mainTick as (event: object) => void);
     Message.addLoading();
 
     PRELOAD = new createjs.LoadQueue();
@@ -98,7 +98,7 @@ function initApp(data: AppStorage.StorageData) {
     PRELOAD.installPlugin(createjs.Sound);
     PRELOAD.on("progress", function (event: createjs.ProgressEvent) {
         Message.updateLoading((event.progress * 100) | 0);
-    } as (event: Object) => void);
+    } as (event: object) => void);
     PRELOAD.on("complete", async function () {
         Message.removeLoading();
 

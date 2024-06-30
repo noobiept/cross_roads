@@ -1,20 +1,20 @@
 import * as Options from "./options.js";
 import * as Game from "./game.js";
 
-var LIVES_ELEMENT: HTMLElement;
-var LEVEL_ELEMENT: HTMLElement;
-var HELP_SECTION: HTMLElement;
+let LIVES_ELEMENT: HTMLElement;
+let LEVEL_ELEMENT: HTMLElement;
+let HELP_SECTION: HTMLElement;
 
 /**
  * Initialize the game menu elements. Called only once.
  */
 export function init() {
-    var container = document.getElementById("Menu")!;
+    const container = document.getElementById("Menu")!;
 
     // play/stop the music
-    var musicElement = document.getElementById("MusicState")!;
-    var musicElementInfo = musicElement.querySelector("span")!;
-    var isPlaying = Options.getMusicState();
+    const musicElement = document.getElementById("MusicState")!;
+    const musicElementInfo = musicElement.querySelector("span")!;
+    let isPlaying = Options.getMusicState();
 
     musicElementInfo.innerHTML = boolToString(isPlaying);
     musicElement.onclick = function () {
@@ -34,7 +34,7 @@ export function init() {
     closeHelp.onclick = toggleHelpListener;
 
     // restart the game
-    var restart = document.getElementById("Restart")!;
+    const restart = document.getElementById("Restart")!;
     restart.onclick = function () {
         Game.restart();
     };
@@ -82,7 +82,7 @@ export function startGame(level: number, lives: number) {
  * Show the game menu.
  */
 export function show() {
-    var menu = document.getElementById("Menu")!;
+    const menu = document.getElementById("Menu")!;
     menu.classList.remove("hidden");
 }
 
@@ -90,7 +90,7 @@ export function show() {
  * Hide the game menu.
  */
 export function hide() {
-    var menu = document.getElementById("Menu")!;
+    const menu = document.getElementById("Menu")!;
     menu.classList.add("hidden");
 }
 
@@ -108,7 +108,7 @@ function boolToString(value: boolean) {
 /**
  * Toggle the help section on mouse click (on the menu help button).
  */
-function toggleHelpListener(_event: MouseEvent) {
+function toggleHelpListener() {
     toggleHelpSection();
 }
 
@@ -125,7 +125,7 @@ export function toggleHelpSection(forceHidden?: boolean) {
  */
 export async function openInitialHelpSection() {
     return new Promise<void>((resolve) => {
-        var closeHelp = document.getElementById("HelpClose")!;
+        const closeHelp = document.getElementById("HelpClose")!;
         closeHelp.onclick = () => {
             toggleHelpSection();
 
