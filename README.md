@@ -1,4 +1,4 @@
-# [Try it out here!](https://nbpt.eu/games/cross_roads/)
+# [Try it out here!](https://pedruu.ch/games/cross_roads/)
 
 # Description
 

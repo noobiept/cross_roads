@@ -1,0 +1,23 @@
+image: ubuntu/24.04
+packages:
+  - curl
+sources:
+  - https://git.sr.ht/~pedruu/cross_roads
+tasks:
+  - setup: |
+      curl https://mise.run | sh
+      echo 'export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"' >> ~/.buildenv
+      source ~/.buildenv
+      cd cross_roads
+      mise trust
+      mise install
+      npm ci --legacy-peer-deps
+  - format: |
+      cd cross_roads
+      npm run format:check
+  - lint: |
+      cd cross_roads
+      npm run lint
+  - build: |
+      cd cross_roads
+      npm run build
