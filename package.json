@@ -2,7 +2,7 @@
     "name": "cross_roads",
     "version": "2.0.0",
     "description": "Need to cross the road without colliding with a moving vehicle.",
-    "packageManager": "npm@10.7.0",
+    "packageManager": "pnpm@11.5.0",
     "type": "module",
     "dependencies": {
         "@drk4/utilities": "^6.2.0",

@@ -11,13 +11,13 @@ tasks:
       cd cross_roads
       mise trust
       mise install
-      npm ci --legacy-peer-deps
+      pnpm install --frozen-lockfile
   - format: |
       cd cross_roads
-      npm run format:check
+      pnpm run format:check
   - lint: |
       cd cross_roads
-      npm run lint
+      pnpm run lint
   - build: |
       cd cross_roads
-      npm run build
+      pnpm run build
