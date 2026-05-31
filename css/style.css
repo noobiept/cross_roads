@@ -53,7 +53,8 @@ h4 {
     align-items: center;
 }
 
-#MainCanvas {
+.Game-Canvas {
+    display: block;
     padding: 0;
 }
 

@@ -136,15 +136,17 @@ export function nextLevel(levelPosition?: number) {
 }
 
 /**
- * Update the level and player state. Its called continuously at a given interval.
+ * Update the level and player state. Its called continuously on the game loop.
+ *
+ * @param deltaTime Time elapsed since the last update (in seconds).
  */
-export function tick(event: createjs.TickerEvent) {
+export function tick(deltaTime: number) {
     if (LEVEL) {
-        LEVEL.tick(event);
+        LEVEL.tick(deltaTime);
     }
 
     if (PLAYER) {
-        PLAYER.tick(event);
+        PLAYER.tick(deltaTime);
     }
 }
 

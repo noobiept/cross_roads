@@ -7,6 +7,7 @@ import {
     getCarInfo,
 } from "./main.js";
 import { GameElement, CanvasPosition } from "./game.js";
+import * as Engine from "@drk4/game-engine";
 
 export type CarType = "one" | "two" | "three" | "four" | "five" | "six";
 
@@ -27,7 +28,7 @@ export interface CarArgs {
 }
 
 export default class Car implements GameElement {
-    private shape: createjs.Bitmap;
+    private shape: Engine.Bitmap;
     private info: CarInfo;
     private width: number;
     private height: number;
@@ -49,14 +50,15 @@ export default class Car implements GameElement {
         });
 
         const canvas = getCanvasDimensions();
-        const travelDuration =
-            ((canvas.width - args.x) / this.info.speed) * 1000;
+        const travelDuration = (canvas.width - args.x) / this.info.speed; // in seconds
 
-        createjs.Tween.get(this.shape)
-            .to({ x: canvas.width }, travelDuration)
+        // tween the (center) `x` until the car is fully off the right edge
+        new Engine.Tween(this.shape)
+            .to({ x: canvas.width + this.width / 2 }, travelDuration)
             .call(() => {
                 args.level.removeCar(this);
-            });
+            })
+            .start();
     }
 
     /**
@@ -64,7 +66,7 @@ export default class Car implements GameElement {
      */
     setupShape() {
         const info = this.info;
-        const shape = new createjs.Bitmap(getAsset(info.image));
+        const shape = new Engine.Bitmap({ image: getAsset(info.image) });
 
         addToStage(shape);
 
@@ -72,32 +74,33 @@ export default class Car implements GameElement {
     }
 
     /**
-     * Position the car in the given x/y position.
+     * Position the car in the given x/y position (top-left based).
      */
     positionIn(position: CanvasPosition) {
-        this.shape.x = position.x;
-        this.shape.y = position.y;
+        this.shape.x = position.x + this.width / 2;
+        this.shape.y = position.y + this.height / 2;
     }
 
     /**
      * Remove the car from the stage (so it isn't displayed anymore).
      */
     clear() {
+        Engine.Tween.removeTweens(this.shape);
         removeFromStage(this.shape);
     }
 
     /**
-     * Get the current `x` position value.
+     * Get the current `x` position value (top-left).
      */
     getX() {
-        return this.shape.x;
+        return this.shape.x - this.width / 2;
     }
 
     /**
-     * Get the current `y` position value.
+     * Get the current `y` position value (top-left).
      */
     getY() {
-        return this.shape.y;
+        return this.shape.y - this.height / 2;
     }
 
     /**

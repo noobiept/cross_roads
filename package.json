@@ -5,19 +5,11 @@
     "packageManager": "pnpm@11.5.0",
     "type": "module",
     "dependencies": {
-        "@drk4/utilities": "^6.4.0",
-        "easeljs": "^1.0.2",
-        "preloadjs": "^1.0.1",
-        "soundjs": "^1.0.1",
-        "tweenjs": "^1.0.2"
+        "@drk4/game-engine": "^3.0.1",
+        "@drk4/utilities": "^7.0.0"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
-        "@types/createjs-lib": "^0.0.33",
-        "@types/easeljs": "^1.0.5",
-        "@types/preloadjs": "^0.6.36",
-        "@types/soundjs": "^0.6.31",
-        "@types/tweenjs": "^1.0.8",
         "eslint": "^10.4.1",
         "globals": "^17.6.0",
         "prettier": "^3.8.3",

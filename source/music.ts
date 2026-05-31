@@ -1,13 +1,15 @@
 import * as Options from "./options.js";
+import * as Engine from "@drk4/game-engine";
+import { getAsset } from "./main.js";
 
-let MUSIC: createjs.AbstractSoundInstance;
+let MUSIC: Engine.Sound.SoundInstance | null = null;
 
 /**
  * Initialize the music.
  */
 export function init() {
-    MUSIC = createjs.Sound.play("happy_tune", { loop: -1 });
-    MUSIC.paused = true;
+    MUSIC = Engine.Sound.play(getAsset("happy_tune"), { loop: true });
+    MUSIC?.pause();
 }
 
 /**
@@ -19,7 +21,7 @@ export function play() {
             init();
         }
 
-        MUSIC.paused = false;
+        MUSIC?.resume();
     }
 }
 
@@ -28,6 +30,6 @@ export function play() {
  */
 export function stop() {
     if (MUSIC) {
-        MUSIC.paused = true;
+        MUSIC.pause();
     }
 }

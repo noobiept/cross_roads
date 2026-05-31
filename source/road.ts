@@ -1,5 +1,6 @@
 import { getCanvasDimensions, addToStage, removeFromStage } from "./main.js";
 import { GameElement, CanvasPosition } from "./game.js";
+import * as Engine from "@drk4/game-engine";
 
 export interface RoadInfo {
     lanes: number;
@@ -9,8 +10,8 @@ export interface RoadInfo {
 export default class Road implements GameElement {
     static readonly LANE_HEIGHT = 30; // height of each lane, as well of the side walks
 
-    private lines: createjs.Shape[];
-    private container: createjs.Container;
+    private lines: Engine.Rectangle[];
+    private container: Engine.Container;
     private lanes: number;
     private side_walks: number[];
     private width: number;
@@ -31,34 +32,50 @@ export default class Road implements GameElement {
 
     /**
      * Setup the all the road elements (side walks, and lane separators), and add that to the stage.
+     *
+     * The children are positioned in a top-left local space (origin at the road's top-left
+     * corner). The engine is center-origin, so each rectangle's center is its
+     * `top-left + size / 2`, and the container's position (set in `positionIn`) places that
+     * local origin on the canvas.
      */
     setupShape() {
         const canvas = getCanvasDimensions();
-        const container = new createjs.Container();
+        const container = new Engine.Container();
 
         const linesColor = "black";
         const sideWalkColor = "gray";
         const lineHeight = 1;
         const width = canvas.width;
 
+        const addRect = (
+            left: number,
+            top: number,
+            rectWidth: number,
+            rectHeight: number,
+            color: string
+        ) => {
+            const rect = new Engine.Rectangle({
+                x: left + rectWidth / 2,
+                y: top + rectHeight / 2,
+                width: rectWidth,
+                height: rectHeight,
+                color: color,
+            });
+
+            container.addChild(rect);
+            this.lines.push(rect);
+        };
+
         // :: Side walks :: //
 
         for (let a = 0; a < this.side_walks.length; a++) {
-            const sideWalk = new createjs.Shape();
-
-            const g = sideWalk.graphics;
-
-            g.beginFill(sideWalkColor);
-            g.drawRect(
+            addRect(
                 0,
                 this.side_walks[a] * Road.LANE_HEIGHT,
                 width,
-                Road.LANE_HEIGHT
+                Road.LANE_HEIGHT,
+                sideWalkColor
             );
-            g.endFill();
-
-            container.addChild(sideWalk);
-            this.lines.push(sideWalk);
         }
 
         // :: Lane separators :: //
@@ -85,20 +102,13 @@ export default class Road implements GameElement {
                         length = width - midLength;
                     }
 
-                    const shape = new createjs.Shape();
-                    const g = shape.graphics;
-
-                    g.beginFill(linesColor);
-                    g.drawRect(
+                    addRect(
                         midLength,
                         Road.LANE_HEIGHT + a * Road.LANE_HEIGHT,
                         length,
-                        lineHeight
+                        lineHeight,
+                        linesColor
                     );
-                    g.endFill();
-
-                    container.addChild(shape);
-                    this.lines.push(shape);
 
                     midLength += length + lengthBetweenLines;
                 }
@@ -112,7 +122,7 @@ export default class Road implements GameElement {
     }
 
     /**
-     * Position the road in the given position.
+     * Position the road in the given position (top-left of the road area).
      */
     positionIn(position: CanvasPosition) {
         this.container.x = position.x;

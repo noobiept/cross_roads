@@ -124,8 +124,8 @@ export default class Level {
      * Gets called in the game loop.
      * Adds the new cars on the set interval, checks for collisions, etc.
      */
-    tick(event: createjs.TickerEvent) {
-        const delta = event.delta / 1000; // in seconds
+    tick(deltaTime: number) {
+        const delta = deltaTime; // in seconds
         this.count_duration += delta;
 
         // check if we need to activate any car info

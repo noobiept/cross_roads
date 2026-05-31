@@ -1,10 +1,16 @@
-import { getCanvasDimensions, addToStage, removeFromStage } from "./main.js";
+import {
+    getCanvasDimensions,
+    addToStage,
+    removeFromStage,
+    bringToTop,
+} from "./main.js";
 import { Timeout, isFunction } from "@drk4/utilities";
+import * as Engine from "@drk4/game-engine";
 
-let MESSAGE: createjs.Text;
-let MESSAGE_CONTAINER: createjs.Container;
+let MESSAGE: Engine.Text;
+let MESSAGE_CONTAINER: Engine.Container;
 let MESSAGE_TIMEOUT: Timeout;
-let LOADING: createjs.Text;
+let LOADING: Engine.Text;
 
 /**
  * Initialize the module.
@@ -13,30 +19,34 @@ export function init() {
     const canvas = getCanvasDimensions();
     const backgroundHeight = 40;
 
-    // the text part
-    MESSAGE = new createjs.Text("", "30px monospace");
-    MESSAGE.textAlign = "center";
-    MESSAGE.textBaseline = "middle";
+    // the text part (centered within the banner)
+    MESSAGE = new Engine.Text({
+        text: "",
+        fontSize: 30,
+        fontFamily: "monospace",
+        textAlign: "center",
+        textBaseline: "middle",
+    });
     MESSAGE.x = 0;
-    MESSAGE.y = backgroundHeight / 2;
+    MESSAGE.y = 0;
 
     // the background color
-    const background = new createjs.Shape();
-    const g = background.graphics;
+    const background = new Engine.Rectangle({
+        x: 0,
+        y: 0,
+        width: canvas.width,
+        height: backgroundHeight,
+        color: "lightblue",
+    });
 
-    g.beginFill("lightblue");
-    g.drawRect(-canvas.width / 2, 0, canvas.width, backgroundHeight);
-    g.endFill();
-
-    // the container
-    MESSAGE_CONTAINER = new createjs.Container();
+    // the container, centered horizontally and sitting at the top of the canvas
+    MESSAGE_CONTAINER = new Engine.Container({
+        children: [background, MESSAGE],
+    });
 
     MESSAGE_CONTAINER.visible = false;
-    MESSAGE_CONTAINER.addChild(background);
-    MESSAGE_CONTAINER.addChild(MESSAGE);
-
     MESSAGE_CONTAINER.x = canvas.width / 2;
-    MESSAGE_CONTAINER.y = 0;
+    MESSAGE_CONTAINER.y = backgroundHeight / 2;
 
     addToStage(MESSAGE_CONTAINER);
 
@@ -44,8 +54,12 @@ export function init() {
     MESSAGE_TIMEOUT = new Timeout();
 
     // the loading message
-    LOADING = new createjs.Text("", "30px monospace");
-    LOADING.textAlign = "center";
+    LOADING = new Engine.Text({
+        text: "",
+        fontSize: 30,
+        fontFamily: "monospace",
+        textAlign: "center",
+    });
     LOADING.x = canvas.width / 2;
     LOADING.y = canvas.height / 2;
 }
@@ -57,8 +71,8 @@ export function show(text: string, timeout: number, callback?: () => void) {
     MESSAGE.text = text;
     MESSAGE_CONTAINER.visible = true;
 
-    // re-add the element so that it stays on top of other elements (z-index)
-    addToStage(MESSAGE_CONTAINER);
+    // bring it to the front so that it stays on top of other elements (z-index)
+    bringToTop(MESSAGE_CONTAINER);
 
     MESSAGE_TIMEOUT.start(function () {
         MESSAGE_CONTAINER.visible = false;

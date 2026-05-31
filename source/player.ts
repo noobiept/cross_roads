@@ -5,12 +5,14 @@ import {
     addToStage,
     getCanvasDimensions,
     removeFromStage,
+    bringToTop,
 } from "./main.js";
 import { GameElement, CanvasPosition } from "./game.js";
 import { getRandomInt } from "@drk4/utilities";
+import * as Engine from "@drk4/game-engine";
 
 export default class Player implements GameElement {
-    private shape!: createjs.Bitmap;
+    private shape!: Engine.Bitmap;
     private width: number;
     private height: number;
     private movement_step: number;
@@ -21,7 +23,7 @@ export default class Player implements GameElement {
         this.width = 15;
         this.height = 15;
         this.movement_step = 11;
-        this.movement_animation = 90; // ease duration
+        this.movement_animation = 0.09; // ease duration (in seconds)
         this.lives = 10;
 
         this.setupShape();
@@ -32,7 +34,7 @@ export default class Player implements GameElement {
      */
     setupShape() {
         const image = getAsset("player_1");
-        const shape = new createjs.Bitmap(image);
+        const shape = new Engine.Bitmap({ image: image });
 
         this.shape = shape;
         this.getNewRandomShape();
@@ -49,13 +51,13 @@ export default class Player implements GameElement {
     }
 
     /**
-     * Position immediately the player in the given position.
+     * Position immediately the player in the given position (top-left based).
      */
     positionIn(position: CanvasPosition) {
-        createjs.Tween.removeTweens(this.shape);
+        Engine.Tween.removeTweens(this.shape);
 
-        this.shape.x = position.x;
-        this.shape.y = position.y;
+        this.shape.x = position.x + this.width / 2;
+        this.shape.y = position.y + this.height / 2;
     }
 
     /**
@@ -65,8 +67,8 @@ export default class Player implements GameElement {
         const canvas = getCanvasDimensions();
         const angle = Math.atan2(yDirection, xDirection);
 
-        let nextX = this.shape.x + Math.cos(angle) * this.movement_step;
-        let nextY = this.shape.y + Math.sin(angle) * this.movement_step;
+        let nextX = this.getX() + Math.cos(angle) * this.movement_step;
+        let nextY = this.getY() + Math.sin(angle) * this.movement_step;
 
         if (nextX < 0) {
             nextX = 0;
@@ -80,34 +82,38 @@ export default class Player implements GameElement {
             nextY = canvas.height - this.height;
         }
 
-        createjs.Tween.get(this.shape, { override: true }).to(
-            {
-                x: nextX,
-                y: nextY,
-            },
-            this.movement_animation
-        );
+        // the engine is center-origin, so convert the top-left target to a center
+        new Engine.Tween(this.shape, { override: true })
+            .to(
+                {
+                    x: nextX + this.width / 2,
+                    y: nextY + this.height / 2,
+                },
+                this.movement_animation
+            )
+            .start();
     }
 
     /**
      * Remove the player's shape from the stage.
      */
     clear() {
+        Engine.Tween.removeTweens(this.shape);
         removeFromStage(this.shape);
     }
 
     /**
-     * Get the current `x` position value.
+     * Get the current `x` position value (top-left).
      */
     getX() {
-        return this.shape.x;
+        return this.shape.x - this.width / 2;
     }
 
     /**
-     * Get the current `y` position value.
+     * Get the current `y` position value (top-left).
      */
     getY() {
-        return this.shape.y;
+        return this.shape.y - this.height / 2;
     }
 
     /**
@@ -150,7 +156,7 @@ export default class Player implements GameElement {
      * Move the player in a direction based on which keys are being held.
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    tick(_event: createjs.TickerEvent) {
+    tick(_deltaTime: number) {
         const keysHeld = Keyboard.KEYS_HELD;
 
         if (keysHeld.left && keysHeld.up) {
@@ -176,6 +182,6 @@ export default class Player implements GameElement {
      * Bring the player's shape to the top of other elements (z-index).
      */
     bringToTop() {
-        addToStage(this.shape);
+        bringToTop(this.shape);
     }
 }

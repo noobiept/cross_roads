@@ -6,13 +6,15 @@ import * as Keyboard from "./keyboard.js";
 import * as Game from "./game.js";
 import * as Music from "./music.js";
 import * as Message from "./message.js";
+import * as Engine from "@drk4/game-engine";
 import { CarType, AllCarsInfo } from "./car.js";
 
 import "../css/style.css";
 
-let CANVAS: HTMLCanvasElement;
-let STAGE: createjs.Stage;
-let PRELOAD: createjs.LoadQueue;
+const CANVAS_WIDTH = 600;
+const CANVAS_HEIGHT = 600;
+
+let PRELOAD: Engine.Preload;
 
 window.onload = function () {
     AppStorage.getData(
@@ -29,14 +31,13 @@ window.onload = function () {
  * Initialize the application with the data we got from the storage.
  */
 function initApp(data: AppStorage.StorageData) {
-    CANVAS = document.getElementById("MainCanvas") as HTMLCanvasElement;
-    CANVAS.width = 600;
-    CANVAS.height = 600;
+    const container = document.getElementById("CanvasContainer")!;
 
-    STAGE = new createjs.Stage(CANVAS);
-
-    createjs.Ticker.timingMode = createjs.Ticker.RAF;
-    createjs.Sound.alternateExtensions = ["mp3"];
+    Engine.init({
+        container: container,
+        width: CANVAS_WIDTH,
+        height: CANVAS_HEIGHT,
+    });
 
     Options.load(data["cross_roads_options"]);
     GameMenu.init();
@@ -45,61 +46,59 @@ function initApp(data: AppStorage.StorageData) {
     Message.init();
 
     const manifest = [
-        { id: "cars", src: "data/cars.json" },
+        { id: "cars", path: "data/cars.json" },
 
-        { id: "level_1", src: "data/levels/level1.json" },
-        { id: "level_2", src: "data/levels/level2.json" },
-        { id: "level_3", src: "data/levels/level3.json" },
-        { id: "level_4", src: "data/levels/level4.json" },
-        { id: "level_5", src: "data/levels/level5.json" },
-        { id: "level_6", src: "data/levels/level6.json" },
-        { id: "level_7", src: "data/levels/level7.json" },
-        { id: "level_8", src: "data/levels/level8.json" },
-        { id: "level_9", src: "data/levels/level9.json" },
-        { id: "level_10", src: "data/levels/level10.json" },
-        { id: "level_11", src: "data/levels/level11.json" },
-        { id: "level_12", src: "data/levels/level12.json" },
-        { id: "level_13", src: "data/levels/level13.json" },
-        { id: "level_14", src: "data/levels/level14.json" },
-        { id: "level_15", src: "data/levels/level15.json" },
-        { id: "level_16", src: "data/levels/level16.json" },
-        { id: "level_17", src: "data/levels/level17.json" },
-        { id: "level_18", src: "data/levels/level18.json" },
-        { id: "level_19", src: "data/levels/level19.json" },
-        { id: "level_20", src: "data/levels/level20.json" },
+        { id: "level_1", path: "data/levels/level1.json" },
+        { id: "level_2", path: "data/levels/level2.json" },
+        { id: "level_3", path: "data/levels/level3.json" },
+        { id: "level_4", path: "data/levels/level4.json" },
+        { id: "level_5", path: "data/levels/level5.json" },
+        { id: "level_6", path: "data/levels/level6.json" },
+        { id: "level_7", path: "data/levels/level7.json" },
+        { id: "level_8", path: "data/levels/level8.json" },
+        { id: "level_9", path: "data/levels/level9.json" },
+        { id: "level_10", path: "data/levels/level10.json" },
+        { id: "level_11", path: "data/levels/level11.json" },
+        { id: "level_12", path: "data/levels/level12.json" },
+        { id: "level_13", path: "data/levels/level13.json" },
+        { id: "level_14", path: "data/levels/level14.json" },
+        { id: "level_15", path: "data/levels/level15.json" },
+        { id: "level_16", path: "data/levels/level16.json" },
+        { id: "level_17", path: "data/levels/level17.json" },
+        { id: "level_18", path: "data/levels/level18.json" },
+        { id: "level_19", path: "data/levels/level19.json" },
+        { id: "level_20", path: "data/levels/level20.json" },
 
-        { id: "car_1", src: "images/car1.png" },
-        { id: "car_2", src: "images/car2.png" },
-        { id: "car_3", src: "images/car3.png" },
-        { id: "car_4", src: "images/car4.png" },
-        { id: "car_5", src: "images/car5.png" },
-        { id: "car_6", src: "images/car6.png" },
+        { id: "car_1", path: "images/car1.png" },
+        { id: "car_2", path: "images/car2.png" },
+        { id: "car_3", path: "images/car3.png" },
+        { id: "car_4", path: "images/car4.png" },
+        { id: "car_5", path: "images/car5.png" },
+        { id: "car_6", path: "images/car6.png" },
 
-        { id: "explosion", src: "images/explosion.png" },
+        { id: "explosion", path: "images/explosion.png" },
 
-        { id: "happy_tune", src: "music/happy_tune.ogg" },
+        { id: "happy_tune", path: "music/happy_tune.ogg" },
 
-        { id: "player_1", src: "images/player1.png" },
-        { id: "player_2", src: "images/player2.png" },
-        { id: "player_3", src: "images/player3.png" },
-        { id: "player_4", src: "images/player4.png" },
-        { id: "player_5", src: "images/player5.png" },
-        { id: "player_6", src: "images/player6.png" },
-        { id: "player_7", src: "images/player7.png" },
-        { id: "player_8", src: "images/player8.png" },
+        { id: "player_1", path: "images/player1.png" },
+        { id: "player_2", path: "images/player2.png" },
+        { id: "player_3", path: "images/player3.png" },
+        { id: "player_4", path: "images/player4.png" },
+        { id: "player_5", path: "images/player5.png" },
+        { id: "player_6", path: "images/player6.png" },
+        { id: "player_7", path: "images/player7.png" },
+        { id: "player_8", path: "images/player8.png" },
     ];
 
-    createjs.Ticker.on("tick", mainTick as (event: object) => void);
+    Engine.addToGameLoop(mainTick);
     Message.addLoading();
 
-    PRELOAD = new createjs.LoadQueue();
-    PRELOAD.setMaxConnections(10);
-    PRELOAD.maintainScriptOrder = false;
-    PRELOAD.installPlugin(createjs.Sound);
-    PRELOAD.on("progress", function (event: createjs.ProgressEvent) {
-        Message.updateLoading((event.progress * 100) | 0);
-    } as (event: object) => void);
-    PRELOAD.on("complete", async function () {
+    PRELOAD = new Engine.Preload({ saveGlobal: false });
+    PRELOAD.addEventListener("progress", function (progress: number) {
+        // the engine dispatches progress as a 0-100 percentage already
+        Message.updateLoading(progress | 0);
+    });
+    PRELOAD.addEventListener("complete", async function () {
         Message.removeLoading();
 
         // show the help page on the first run of the game
@@ -111,7 +110,7 @@ function initApp(data: AppStorage.StorageData) {
         Game.init();
         Game.loadInitialLevel();
     });
-    PRELOAD.loadManifest(manifest, true);
+    PRELOAD.loadManifest(manifest);
 }
 
 /**
@@ -119,44 +118,52 @@ function initApp(data: AppStorage.StorageData) {
  */
 export function getCanvasDimensions() {
     return {
-        width: CANVAS.width,
-        height: CANVAS.height,
+        width: CANVAS_WIDTH,
+        height: CANVAS_HEIGHT,
     };
 }
 
 /**
  * Add an element to the stage (to be shown on the canvas).
  */
-export function addToStage(element: createjs.DisplayObject) {
-    STAGE.addChild(element);
+export function addToStage(element: Engine.Element) {
+    Engine.addElement(element);
 }
 
 /**
  * Remove an element from the stage.
  */
-export function removeFromStage(element: createjs.DisplayObject) {
-    STAGE.removeChild(element);
+export function removeFromStage(element: Engine.Element) {
+    Engine.removeElement(element);
+}
+
+/**
+ * Bring an element to the front, so it stays on top of the other elements.
+ */
+export function bringToTop(element: Engine.Element) {
+    Engine.getCanvas().bringToFront(element);
 }
 
 /**
  * Get a previously pre-loaded asset (image, sound, map, etc).
  */
 export function getAsset(id: string) {
-    return PRELOAD.getResult(id);
+    return PRELOAD.get(id);
 }
 
 /**
  * Get the info a specific car type (to know the speed, width, etc).
  */
 export function getCarInfo(type: CarType) {
-    const cars = PRELOAD.getResult("cars") as AllCarsInfo;
+    const cars = PRELOAD.get("cars") as AllCarsInfo;
     return cars[type];
 }
 
 /**
  * The main game loop, calls other updates from here.
+ *
+ * @param deltaTime Time elapsed since the last update (in seconds).
  */
-function mainTick(event: createjs.TickerEvent) {
-    Game.tick(event);
-    STAGE.update();
+function mainTick(deltaTime: number) {
+    Game.tick(deltaTime);
 }
