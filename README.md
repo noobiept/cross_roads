@@ -1,5 +1,7 @@
 # [Try it out here!](https://pedruu.ch/games/cross_roads/)
 
+[![CI](https://github.com/noobiept/cross_roads/actions/workflows/build.yml/badge.svg)](https://github.com/noobiept/cross_roads/actions/workflows/build.yml)
+
 # Description
 
 - You have to cross the road to the other side.
@@ -26,5 +28,6 @@ Use the arrow keys (or wasd keys) to control the player movement.
 
 # Commands
 
-- `npm run dev`: Build the game and start a local server (at `localhost:8000/`).
-- `npm run build`: Build the release version of the game.
+- `pnpm install --frozen-lockfile`: Install dependencies using the committed lockfile.
+- `pnpm run dev`: Start the local development server.
+- `pnpm run build`: Build the release version of the game.
