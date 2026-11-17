@@ -5,14 +5,22 @@ import Road, { RoadInfo } from "./road.js";
 import Player from "./player.js";
 import Explosion from "./explosion.js";
 import { getCanvasDimensions, getCarInfo } from "./main.js";
-import { boxBoxCollision, deepClone } from "@drk4/utilities";
+import { boxBoxCollision } from "@drk4/utilities";
+import * as Engine from "@drk4/game-engine";
 
 export interface CarsInLevelInfo {
     type: CarType;
     start_seconds: number;
     spawn_interval_seconds: number;
     lane: number;
-    count: number;
+}
+
+/**
+ * The cars of a lane: the first one comes at `start_seconds`, then one every `spawn_interval_seconds`.
+ */
+interface LaneSpawn {
+    info: CarsInLevelInfo;
+    cooldown: Engine.Cooldown;
 }
 
 export interface LevelInfo {
@@ -31,9 +39,7 @@ export default class Level {
     private start_x: number;
     private start_y: number;
     private destination_y: number;
-    private count_duration: number;
-    private cars_info: CarsInLevelInfo[];
-    private active_cars_info: CarsInLevelInfo[];
+    private spawns: LaneSpawn[];
     private player: Player;
 
     constructor(args: LevelArgs) {
@@ -53,18 +59,23 @@ export default class Level {
 
         player.positionIn({ x: this.start_x, y: this.start_y });
 
-        // counts the time since the level started (useful to know when to start adding the cars)
-        this.count_duration = 0;
+        this.spawns = [];
 
-        // has the info of the cars to be added (which lane, spawn interval, etc)
-        // these still haven't started
-        this.cars_info = deepClone(info.cars);
+        for (let a = 0; a < info.cars.length; a++) {
+            const carInfo = info.cars[a];
 
-        for (let a = 0; a < this.cars_info.length; a++) {
-            this.cars_info[a].count = 0;
+            // it waits until the lane starts, then `restart()` sets the spawn interval (keeping the
+            // time past the start and each interval, so the gaps between the cars don't depend on the
+            // frame rate)
+            this.spawns.push({
+                info: carInfo,
+                cooldown: new Engine.Cooldown(carInfo.start_seconds, {
+                    ready: false,
+                }),
+            });
 
-            // start the level already with some cars in the road
-            const carInfo = this.cars_info[a];
+            // start the level already with some cars in the road (where they'd be if the lane had
+            // been spawning them before the level started)
             const carTypeInfo = getCarInfo(carInfo.type);
             const xStep = carTypeInfo.speed * carInfo.spawn_interval_seconds;
 
@@ -86,9 +97,6 @@ export default class Level {
                 x += xStep;
             }
         }
-
-        // this will have the same info there is in .cars_info (it will be moved to here), once it is active (the level duration has passed the .start_seconds property)
-        this.active_cars_info = [];
 
         // need to move here to pass the level
         this.destination_y =
@@ -115,7 +123,6 @@ export default class Level {
         }
 
         this.cars.length = 0;
-        this.count_duration = 0;
 
         this.road.clear();
     }
@@ -125,16 +132,15 @@ export default class Level {
      * Adds the new cars on the set interval, checks for collisions, etc.
      */
     tick(deltaTime: number) {
-        const delta = deltaTime; // in seconds
-        this.count_duration += delta;
+        // add the new cars (once the lane starts, and then on its spawn interval)
+        for (let a = 0; a < this.spawns.length; a++) {
+            const spawn = this.spawns[a];
+            const info = spawn.info;
 
-        // check if we need to activate any car info
-        for (let a = this.cars_info.length - 1; a >= 0; a--) {
-            const info = this.cars_info[a];
+            spawn.cooldown.update(deltaTime);
 
-            if (this.count_duration >= info.start_seconds) {
-                this.active_cars_info.push(info);
-                this.cars_info.splice(a, 1);
+            if (spawn.cooldown.isReady()) {
+                spawn.cooldown.restart(info.spawn_interval_seconds);
 
                 const car = new Car({
                     y: this.road.laneToY(info.lane),
@@ -143,25 +149,6 @@ export default class Level {
                 });
 
                 this.cars.push(car);
-            }
-        }
-
-        // add new cars, according to its spawn interval
-        for (let a = 0; a < this.active_cars_info.length; a++) {
-            const info = this.active_cars_info[a];
-
-            info.count += delta;
-
-            if (info.count >= info.spawn_interval_seconds) {
-                const car = new Car({
-                    y: this.road.laneToY(info.lane),
-                    type: info.type,
-                    level: this,
-                });
-
-                this.cars.push(car);
-
-                info.count = 0;
             }
         }
 
