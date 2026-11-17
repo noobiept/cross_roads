@@ -40,6 +40,10 @@ async function initApp(data: AppStorage.SavedData) {
         height: CANVAS_HEIGHT,
     });
 
+    // the game logic runs 60 times per second on any display (so it behaves the same everywhere),
+    // and the drawing is smooth at any refresh rate
+    Engine.setFixedTimestep(1 / 60);
+
     Options.load(data["cross_roads_options"]);
     GameMenu.init();
     HighScore.init(data["cross_roads_high_score"]);

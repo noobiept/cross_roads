@@ -53,6 +53,9 @@ export default class Player {
 
         this.shape.left = position.x;
         this.shape.top = position.y;
+
+        // drawn right there (not moving there from where it was, between two steps of the logic)
+        this.shape.resetInterpolation();
     }
 
     /**
