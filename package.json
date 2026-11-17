@@ -2,7 +2,7 @@
     "name": "cross_roads",
     "version": "2.1.0",
     "description": "Need to cross the road without colliding with a moving vehicle.",
-    "packageManager": "pnpm@11.5.1",
+    "packageManager": "pnpm@12.21.0",
     "type": "module",
     "dependencies": {
         "@drk4/game-engine": "^3.0.1",
