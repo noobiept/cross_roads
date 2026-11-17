@@ -44,7 +44,6 @@ function initApp(data: AppStorage.SavedData) {
     HighScore.init(data["cross_roads_high_score"]);
     Keyboard.init([Music.play]);
     Message.init();
-    Music.init();
 
     const manifest = [
         { id: "cars", path: "data/cars.json" },

@@ -5,7 +5,7 @@
     "packageManager": "pnpm@12.21.0",
     "type": "module",
     "dependencies": {
-        "@drk4/game-engine": "^4.2.0",
+        "@drk4/game-engine": "^4.3.0",
         "@drk4/utilities": "^8.0.0"
     },
     "devDependencies": {

@@ -209,11 +209,7 @@ export default class Level {
      */
     removeCar(car: Car) {
         const index = this.cars.indexOf(car);
-
-        // a car of a level that was cleared can still finish its tween in the same frame
-        if (index >= 0) {
-            this.cars.splice(index, 1);
-        }
+        this.cars.splice(index, 1);
 
         car.clear();
     }
