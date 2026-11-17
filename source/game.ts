@@ -9,15 +9,6 @@ import { getLevelInfo } from "./main.js";
 import { timeToString } from "@drk4/utilities";
 import * as Engine from "@drk4/game-engine";
 
-export interface GameElement {
-    getX(): number;
-    getY(): number;
-    getWidth(): number;
-    getHeight(): number;
-    clear(): void;
-    positionIn(position: CanvasPosition): void;
-}
-
 export interface CanvasPosition {
     x: number;
     y: number;
@@ -202,18 +193,4 @@ export function setMusicState(onOff: boolean) {
     } else {
         Music.stop();
     }
-}
-
-/**
- * The origin point of the game elements is on the top-left corner.
- * So if we want 2 elements that have different width/height to be centered, we need to calculate an adjusted x/y position.
- */
-export function centerElement(reference: GameElement, element: GameElement) {
-    const diffWidth = element.getWidth() - reference.getWidth();
-    const diffHeight = element.getHeight() - reference.getHeight();
-
-    return {
-        x: reference.getX() - diffWidth / 2,
-        y: reference.getY() - diffHeight / 2,
-    };
 }

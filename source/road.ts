@@ -1,5 +1,5 @@
 import { getCanvasDimensions, addToStage, removeFromStage } from "./main.js";
-import { GameElement, CanvasPosition } from "./game.js";
+import { CanvasPosition } from "./game.js";
 import * as Engine from "@drk4/game-engine";
 
 export interface RoadInfo {
@@ -7,14 +7,13 @@ export interface RoadInfo {
     side_walks: number[];
 }
 
-export default class Road implements GameElement {
+export default class Road {
     static readonly LANE_HEIGHT = 30; // height of each lane, as well of the side walks
 
     private lines: Engine.Rectangle[];
     private container: Engine.Container;
     private lanes: number;
     private side_walks: number[];
-    private width: number;
     private height: number;
 
     constructor(info: RoadInfo) {
@@ -23,7 +22,6 @@ export default class Road implements GameElement {
         this.lines = [];
         this.lanes = info.lanes;
         this.side_walks = info.side_walks;
-        this.width = canvas.width;
         this.height = this.lanes * Road.LANE_HEIGHT;
         this.container = this.setupShape();
 
@@ -33,10 +31,8 @@ export default class Road implements GameElement {
     /**
      * Setup the all the road elements (side walks, and lane separators), and add that to the stage.
      *
-     * The children are positioned in a top-left local space (origin at the road's top-left
-     * corner). The engine is center-origin, so each rectangle's center is its
-     * `top-left + size / 2`, and the container's position (set in `positionIn`) places that
-     * local origin on the canvas.
+     * The children are positioned by their edges, relative to the road's top-left corner (the
+     * container's position, set in `positionIn`).
      */
     setupShape() {
         const canvas = getCanvasDimensions();
@@ -55,12 +51,12 @@ export default class Road implements GameElement {
             color: string
         ) => {
             const rect = new Engine.Rectangle({
-                x: left + rectWidth / 2,
-                y: top + rectHeight / 2,
                 width: rectWidth,
                 height: rectHeight,
                 color: color,
             });
+            rect.left = left;
+            rect.top = top;
 
             container.addChild(rect);
             this.lines.push(rect);
@@ -145,24 +141,10 @@ export default class Road implements GameElement {
     }
 
     /**
-     * Get the `x` position of the road.
-     */
-    getX() {
-        return this.container.x;
-    }
-
-    /**
      * Get the `y` position of the road.
      */
     getY() {
         return this.container.y;
-    }
-
-    /**
-     * Get the road's `width`.
-     */
-    getWidth() {
-        return this.width;
     }
 
     /**

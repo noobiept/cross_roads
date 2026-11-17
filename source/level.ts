@@ -3,9 +3,8 @@ import * as Message from "./message.js";
 import Car, { CarType } from "./car.js";
 import Road, { RoadInfo } from "./road.js";
 import Player from "./player.js";
-import Explosion from "./explosion.js";
+import explode from "./explosion.js";
 import { getCanvasDimensions, getCarInfo } from "./main.js";
-import { boxBoxCollision } from "@drk4/utilities";
 import * as Engine from "@drk4/game-engine";
 
 export interface CarsInLevelInfo {
@@ -155,10 +154,9 @@ export default class Level {
         if (this.checkCollisions()) {
             Message.show("Collision!", 0.5);
 
-            // center the explosion around the player
-            const explosion = new Explosion();
-            const centeredPosition = Game.centerElement(this.player, explosion);
-            explosion.positionIn(centeredPosition);
+            // where the player was hit
+            const { x, y } = this.player.getShape();
+            explode({ x, y });
 
             // no more new lives
             if (!this.newLife()) {
@@ -179,29 +177,9 @@ export default class Level {
      * Check collisions between the player and a car.
      */
     checkCollisions() {
-        const player = this.player;
-        const cars = this.cars;
+        const player = this.player.getShape();
 
-        for (let a = 0; a < cars.length; a++) {
-            const car = cars[a];
-
-            const collision = boxBoxCollision(
-                player.getX(),
-                player.getY(),
-                player.getWidth(),
-                player.getHeight(),
-                car.getX(),
-                car.getY(),
-                car.getWidth(),
-                car.getHeight()
-            );
-
-            if (collision) {
-                return true;
-            }
-        }
-
-        return false;
+        return this.cars.some((car) => player.overlaps(car.getShape()));
     }
 
     /**

@@ -7,21 +7,17 @@ import {
     removeFromStage,
     bringToTop,
 } from "./main.js";
-import { GameElement, CanvasPosition } from "./game.js";
+import { CanvasPosition } from "./game.js";
 import { getRandomInt } from "@drk4/utilities";
 import * as Engine from "@drk4/game-engine";
 
-export default class Player implements GameElement {
+export default class Player {
     private shape!: Engine.Bitmap;
-    private width: number;
-    private height: number;
     private movement_speed: number;
     private movement_glide: number;
     private lives: number;
 
     constructor() {
-        this.width = 15;
-        this.height = 15;
         this.movement_speed = 122; // while a key is held (pixels per second)
         this.movement_glide = 7; // how far it keeps moving after the key is released (in pixels)
         this.lives = 10;
@@ -55,8 +51,8 @@ export default class Player implements GameElement {
     positionIn(position: CanvasPosition) {
         Engine.Tween.removeTweens(this.shape);
 
-        this.shape.x = position.x + this.width / 2;
-        this.shape.y = position.y + this.height / 2;
+        this.shape.left = position.x;
+        this.shape.top = position.y;
     }
 
     /**
@@ -72,36 +68,31 @@ export default class Player implements GameElement {
         const angle = Math.atan2(yDirection, xDirection);
         const distance = this.movement_speed * deltaTime + this.movement_glide;
 
-        let nextX = this.getX() + Math.cos(angle) * distance;
-        let nextY = this.getY() + Math.sin(angle) * distance;
+        const shape = this.shape;
+
+        let nextX = shape.left + Math.cos(angle) * distance;
+        let nextY = shape.top + Math.sin(angle) * distance;
 
         if (nextX < 0) {
             nextX = 0;
-        } else if (nextX > canvas.width - this.width) {
-            nextX = canvas.width - this.width;
+        } else if (nextX > canvas.width - shape.width) {
+            nextX = canvas.width - shape.width;
         }
 
         if (nextY < 0) {
             nextY = 0;
-        } else if (nextY > canvas.height - this.height) {
-            nextY = canvas.height - this.height;
+        } else if (nextY > canvas.height - shape.height) {
+            nextY = canvas.height - shape.height;
         }
 
         // at the same speed when it's stopped by the canvas edges
         const duration =
-            Math.hypot(nextX - this.getX(), nextY - this.getY()) /
+            Math.hypot(nextX - shape.left, nextY - shape.top) /
             this.movement_speed;
 
-        // the engine is center-origin, so convert the top-left target to a center
-        // (the tweens are updated after the game loop callbacks, so it already moves in this update)
-        new Engine.Tween(this.shape, { override: true })
-            .to(
-                {
-                    x: nextX + this.width / 2,
-                    y: nextY + this.height / 2,
-                },
-                duration
-            )
+        // the tweens are updated after the game loop callbacks, so it already moves in this update
+        new Engine.Tween(shape, { override: true })
+            .to({ left: nextX, top: nextY }, duration)
             .start();
     }
 
@@ -113,31 +104,31 @@ export default class Player implements GameElement {
     }
 
     /**
-     * Get the current `x` position value (top-left).
-     */
-    getX() {
-        return this.shape.x - this.width / 2;
-    }
-
-    /**
      * Get the current `y` position value (top-left).
      */
     getY() {
-        return this.shape.y - this.height / 2;
+        return this.shape.top;
     }
 
     /**
      * Get the current `width` value.
      */
     getWidth() {
-        return this.width;
+        return this.shape.width;
     }
 
     /**
      * Get the current `height` value.
      */
     getHeight() {
-        return this.height;
+        return this.shape.height;
+    }
+
+    /**
+     * Get the element shown in the canvas (to check if a car hits it, for example).
+     */
+    getShape() {
+        return this.shape;
     }
 
     /**

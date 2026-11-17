@@ -6,7 +6,6 @@ import {
     removeFromStage,
     getCarInfo,
 } from "./main.js";
-import { GameElement, CanvasPosition } from "./game.js";
 import * as Engine from "@drk4/game-engine";
 
 export type CarType = "one" | "two" | "three" | "four" | "five" | "six";
@@ -15,70 +14,38 @@ export type AllCarsInfo = { [key in CarType]: CarInfo };
 
 export interface CarInfo {
     image: string;
-    speed: number;
-    width: number;
-    height: number;
+    speed: number; // in pixels per second
 }
 
 export interface CarArgs {
-    x?: number;
-    y: number;
+    x?: number; // the left edge (default `0`)
+    y: number; // the center of its lane
     type: CarType;
     level: Level;
 }
 
-export default class Car implements GameElement {
+export default class Car {
     private shape: Engine.Bitmap;
-    private info: CarInfo;
-    private width: number;
-    private height: number;
 
     constructor(args: CarArgs) {
-        if (typeof args.x === "undefined") {
-            args.x = 0;
-        }
-
-        this.info = getCarInfo(args.type);
-        this.width = this.info.width;
-        this.height = this.info.height;
-
-        this.shape = this.setupShape();
-
-        this.positionIn({
-            x: args.x,
-            y: args.y - this.height / 2,
-        });
-
+        const info = getCarInfo(args.type);
         const canvas = getCanvasDimensions();
-        const travelDuration = (canvas.width - args.x) / this.info.speed; // in seconds
 
-        // tween the (center) `x` until the car is fully off the right edge
+        this.shape = new Engine.Bitmap({ image: getImage(info.image) });
+        this.shape.left = args.x ?? 0;
+        this.shape.y = args.y;
+
+        addToStage(this.shape);
+
+        const travelDuration = (canvas.width - this.shape.left) / info.speed; // in seconds
+
+        // until the car is fully off the right edge
         new Engine.Tween(this.shape)
-            .to({ x: canvas.width + this.width / 2 }, travelDuration)
+            .to({ left: canvas.width }, travelDuration)
             .call(() => {
                 args.level.removeCar(this);
             })
             .start();
-    }
-
-    /**
-     * Setup the display object of the car (an image).
-     */
-    setupShape() {
-        const info = this.info;
-        const shape = new Engine.Bitmap({ image: getImage(info.image) });
-
-        addToStage(shape);
-
-        return shape;
-    }
-
-    /**
-     * Position the car in the given x/y position (top-left based).
-     */
-    positionIn(position: CanvasPosition) {
-        this.shape.x = position.x + this.width / 2;
-        this.shape.y = position.y + this.height / 2;
     }
 
     /**
@@ -89,30 +56,9 @@ export default class Car implements GameElement {
     }
 
     /**
-     * Get the current `x` position value (top-left).
+     * Get the element shown in the canvas (to check if it hits the player, for example).
      */
-    getX() {
-        return this.shape.x - this.width / 2;
-    }
-
-    /**
-     * Get the current `y` position value (top-left).
-     */
-    getY() {
-        return this.shape.y - this.height / 2;
-    }
-
-    /**
-     * Get the car's `width` value.
-     */
-    getWidth() {
-        return this.width;
-    }
-
-    /**
-     * Get the car's `height` value.
-     */
-    getHeight() {
-        return this.height;
+    getShape() {
+        return this.shape;
     }
 }

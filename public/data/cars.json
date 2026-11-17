@@ -1,38 +1,26 @@
 {
     "one": {
         "image": "car_1",
-        "speed": 50,
-        "width": 47,
-        "height": 24
+        "speed": 50
     },
     "two": {
         "image": "car_2",
-        "speed": 70,
-        "width": 47,
-        "height": 21
+        "speed": 70
     },
     "three": {
         "image": "car_3",
-        "speed": 120,
-        "width": 31,
-        "height": 11
+        "speed": 120
     },
     "four": {
         "image": "car_4",
-        "speed": 150,
-        "width": 16,
-        "height": 12
+        "speed": 150
     },
     "five": {
         "image": "car_5",
-        "speed": 60,
-        "width": 20,
-        "height": 16
+        "speed": 60
     },
     "six": {
         "image": "car_6",
-        "speed": 90,
-        "width": 31,
-        "height": 15
+        "speed": 90
     }
 }
