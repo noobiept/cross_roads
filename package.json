@@ -12,10 +12,12 @@
         "@eslint/js": "^10.0.1",
         "eslint": "^10.15.0",
         "globals": "^17.14.0",
+        "jsdom": "^31.0.1",
         "prettier": "^3.10.1",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.72.2",
-        "vite": "^8.3.8"
+        "vite": "^8.3.8",
+        "vitest": "^5.1.0"
     },
     "prettier": {
         "printWidth": 80,
@@ -36,6 +38,8 @@
         "format:check": "prettier --check \"**/*.{html,css,json,js,ts,md}\"",
         "format:run": "prettier --write \"**/*.{html,css,json,js,ts,md}\"",
         "check:types": "tsc -p tsconfig.json --noEmit --skipLibCheck",
-        "lint": "eslint source"
+        "lint": "eslint source tests",
+        "test": "vitest run",
+        "test:watch": "vitest"
     }
 }

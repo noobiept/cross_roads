@@ -31,3 +31,4 @@ Use the arrow keys (or wasd keys) to control the player movement.
 - `pnpm install --frozen-lockfile`: Install dependencies using the committed lockfile.
 - `pnpm run dev`: Start the local development server.
 - `pnpm run build`: Build the release version of the game.
+- `pnpm run test`: Run the tests (`pnpm run test:watch` to run them again on every change).

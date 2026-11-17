@@ -6,4 +6,9 @@ export default defineConfig({
     build: {
         outDir: `release/${packageJson.name} ${packageJson.version}`,
     },
+    test: {
+        // the game needs a page (its menu, and the canvas)
+        environment: "jsdom",
+        include: ["source/**/*.test.ts"],
+    },
 });
