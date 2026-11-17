@@ -1,16 +1,22 @@
 import * as Options from "./options.js";
 import * as Engine from "@drk4/game-engine";
-import { getAsset } from "./main.js";
+import { getAudio } from "./main.js";
 
 let MUSIC: Engine.Sound.SoundInstance | null = null;
 
 /**
  * Set up the music (it starts paused).
- * The game can run without it: `play()` returns `null` when its file wasn't loaded (it failed to
- * load, or it's still loading).
+ * The game can run without it, so nothing happens when its file wasn't loaded (it failed to load,
+ * or it's still loading).
  */
 function setup() {
-    MUSIC = Engine.Sound.play(getAsset("happy_tune"), { loop: true });
+    const buffer = getAudio("happy_tune");
+
+    if (!buffer) {
+        return;
+    }
+
+    MUSIC = Engine.Sound.play(buffer, { loop: true });
     MUSIC?.pause();
 }
 

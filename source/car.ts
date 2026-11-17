@@ -1,7 +1,7 @@
 import Level from "./level.js";
 import {
     getCanvasDimensions,
-    getAsset,
+    getImage,
     addToStage,
     removeFromStage,
     getCarInfo,
@@ -66,7 +66,7 @@ export default class Car implements GameElement {
      */
     setupShape() {
         const info = this.info;
-        const shape = new Engine.Bitmap({ image: getAsset(info.image) });
+        const shape = new Engine.Bitmap({ image: getImage(info.image) });
 
         addToStage(shape);
 

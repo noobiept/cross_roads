@@ -1,7 +1,7 @@
 import * as GameMenu from "./game_menu.js";
 import * as Keyboard from "./keyboard.js";
 import {
-    getAsset,
+    getImage,
     addToStage,
     getCanvasDimensions,
     removeFromStage,
@@ -33,8 +33,7 @@ export default class Player implements GameElement {
      * Setup the shape (image) of the player.
      */
     setupShape() {
-        const image = getAsset("player_1");
-        const shape = new Engine.Bitmap({ image: image });
+        const shape = new Engine.Bitmap({ image: getImage("player_1") });
 
         this.shape = shape;
         this.getNewRandomShape();
@@ -47,7 +46,7 @@ export default class Player implements GameElement {
      */
     getNewRandomShape() {
         const position = getRandomInt(1, 8);
-        this.shape.image = getAsset("player_" + position) as HTMLImageElement;
+        this.shape.image = getImage("player_" + position);
     }
 
     /**

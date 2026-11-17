@@ -4,9 +4,9 @@ import * as HighScore from "./high_score.js";
 import * as Keyboard from "./keyboard.js";
 import * as Music from "./music.js";
 import * as Message from "./message.js";
-import Level, { LevelInfo } from "./level.js";
+import Level from "./level.js";
 import Player from "./player.js";
-import { getAsset } from "./main.js";
+import { getLevelInfo } from "./main.js";
 import { timeToString } from "@drk4/utilities";
 import * as Engine from "@drk4/game-engine";
 
@@ -77,7 +77,7 @@ export function clear() {
  * Load the first level, and configure the player, etc.
  */
 export function loadInitialLevel() {
-    const first = getAsset("level_1") as LevelInfo;
+    const first = getLevelInfo(1)!;
 
     PLAYER = new Player();
     LEVEL = new Level({
@@ -116,9 +116,8 @@ export function nextLevel(levelPosition?: number) {
         CURRENT_LEVEL = levelPosition;
     }
 
-    const next = "level_" + CURRENT_LEVEL;
     // there's no file for the level after the last one
-    const levelInfo = getAsset(next) as LevelInfo | undefined;
+    const levelInfo = getLevelInfo(CURRENT_LEVEL);
 
     if (levelInfo) {
         LEVEL = new Level({

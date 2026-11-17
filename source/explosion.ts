@@ -1,4 +1,4 @@
-import { getAsset, addToStage, removeFromStage } from "./main.js";
+import { getImage, addToStage, removeFromStage } from "./main.js";
 import { GameElement, CanvasPosition } from "./game.js";
 import * as Engine from "@drk4/game-engine";
 
@@ -23,7 +23,7 @@ export default class Explosion implements GameElement {
         const width = 32;
         const height = 32;
         const sprite = new Engine.Sprite({
-            image: getAsset("explosion"),
+            image: getImage("explosion"),
             frameWidth: width,
             frameHeight: height,
             interval: 0.08, // seconds per frame

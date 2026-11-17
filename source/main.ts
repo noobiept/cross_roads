@@ -8,6 +8,7 @@ import * as Music from "./music.js";
 import * as Message from "./message.js";
 import * as Engine from "@drk4/game-engine";
 import { CarType, AllCarsInfo } from "./car.js";
+import { LevelInfo } from "./level.js";
 
 import "../css/style.css";
 
@@ -30,7 +31,7 @@ window.onload = function () {
 /**
  * Initialize the application with the data we got from the storage.
  */
-function initApp(data: AppStorage.SavedData) {
+async function initApp(data: AppStorage.SavedData) {
     const container = document.getElementById("CanvasContainer")!;
 
     Engine.init({
@@ -45,7 +46,7 @@ function initApp(data: AppStorage.SavedData) {
     Keyboard.init([Music.play]);
     Message.init();
 
-    const manifest = [
+    const manifest: Engine.PreloadManifestEntry[] = [
         { id: "cars", path: "data/cars.json" },
 
         { id: "level_1", path: "data/levels/level1.json" },
@@ -78,7 +79,8 @@ function initApp(data: AppStorage.SavedData) {
 
         { id: "explosion", path: "images/explosion.png" },
 
-        { id: "happy_tune", path: "music/happy_tune.ogg" },
+        // the game can run without the music
+        { id: "happy_tune", path: "music/happy_tune.ogg", optional: true },
 
         { id: "player_1", path: "images/player1.png" },
         { id: "player_2", path: "images/player2.png" },
@@ -98,28 +100,30 @@ function initApp(data: AppStorage.SavedData) {
         // the engine dispatches progress as a 0-100 percentage already
         Message.updateLoading(progress | 0);
     });
-    PRELOAD.addEventListener("complete", async function (result) {
-        // the game can run without the music, but not without the levels or the images
-        const failedIds = result.failedIds.filter((id) => id !== "happy_tune");
 
-        if (failedIds.length > 0) {
-            console.error("Failed to load: " + failedIds.join(", "));
-            Message.loadingFailed();
-            return;
+    try {
+        // it fails when a file that isn't optional fails to load
+        await PRELOAD.loadManifest(manifest);
+    } catch (error) {
+        if (!(error instanceof Engine.PreloadError)) {
+            throw error;
         }
 
-        Message.removeLoading();
+        console.error("Failed to load: " + error.failedIds.join(", "));
+        Message.loadingFailed();
+        return;
+    }
 
-        // show the help page on the first run of the game
-        if (!data["cross_roads_has_run_before"]) {
-            AppStorage.setData({ cross_roads_has_run_before: true });
-            await GameMenu.openInitialHelpSection();
-        }
+    Message.removeLoading();
 
-        Game.init();
-        Game.loadInitialLevel();
-    });
-    PRELOAD.loadManifest(manifest);
+    // show the help page on the first run of the game
+    if (!data["cross_roads_has_run_before"]) {
+        AppStorage.setData({ cross_roads_has_run_before: true });
+        await GameMenu.openInitialHelpSection();
+    }
+
+    Game.init();
+    Game.loadInitialLevel();
 }
 
 /**
@@ -155,18 +159,43 @@ export function bringToTop(element: Engine.Element) {
 }
 
 /**
- * Get a previously pre-loaded asset (image, sound, map, etc).
+ * The game only starts once its files are loaded (except the optional ones), so a file that isn't
+ * there is a mistake in the code (a wrong id).
  */
-export function getAsset(id: string) {
-    return PRELOAD.get(id);
+function loaded<T>(file: T | undefined, id: string): T {
+    if (file === undefined) {
+        throw new Error(`The file "${id}" wasn't loaded.`);
+    }
+
+    return file;
+}
+
+/**
+ * Get a preloaded image.
+ */
+export function getImage(id: string) {
+    return loaded(PRELOAD.getImage(id), id);
+}
+
+/**
+ * Get a preloaded sound (`undefined` when it failed to load, or it's still loading).
+ */
+export function getAudio(id: string) {
+    return PRELOAD.getAudio(id);
+}
+
+/**
+ * Get the info of a level (`undefined` when there's no such level, after the last one).
+ */
+export function getLevelInfo(level: number) {
+    return PRELOAD.getJson<LevelInfo>("level_" + level);
 }
 
 /**
  * Get the info a specific car type (to know the speed, width, etc).
  */
 export function getCarInfo(type: CarType) {
-    const cars = PRELOAD.get("cars") as AllCarsInfo;
-    return cars[type];
+    return loaded(PRELOAD.getJson<AllCarsInfo>("cars"), "cars")[type];
 }
 
 /**
