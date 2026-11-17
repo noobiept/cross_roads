@@ -8,7 +8,7 @@ import * as Engine from "@drk4/game-engine";
 
 let MESSAGE: Engine.Text;
 let MESSAGE_CONTAINER: Engine.Container;
-let MESSAGE_TIMEOUT: (() => void) | null = null; // hides the current message (it's in the game loop)
+let MESSAGE_TIMEOUT: Engine.Timeout;
 let LOADING: Engine.Text;
 
 /**
@@ -49,6 +49,9 @@ export function init() {
 
     addToStage(MESSAGE_CONTAINER);
 
+    // it counts game time, so the message (and what's called after it) pauses with the game
+    MESSAGE_TIMEOUT = new Engine.Timeout();
+
     // the loading message
     LOADING = new Engine.Text({
         text: "",
@@ -61,32 +64,24 @@ export function init() {
 }
 
 /**
- * Show a message in the game canvas for a certain duration before it is hidden.
- * The duration is counted in the game loop, so it pauses with the game (while the page is hidden
- * for example), and so does the `callback` (called once it's hidden).
+ * Show a message in the game canvas for a certain duration before it is hidden (it replaces the
+ * previous message).
+ * The duration is game time, so it pauses with the game (while the page is hidden for example), and
+ * so does the `callback` (called once it's hidden).
  *
- * @param timeout How long the message is shown (in milliseconds).
+ * @param duration How long the message is shown (in seconds).
  */
-export function show(text: string, timeout: number, callback?: () => void) {
+export function show(text: string, duration: number, callback?: () => void) {
     MESSAGE.text = text;
     MESSAGE_CONTAINER.visible = true;
 
     // bring it to the front so that it stays on top of other elements (z-index)
     bringToTop(MESSAGE_CONTAINER);
 
-    // it replaces the previous message
-    if (MESSAGE_TIMEOUT) {
-        Engine.removeFromGameLoop(MESSAGE_TIMEOUT);
-    }
-
-    const hide = () => {
-        MESSAGE_TIMEOUT = null;
+    MESSAGE_TIMEOUT.start(() => {
         MESSAGE_CONTAINER.visible = false;
         callback?.();
-    };
-
-    MESSAGE_TIMEOUT = hide;
-    Engine.addToGameLoop(hide, { delay: timeout / 1000, interval: false });
+    }, duration);
 }
 
 /**

@@ -153,7 +153,7 @@ export default class Level {
         }
 
         if (this.checkCollisions()) {
-            Message.show("Collision!", 500);
+            Message.show("Collision!", 0.5);
 
             // center the explosion around the player
             const explosion = new Explosion();
@@ -163,7 +163,7 @@ export default class Level {
             // no more new lives
             if (!this.newLife()) {
                 Game.clear();
-                Message.show("No more lives, you loose!", 2000, function () {
+                Message.show("No more lives, you loose!", 2, function () {
                     Game.loadInitialLevel();
                 });
                 return;
