@@ -1,4 +1,4 @@
-import { timeToString } from "@drk4/utilities";
+import { isArray, isNumber, timeToString } from "@drk4/utilities";
 import * as AppStorage from "./app_storage.js";
 
 export type HighScoreData = number[];
@@ -8,9 +8,9 @@ const SAVE_LIMIT = 5; // the total scores we keep track of
 const LIST_ITEMS: HTMLElement[] = [];
 
 /**
- * Initialize the module with some optional previous scores.
+ * Initialize the module with the saved scores (it can be anything, only the valid times are used).
  */
-export function init(scoreData?: HighScoreData) {
+export function init(scoreData: unknown) {
     const ul = document.getElementById("HighScore")!;
 
     // add the list items that will have the high scores
@@ -23,8 +23,11 @@ export function init(scoreData?: HighScoreData) {
         LIST_ITEMS.push(li);
     }
 
-    if (scoreData) {
-        HIGH_SCORE = scoreData;
+    if (isArray(scoreData)) {
+        HIGH_SCORE = scoreData
+            .filter((value): value is number => isNumber(value) && value >= 0)
+            .sort((a, b) => a - b)
+            .slice(0, SAVE_LIMIT);
     }
 
     updateHtmlElement();

@@ -10,12 +10,16 @@ const OPTIONS: OptionsData = {
 };
 
 /**
- * Load the options given.
+ * Load the saved options (it can be anything, only the values of the right type are used).
  */
-export function load(optionsData?: OptionsData) {
-    if (optionsData) {
-        if (isBoolean(optionsData.music_state)) {
-            OPTIONS.music_state = optionsData.music_state;
+export function load(optionsData: unknown) {
+    if (typeof optionsData === "object" && optionsData !== null) {
+        const options = optionsData as Partial<
+            Record<keyof OptionsData, unknown>
+        >;
+
+        if (isBoolean(options.music_state)) {
+            OPTIONS.music_state = options.music_state;
         }
     }
 }

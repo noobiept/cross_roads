@@ -30,7 +30,7 @@ window.onload = function () {
 /**
  * Initialize the application with the data we got from the storage.
  */
-function initApp(data: AppStorage.StorageData) {
+function initApp(data: AppStorage.SavedData) {
     const container = document.getElementById("CanvasContainer")!;
 
     Engine.init({
