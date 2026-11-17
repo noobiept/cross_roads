@@ -166,7 +166,7 @@ export default class Player implements GameElement {
      * Move the player in a direction based on which keys are being held.
      */
     tick(deltaTime: number) {
-        const keys = Keyboard.getKeysForUpdate();
+        const keys = Keyboard.getDirections();
 
         if (keys.left && keys.up) {
             this.moveTo(-1, -1, deltaTime);

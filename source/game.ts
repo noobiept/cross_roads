@@ -1,7 +1,6 @@
 import * as GameMenu from "./game_menu.js";
 import * as Options from "./options.js";
 import * as HighScore from "./high_score.js";
-import * as Keyboard from "./keyboard.js";
 import * as Music from "./music.js";
 import * as Message from "./message.js";
 import Level from "./level.js";
@@ -67,7 +66,6 @@ export function clear() {
     }
 
     STOPWATCH.stop();
-    Keyboard.clearKeysHeld();
     GameMenu.toggleHelpSection(true);
 
     CURRENT_LEVEL = 1;

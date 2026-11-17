@@ -43,7 +43,7 @@ async function initApp(data: AppStorage.SavedData) {
     Options.load(data["cross_roads_options"]);
     GameMenu.init();
     HighScore.init(data["cross_roads_high_score"]);
-    Keyboard.init([Music.play]);
+    Keyboard.init(Music.play);
     Message.init();
 
     const manifest: Engine.PreloadManifestEntry[] = [
