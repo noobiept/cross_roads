@@ -1,5 +1,22 @@
+export interface DirectionKeys {
+    up: boolean;
+    down: boolean;
+    left: boolean;
+    right: boolean;
+}
+
+type Direction = keyof DirectionKeys;
+
 // keys state (being pressed or not)
-export const KEYS_HELD = {
+const KEYS_HELD: DirectionKeys = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+};
+
+// keys pressed since the last update (a quick tap can be released before the next update)
+const KEYS_PRESSED: DirectionKeys = {
     up: false,
     down: false,
     left: false,
@@ -18,6 +35,9 @@ export function init(onInitialInput?: (() => void)[]) {
     window.addEventListener("keydown", handleKeyDown, false);
     window.addEventListener("keyup", handleKeyUp, false);
 
+    // the keys released while the window doesn't have the focus don't get a `keyup` event here
+    window.addEventListener("blur", clearKeysHeld, false);
+
     if (onInitialInput) {
         INITIAL_USER_INPUT_CALLBACKS = onInitialInput;
     }
@@ -27,10 +47,51 @@ export function init(onInitialInput?: (() => void)[]) {
  * Reset the 'keys held' state.
  */
 export function clearKeysHeld() {
-    KEYS_HELD.up = false;
-    KEYS_HELD.down = false;
-    KEYS_HELD.left = false;
-    KEYS_HELD.right = false;
+    for (const direction of Object.keys(KEYS_HELD) as Direction[]) {
+        KEYS_HELD[direction] = false;
+        KEYS_PRESSED[direction] = false;
+    }
+}
+
+/**
+ * The direction keys to move with in this update: the ones being held, and the ones pressed since
+ * the last update (so a quick tap, released before the next update, still moves the player).
+ * Call it once per update.
+ */
+export function getKeysForUpdate(): DirectionKeys {
+    const keys = { ...KEYS_HELD };
+
+    for (const direction of Object.keys(KEYS_PRESSED) as Direction[]) {
+        keys[direction] ||= KEYS_PRESSED[direction];
+        KEYS_PRESSED[direction] = false;
+    }
+
+    return keys;
+}
+
+/**
+ * Get the direction of a key (`null` if it isn't one of the movement keys).
+ */
+function codeToDirection(code: string): Direction | null {
+    switch (code) {
+        case "KeyA":
+        case "ArrowLeft":
+            return "left";
+
+        case "KeyD":
+        case "ArrowRight":
+            return "right";
+
+        case "KeyW":
+        case "ArrowUp":
+            return "up";
+
+        case "KeyS":
+        case "ArrowDown":
+            return "down";
+    }
+
+    return null;
 }
 
 /**
@@ -43,26 +104,11 @@ function handleKeyDown(event: KeyboardEvent) {
         handleInitialInput();
     }
 
-    switch (event.code) {
-        case "KeyA":
-        case "ArrowLeft":
-            KEYS_HELD.left = true;
-            break;
+    const direction = codeToDirection(event.code);
 
-        case "KeyD":
-        case "ArrowRight":
-            KEYS_HELD.right = true;
-            break;
-
-        case "KeyW":
-        case "ArrowUp":
-            KEYS_HELD.up = true;
-            break;
-
-        case "KeyS":
-        case "ArrowDown":
-            KEYS_HELD.down = true;
-            break;
+    if (direction) {
+        KEYS_HELD[direction] = true;
+        KEYS_PRESSED[direction] = true;
     }
 }
 
@@ -71,26 +117,10 @@ function handleKeyDown(event: KeyboardEvent) {
  * Detect when a certain key stops being held.
  */
 function handleKeyUp(event: KeyboardEvent) {
-    switch (event.code) {
-        case "KeyA":
-        case "ArrowLeft":
-            KEYS_HELD.left = false;
-            break;
+    const direction = codeToDirection(event.code);
 
-        case "KeyD":
-        case "ArrowRight":
-            KEYS_HELD.right = false;
-            break;
-
-        case "KeyW":
-        case "ArrowUp":
-            KEYS_HELD.up = false;
-            break;
-
-        case "KeyS":
-        case "ArrowDown":
-            KEYS_HELD.down = false;
-            break;
+    if (direction) {
+        KEYS_HELD[direction] = false;
     }
 }
 

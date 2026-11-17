@@ -15,15 +15,15 @@ export default class Player implements GameElement {
     private shape!: Engine.Bitmap;
     private width: number;
     private height: number;
-    private movement_step: number;
-    private movement_animation: number;
+    private movement_speed: number;
+    private movement_glide: number;
     private lives: number;
 
     constructor() {
         this.width = 15;
         this.height = 15;
-        this.movement_step = 11;
-        this.movement_animation = 0.09; // ease duration (in seconds)
+        this.movement_speed = 122; // while a key is held (pixels per second)
+        this.movement_glide = 7; // how far it keeps moving after the key is released (in pixels)
         this.lives = 10;
 
         this.setupShape();
@@ -61,14 +61,20 @@ export default class Player implements GameElement {
     }
 
     /**
-     * Move over time the player in the given direction by a certain amount (the movement step).
+     * Move the player in the given direction, in an update where the key is held.
+     *
+     * It moves this update's distance plus the glide: when the key is still held in the next update,
+     * it starts again from where it is, and once the key is released, it only moves the glide. So it
+     * moves the same way whatever the frame rate is (with a fixed distance ahead, the glide was what
+     * was left of it after the update's movement).
      */
-    moveTo(xDirection: number, yDirection: number) {
+    moveTo(xDirection: number, yDirection: number, deltaTime: number) {
         const canvas = getCanvasDimensions();
         const angle = Math.atan2(yDirection, xDirection);
+        const distance = this.movement_speed * deltaTime + this.movement_glide;
 
-        let nextX = this.getX() + Math.cos(angle) * this.movement_step;
-        let nextY = this.getY() + Math.sin(angle) * this.movement_step;
+        let nextX = this.getX() + Math.cos(angle) * distance;
+        let nextY = this.getY() + Math.sin(angle) * distance;
 
         if (nextX < 0) {
             nextX = 0;
@@ -82,14 +88,20 @@ export default class Player implements GameElement {
             nextY = canvas.height - this.height;
         }
 
+        // at the same speed when it's stopped by the canvas edges
+        const duration =
+            Math.hypot(nextX - this.getX(), nextY - this.getY()) /
+            this.movement_speed;
+
         // the engine is center-origin, so convert the top-left target to a center
+        // (the tweens are updated after the game loop callbacks, so it already moves in this update)
         new Engine.Tween(this.shape, { override: true })
             .to(
                 {
                     x: nextX + this.width / 2,
                     y: nextY + this.height / 2,
                 },
-                this.movement_animation
+                duration
             )
             .start();
     }
@@ -154,26 +166,25 @@ export default class Player implements GameElement {
     /**
      * Move the player in a direction based on which keys are being held.
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    tick(_deltaTime: number) {
-        const keysHeld = Keyboard.KEYS_HELD;
+    tick(deltaTime: number) {
+        const keys = Keyboard.getKeysForUpdate();
 
-        if (keysHeld.left && keysHeld.up) {
-            this.moveTo(-1, -1);
-        } else if (keysHeld.left && keysHeld.down) {
-            this.moveTo(-1, 1);
-        } else if (keysHeld.right && keysHeld.up) {
-            this.moveTo(1, -1);
-        } else if (keysHeld.right && keysHeld.down) {
-            this.moveTo(1, 1);
-        } else if (keysHeld.left) {
-            this.moveTo(-1, 0);
-        } else if (keysHeld.right) {
-            this.moveTo(1, 0);
-        } else if (keysHeld.up) {
-            this.moveTo(0, -1);
-        } else if (keysHeld.down) {
-            this.moveTo(0, 1);
+        if (keys.left && keys.up) {
+            this.moveTo(-1, -1, deltaTime);
+        } else if (keys.left && keys.down) {
+            this.moveTo(-1, 1, deltaTime);
+        } else if (keys.right && keys.up) {
+            this.moveTo(1, -1, deltaTime);
+        } else if (keys.right && keys.down) {
+            this.moveTo(1, 1, deltaTime);
+        } else if (keys.left) {
+            this.moveTo(-1, 0, deltaTime);
+        } else if (keys.right) {
+            this.moveTo(1, 0, deltaTime);
+        } else if (keys.up) {
+            this.moveTo(0, -1, deltaTime);
+        } else if (keys.down) {
+            this.moveTo(0, 1, deltaTime);
         }
     }
 
