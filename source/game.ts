@@ -113,9 +113,10 @@ export function nextLevel(levelPosition?: number) {
     }
 
     const next = "level_" + CURRENT_LEVEL;
-    const levelInfo = getAsset(next) as LevelInfo;
+    // there's no file for the level after the last one
+    const levelInfo = getAsset(next) as LevelInfo | undefined;
 
-    if (levelInfo !== null) {
+    if (levelInfo) {
         LEVEL = new Level({
             info: levelInfo,
             player: PLAYER,
