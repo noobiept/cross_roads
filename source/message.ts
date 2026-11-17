@@ -104,6 +104,13 @@ export function updateLoading(progress: number) {
 }
 
 /**
+ * Replace the loading message with an error (the game can't start without its files).
+ */
+export function loadingFailed() {
+    LOADING.text = "Failed to load the game.";
+}
+
+/**
  * Remove the loading message.
  */
 export function removeLoading() {

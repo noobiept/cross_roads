@@ -99,7 +99,16 @@ function initApp(data: AppStorage.StorageData) {
         // the engine dispatches progress as a 0-100 percentage already
         Message.updateLoading(progress | 0);
     });
-    PRELOAD.addEventListener("complete", async function () {
+    PRELOAD.addEventListener("complete", async function (result) {
+        // the game can run without the music, but not without the levels or the images
+        const failedIds = result.failedIds.filter((id) => id !== "happy_tune");
+
+        if (failedIds.length > 0) {
+            console.error("Failed to load: " + failedIds.join(", "));
+            Message.loadingFailed();
+            return;
+        }
+
         Message.removeLoading();
 
         // show the help page on the first run of the game
