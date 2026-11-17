@@ -98,7 +98,6 @@ export default class Player implements GameElement {
      * Remove the player's shape from the stage.
      */
     clear() {
-        Engine.Tween.removeTweens(this.shape);
         removeFromStage(this.shape);
     }
 

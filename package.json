@@ -5,8 +5,8 @@
     "packageManager": "pnpm@12.21.0",
     "type": "module",
     "dependencies": {
-        "@drk4/game-engine": "^3.0.1",
-        "@drk4/utilities": "^7.0.0"
+        "@drk4/game-engine": "^4.2.0",
+        "@drk4/utilities": "^8.0.0"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",

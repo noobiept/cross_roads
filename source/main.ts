@@ -131,10 +131,11 @@ export function addToStage(element: Engine.Element) {
 }
 
 /**
- * Remove an element from the stage.
+ * Remove an element from the stage for good. It's destroyed (which also stops its tweens), so it
+ * can't be added again.
  */
 export function removeFromStage(element: Engine.Element) {
-    Engine.removeElement(element);
+    element.destroy();
 }
 
 /**

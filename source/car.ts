@@ -85,7 +85,6 @@ export default class Car implements GameElement {
      * Remove the car from the stage (so it isn't displayed anymore).
      */
     clear() {
-        Engine.Tween.removeTweens(this.shape);
         removeFromStage(this.shape);
     }
 

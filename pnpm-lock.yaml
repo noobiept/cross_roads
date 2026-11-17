@@ -176,11 +176,11 @@ importers:
   .:
     dependencies:
       '@drk4/game-engine':
-        specifier: ^3.0.1
-        version: 3.0.1
+        specifier: ^4.2.0
+        version: 4.2.0
       '@drk4/utilities':
-        specifier: ^7.0.0
-        version: 7.0.0
+        specifier: ^8.0.0
+        version: 8.0.0
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -212,11 +212,11 @@ packages:
   '@cacheable/utils@2.5.0':
     resolution: {integrity: sha512-buipgOVDkkPXNR5+xBpDw7Zk2n1EvU7qBJCNUcL7rhQ//kfpOXPAvQ511Os0vpLYJ1pZnvudNytkQt2hst3wqA==}
 
-  '@drk4/game-engine@3.0.1':
-    resolution: {integrity: sha512-rocHROCUaHOJqN2DqwWSXwGXKfUf2vfE/iKkJDU0aykFjPXzye1fVG4sMDORVg0rlV2pArak2HmyMv6PxVtZ7Q==}
+  '@drk4/game-engine@4.2.0':
+    resolution: {integrity: sha512-qjfNxLfbnjg3v1X2ZVnyxBFKkGoRrXxp2Yuj9L0IrwS0Dh9MccF8EjwLgwqFDhvhLdTcP9cq+mMvnizMxgItIQ==}
 
-  '@drk4/utilities@7.0.0':
-    resolution: {integrity: sha512-wVooS9YHG1FY997eUiaS0+Q81J7PHdFwCcEU43G4bn/609jWcHWO6LElY8eYxQC1GzV4Wh4s1Yeim/nirYpDuQ==}
+  '@drk4/utilities@8.0.0':
+    resolution: {integrity: sha512-xbbhKZ+l8Qo/tUwF4QQP2X/KSjT3Yy6q+YOv6CdZNjFwXPaHHqde9ILCNVwE75Hih3dViljTzD7LmlnbJ7gklw==}
 
   '@emnapi/core@2.0.0-beta.2':
     resolution: {integrity: sha512-MzCVoWtcg4Pm2B3je5mMvYMvj3MmBKw+fU7vbsJc9/iT8ip6/eYIHo/Dsm/mr+wsHB6SEyJDuxB09Yy6r/8+4A==}
@@ -936,11 +936,11 @@ snapshots:
       hashery: 1.5.1
       keyv: 5.6.0
 
-  '@drk4/game-engine@3.0.1':
+  '@drk4/game-engine@4.2.0':
     dependencies:
-      '@drk4/utilities': 7.0.0
+      '@drk4/utilities': 8.0.0
 
-  '@drk4/utilities@7.0.0': {}
+  '@drk4/utilities@8.0.0': {}
 
   '@emnapi/core@2.0.0-beta.2':
     dependencies:
