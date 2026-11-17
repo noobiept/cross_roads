@@ -7,7 +7,7 @@ import * as Message from "./message.js";
 import Level, { LevelInfo } from "./level.js";
 import Player from "./player.js";
 import { getAsset } from "./main.js";
-import { Timer } from "@drk4/utilities";
+import { timeToString } from "@drk4/utilities";
 
 export interface GameElement {
     getX(): number;
@@ -23,21 +23,21 @@ export interface CanvasPosition {
     y: number;
 }
 
-let TIMER: Timer;
 let PLAYER: Player | null = null;
 let LEVEL: Level | null = null;
 let CURRENT_LEVEL = 1;
+
+// the time since the game started (in seconds), which is the score (the lower the better)
+// it's counted in the game loop, so it stops with the game (while the page is hidden for example)
+let GAME_TIME = 0;
+let TIMER_ELEMENT: HTMLElement;
+let SHOWN_SECONDS = -1; // the time shown in the timer element
 
 /**
  * Initial load of the game. Only call it once at the start.
  */
 export function init() {
-    const timerElement = GameMenu.getTimerElement();
-    TIMER = new Timer({
-        updateElement: {
-            element: timerElement,
-        },
-    });
+    TIMER_ELEMENT = GameMenu.getTimerElement();
 
     GameMenu.show();
 }
@@ -84,7 +84,8 @@ export function loadInitialLevel() {
     PLAYER.bringToTop();
 
     CURRENT_LEVEL = 1;
-    TIMER.restart();
+    GAME_TIME = 0;
+    updateTimerElement();
 
     GameMenu.startGame(CURRENT_LEVEL, PLAYER.getCurrentLives());
     Message.show("Level " + CURRENT_LEVEL, 2000);
@@ -126,12 +127,18 @@ export function nextLevel(levelPosition?: number) {
 
         Message.show("Level " + CURRENT_LEVEL, 2000);
     } else {
-        HighScore.add(TIMER.getTimeSeconds());
+        const time = getTimeSeconds();
+
+        HighScore.add(time);
         clear();
 
-        Message.show("You Win! " + TIMER.getTimeString(), 2000, function () {
-            loadInitialLevel();
-        });
+        Message.show(
+            "You Win! " + timeToString({ time: time * 1000 }),
+            2000,
+            function () {
+                loadInitialLevel();
+            }
+        );
     }
 }
 
@@ -141,12 +148,38 @@ export function nextLevel(levelPosition?: number) {
  * @param deltaTime Time elapsed since the last update (in seconds).
  */
 export function tick(deltaTime: number) {
+    // the time only counts while playing (not during the message at the end of a game)
+    if (PLAYER) {
+        GAME_TIME += deltaTime;
+        updateTimerElement();
+    }
+
     if (LEVEL) {
         LEVEL.tick(deltaTime);
     }
 
     if (PLAYER) {
         PLAYER.tick(deltaTime);
+    }
+}
+
+/**
+ * The time since the game started, in whole seconds (as shown in the game menu).
+ */
+function getTimeSeconds() {
+    return Math.floor(GAME_TIME);
+}
+
+/**
+ * Show the current time in the game menu.
+ * It's called on every update, so it only changes the page when the shown value changes.
+ */
+function updateTimerElement() {
+    const seconds = getTimeSeconds();
+
+    if (seconds !== SHOWN_SECONDS) {
+        SHOWN_SECONDS = seconds;
+        TIMER_ELEMENT.textContent = timeToString({ time: seconds * 1000 });
     }
 }
 
