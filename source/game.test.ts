@@ -1,5 +1,7 @@
 import { describe, expect, test, vi } from "vitest";
+import { timeToString } from "@drk4/utilities";
 import { startGame } from "../tests/helpers.js";
+import { SavedData } from "./app_storage.js";
 
 vi.mock("./main.js", () => import("../tests/fake_main.js"));
 
@@ -29,6 +31,19 @@ describe("a game", () => {
         game.run(1, 1 / 60);
 
         expect(game.menu("Timer")).toBe("1 second");
+    });
+
+    test("the timer shows the whole seconds of game time", async () => {
+        const game = await startGame();
+
+        // the steps of 1/60 of a second don't add up exactly to the whole seconds
+        for (let seconds = 1; seconds <= 60; seconds++) {
+            game.run(1, 1 / 60);
+
+            expect(game.menu("Timer")).toBe(
+                timeToString({ time: seconds * 1000 })
+            );
+        }
     });
 
     test("the player goes to the next level after crossing the road", async () => {
@@ -117,13 +132,19 @@ describe("the saved data", () => {
         localStorage.setItem("cross_roads_high_score", "[3, 5");
         localStorage.setItem("cross_roads_options", "{music_state");
 
+        let saved: SavedData | undefined;
+
         AppStorage.getData(
             ["cross_roads_high_score", "cross_roads_options"],
             (data) => {
-                expect(data.cross_roads_high_score).toBeNull();
-                expect(data.cross_roads_options).toBeNull();
+                saved = data;
             }
         );
+
+        expect(saved).toEqual({
+            cross_roads_high_score: null,
+            cross_roads_options: null,
+        });
     });
 
     test("only the valid values are used", async () => {

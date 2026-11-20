@@ -159,7 +159,9 @@ export function tick(deltaTime: number) {
  * The time since the game started, in whole seconds (as shown in the game menu).
  */
 function getTimeSeconds() {
-    return Math.floor(STOPWATCH.getTime());
+    // the steps don't add up exactly (120 steps of 1/60 of a second are a bit less than 2 seconds),
+    // so a time on a whole second could round down to the one before
+    return Math.floor(STOPWATCH.getTime() + 1e-6);
 }
 
 /**
