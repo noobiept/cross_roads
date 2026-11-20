@@ -23,15 +23,22 @@ function setup() {
 /**
  * Play the background music (if the option is set).
  * The engine pauses it while the page is hidden.
+ *
+ * @return If it's playing, or doesn't have to (the option is off). It's `false` when its file isn't
+ *         loaded (it's still loading, or it failed to load).
  */
 export function play() {
-    if (Options.getMusicState() === true) {
-        if (!MUSIC) {
-            setup();
-        }
-
-        MUSIC?.resume();
+    if (Options.getMusicState() !== true) {
+        return true;
     }
+
+    if (!MUSIC) {
+        setup();
+    }
+
+    MUSIC?.resume();
+
+    return MUSIC !== null;
 }
 
 /**

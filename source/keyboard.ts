@@ -12,10 +12,11 @@ let CONTROLS: Engine.Keyboard<keyof DirectionKeys>;
 /**
  * Initialize the module, called at the start.
  *
- * @param onInitialInput Called on the first key press (some code can only run after some user
- *                       input, like the music).
+ * @param onInitialInput Some code can only run after some user input (like the music), so it's
+ *                       called on the key presses until it returns `true` (it may not be ready on
+ *                       the first one, while the files are loading).
  */
-export function init(onInitialInput: () => void) {
+export function init(onInitialInput: () => boolean) {
     CONTROLS = new Engine.Keyboard({
         up: ["ArrowUp", "KeyW"],
         down: ["ArrowDown", "KeyS"],
@@ -23,7 +24,13 @@ export function init(onInitialInput: () => void) {
         right: ["ArrowRight", "KeyD"],
     });
 
-    window.addEventListener("keydown", onInitialInput, { once: true });
+    const onKeyDown = () => {
+        if (onInitialInput()) {
+            window.removeEventListener("keydown", onKeyDown);
+        }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
 }
 
 /**
