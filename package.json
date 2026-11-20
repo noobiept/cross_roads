@@ -1,6 +1,6 @@
 {
     "name": "cross_roads",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "description": "Need to cross the road without colliding with a moving vehicle.",
     "packageManager": "pnpm@12.21.0",
     "type": "module",
